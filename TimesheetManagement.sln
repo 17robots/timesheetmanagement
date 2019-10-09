@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimesheetManagement", "TimesheetManagement.csproj", "{5C569B4B-8B6F-4248-90BE-CE6250F5217F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C569B4B-8B6F-4248-90BE-CE6250F5217F}.Debug|x86.ActiveCfg = Debug|x86
+		{5C569B4B-8B6F-4248-90BE-CE6250F5217F}.Debug|x86.Build.0 = Debug|x86
+		{5C569B4B-8B6F-4248-90BE-CE6250F5217F}.Release|x86.ActiveCfg = Release|x86
+		{5C569B4B-8B6F-4248-90BE-CE6250F5217F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C81AD017-0456-4792-8687-99529789045E}
+	EndGlobalSection
+EndGlobal

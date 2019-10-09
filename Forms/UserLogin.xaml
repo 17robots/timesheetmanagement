@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="FivesBronxTimesheetManagement.Forms.UserLogin" Title="User Logon" Height="147" Width="249" SizeToContent="WidthAndHeight" FocusManager.FocusedElement="{Binding ElementName=txtEmployeeId}" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid>
+    <Menu Height="26" VerticalAlignment="Top">
+      <MenuItem Header="File">
+        <MenuItem Name="menuFile_ChangeConnectionString" Header="Change Connection String" Click="menuFile_ChangeConnectionString_Click" />
+      </MenuItem>
+    </Menu>
+    <StackPanel Orientation="Vertical" Margin="10,29,0,10" Width="88" HorizontalAlignment="Left">
+      <Label Content="Employee ID" Height="26" Margin="0,5,0,0" />
+      <Label Content="Password" Height="26" Margin="0,5,0,0" />
+      <Button Name="btnClose" TabIndex="3" Content="Cancel" Width="88" Margin="0,5,0,0" Click="Button_Click" />
+    </StackPanel>
+    <StackPanel Orientation="Vertical" Margin="111,29,10,10" Width="120">
+      <TextBox Name="txtEmployeeId" TabIndex="1" Text="" Height="26" Margin="0,5,0,0" />
+      <PasswordBox Name="txtPassword" TabIndex="2" PasswordChar="*" Password="" Height="26" Margin="0,5,0,0" KeyDown="txtPassword_KeyDown" />
+      <Button Name="btnLogin" TabIndex="4" Content="Login" Margin="0,5,0,0" Click="btnLogin_Click" />
+    </StackPanel>
+  </Grid>
+</Window>

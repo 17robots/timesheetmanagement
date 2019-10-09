@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="FivesBronxTimesheetManagement.Forms.AdminTools" Title="AdminTools" MinHeight="120" Width="300" SizeToContent="Height" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Window.Resources>
+    <Storyboard x:Key="Show_BackButton">
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnBack" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+    <Storyboard x:Key="Show_UserOptions">
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnPasswordReset" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnSubmitForApproval" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateUser" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditUser" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnApprovalHierarchy" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+    <Storyboard x:Key="Show_TimesheetCodes">
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateTimesheetCodes" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditTimesheetCodes" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+    <Storyboard x:Key="Show_TaskTypes">
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateTaskType" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditTaskType" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+    <Storyboard x:Key="Show_Projects">
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateProject" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditProject" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+    <Storyboard x:Key="Hide_Tier1">
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnUserOptions" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnTimesheetCodes" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnTaskTypes" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnProjects" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+    <Storyboard x:Key="Show_Tier1">
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnUserOptions" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnTimesheetCodes" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnTaskTypes" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnProjects" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+      </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+    <Storyboard x:Key="Hide_Tier2">
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnPasswordReset" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnSubmitForApproval" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateUser" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditUser" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateTimesheetCodes" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditTimesheetCodes" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnApprovalHierarchy" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateTaskType" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditTaskType" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateProject" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditProject" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnBack" Storyboard.TargetProperty="Visibility">
+        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+      </ObjectAnimationUsingKeyFrames>
+    </Storyboard>
+  </Window.Resources>
+  <Grid>
+    <StackPanel Orientation="Vertical" Width="154" HorizontalAlignment="Left" Margin="10,5,0,10">
+      <Button Name="btnUserOptions" Content="User Options" Margin="0,5,0,0">
+        <Button.Triggers>
+          <EventTrigger RoutedEvent="Button.Click">
+            <BeginStoryboard Storyboard="{StaticResource Show_UserOptions}" />
+            <BeginStoryboard Storyboard="{StaticResource Hide_Tier1}" />
+            <BeginStoryboard Storyboard="{StaticResource Show_BackButton}" />
+          </EventTrigger>
+        </Button.Triggers>
+      </Button>
+      <Button Name="btnPasswordReset" Content="Password Reset" Margin="0,5,0,0" Visibility="Collapsed" Click="btnPasswordReset_Click" />
+      <Button Name="btnSubmitForApproval" Content="Submit for Approval" Margin="0,5,0,0" Visibility="Collapsed" />
+      <Button Name="btnCreateUser" Content="Create User" Margin="0,5,0,0" Visibility="Collapsed" Click="btnCreateUser_Click" />
+      <Button Name="btnEditUser" Content="Edit User" Margin="0,5,0,0" Visibility="Collapsed" />
+      <Button Name="btnApprovalHierarchy" Content="Approval Hierarchy" Margin="0,5,0,0" Visibility="Collapsed" Click="btnApprovalHierarchy_Click" />
+      <Button Name="btnTimesheetCodes" Content="Timesheet Codes" Margin="0,5,0,0">
+        <Button.Triggers>
+          <EventTrigger RoutedEvent="Button.Click">
+            <BeginStoryboard Storyboard="{StaticResource Show_TimesheetCodes}" />
+            <BeginStoryboard Storyboard="{StaticResource Hide_Tier1}" />
+            <BeginStoryboard Storyboard="{StaticResource Show_BackButton}" />
+          </EventTrigger>
+        </Button.Triggers>
+      </Button>
+      <Button Name="btnCreateTimesheetCodes" Content="Create Timesheet Codes" Margin="0,5,0,0" Visibility="Collapsed" />
+      <Button Name="btnEditTimesheetCodes" Content="Edit Timesheet Codes" Margin="0,5,0,0" Visibility="Collapsed" />
+      <Button Name="btnTaskTypes" Content="Task Types" Margin="0,5,0,0">
+        <Button.Triggers>
+          <EventTrigger RoutedEvent="Button.Click">
+            <BeginStoryboard Storyboard="{StaticResource Show_TaskTypes}" />
+            <BeginStoryboard Storyboard="{StaticResource Hide_Tier1}" />
+            <BeginStoryboard Storyboard="{StaticResource Show_BackButton}" />
+          </EventTrigger>
+        </Button.Triggers>
+      </Button>
+      <Button Name="btnCreateTaskType" Content="Create Task Type" Margin="0,5,0,0" Visibility="Collapsed" />
+      <Button Name="btnEditTaskType" Content="Edit Task Type" Margin="0,5,0,0" Visibility="Collapsed" />
+      <Button Name="btnProjects" Content="Projects" Margin="0,5,0,0">
+        <Button.Triggers>
+          <EventTrigger RoutedEvent="Button.Click">
+            <BeginStoryboard Storyboard="{StaticResource Show_Projects}" />
+            <BeginStoryboard Storyboard="{StaticResource Hide_Tier1}" />
+            <BeginStoryboard Storyboard="{StaticResource Show_BackButton}" />
+          </EventTrigger>
+        </Button.Triggers>
+      </Button>
+      <Button Name="btnCreateProject" Content="Create Project" Margin="0,5,0,0" Visibility="Collapsed" Click="btnCreateProject_Click" />
+      <Button Name="btnEditProject" Content="Edit Project" Margin="0,5,0,0" Visibility="Collapsed" Click="btnEditProject_Click" />
+      <Button Name="btnBack" Content="Back" Margin="0,5,0,0" Visibility="Collapsed">
+        <Button.Triggers>
+          <EventTrigger RoutedEvent="Button.Click">
+            <BeginStoryboard Storyboard="{StaticResource Hide_Tier2}" />
+            <BeginStoryboard Storyboard="{StaticResource Show_Tier1}" />
+          </EventTrigger>
+        </Button.Triggers>
+      </Button>
+    </StackPanel>
+    <Image HorizontalAlignment="Left" Height="76" Margin="169,10,0,0" VerticalAlignment="Top" Width="112" Source="/Pics/Fives_logo.jpg" />
+  </Grid>
+</Window>

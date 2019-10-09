@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="FivesBronxTimesheetManagement.Forms.UserDefaults" Title="Timesheet Default Preferences" SizeToContent="WidthAndHeight" Width="387" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid>
+    <StackPanel Orientation="Vertical" Width="130" Height="Auto" Margin="10,0,0,10" HorizontalAlignment="Left">
+      <Label Content="TimesheetCode" Height="26" />
+      <Label Content="Task Type" Height="26" />
+      <Label Content="Project" Height="26" />
+      <Button Name="btnCancel" Content="Cancel" Margin="0,10,0,0" Click="btnCancel_Click" />
+    </StackPanel>
+    <StackPanel Orientation="Vertical" Height="Auto" Margin="150,0,0,10" HorizontalAlignment="Left" Width="130">
+      <ComboBox Name="cbxTimesheetCode" Height="26" />
+      <ComboBox Name="cbxTaskType" Height="26" />
+      <ComboBox Name="cbxProject" Height="26" />
+      <Button Name="btnOk" Content="OK" Margin="0,10,0,0" Click="btnOk_Click" />
+    </StackPanel>
+    <StackPanel Orientation="Vertical" Height="Auto" Margin="300,0,10,0" HorizontalAlignment="Left" Width="26">
+      <Button Name="btnTimesheetCode" Height="26" Click="btnTimesheetCode_Click">
+        <Image Source="/Pics/DeleteRed.png" Stretch="Fill" />
+      </Button>
+      <Button Name="btnTaskType" Height="26" Click="btnTaskType_Click">
+        <Image Source="/Pics/DeleteRed.png" Stretch="Fill" />
+      </Button>
+      <Button Name="btnProject" Height="26" Click="btnProject_Click">
+        <Image Source="/Pics/DeleteRed.png" Stretch="Fill" />
+      </Button>
+    </StackPanel>
+  </Grid>
+</Window>

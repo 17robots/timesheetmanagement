@@ -1,0 +1,118 @@
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\TimesheetManagement.csprojAssemblyReference.cache
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\About.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\PeriodMaintenance.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\AdminTools_EditProject_NewSection.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\AdminTools.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\CustomDateTimePicker.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\TimesheetEntry_Edit.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\MainWindow.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\AdminTools_EditProject.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\DbLoadAndMaint.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\AdminTools_CreateProject.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\UserDefaults.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\UserLogin.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\User_CreateEdit.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\TimesheetApproval.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\TimesheetApproval_Submission.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\UserRights.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\UserChangePassword.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\ProjectInfoScreen.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\Report.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\User_ApprovalHierarchy.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\About.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\PeriodMaintenance.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\AdminTools_EditProject_NewSection.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\AdminTools.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\CustomDateTimePicker.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\TimesheetEntry_Edit.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\MainWindow.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\AdminTools_EditProject.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\DbLoadAndMaint.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\AdminTools_CreateProject.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\UserDefaults.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\UserLogin.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\User_CreateEdit.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\TimesheetApproval.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\TimesheetApproval_Submission.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\UserRights.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\UserChangePassword.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\ProjectInfoScreen.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\Report.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\User_ApprovalHierarchy.g.cs
+C:\Users\mdray\Documents\Timesheet\bin\Debug\TimesheetManagement.exe.config
+C:\Users\mdray\Documents\Timesheet\bin\Debug\TimesheetManagement.exe
+C:\Users\mdray\Documents\Timesheet\bin\Debug\TimesheetManagement.pdb
+C:\Users\mdray\Documents\Timesheet\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\mdray\Documents\Timesheet\bin\Debug\Google.Protobuf.dll
+C:\Users\mdray\Documents\Timesheet\bin\Debug\MySql.Data.dll
+C:\Users\mdray\Documents\Timesheet\bin\Debug\Google.Protobuf.xml
+C:\Users\mdray\Documents\Timesheet\bin\Debug\MySql.Data.xml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\TimesheetEntry.baml
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\Forms\TimesheetEntry.g.cs
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\TimesheetManagement_MarkupCompile.cache
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\TimesheetManagement.g.resources
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\FivesBronxTimesheetManagement.Properties.Resources.resources
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\TimesheetManagement.csproj.GenerateResource.cache
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\TimesheetManagement.csproj.CoreCompileInputs.cache
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\TimesheetManagement.csproj.CopyComplete
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\TimesheetManagement.exe
+C:\Users\mdray\Documents\Timesheet\obj\x86\Debug\TimesheetManagement.pdb
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\bin\Debug\TimesheetManagement.exe.config
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\bin\Debug\TimesheetManagement.exe
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\bin\Debug\TimesheetManagement.pdb
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\bin\Debug\Google.Protobuf.dll
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\bin\Debug\MySql.Data.dll
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\bin\Debug\Google.Protobuf.xml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\bin\Debug\MySql.Data.xml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\TimesheetManagement.csprojAssemblyReference.cache
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\About.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\PeriodMaintenance.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\AdminTools_EditProject_NewSection.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\AdminTools.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\CustomDateTimePicker.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\TimesheetEntry_Edit.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\MainWindow.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\AdminTools_EditProject.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\DbLoadAndMaint.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\AdminTools_CreateProject.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\UserDefaults.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\UserLogin.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\User_CreateEdit.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\TimesheetApproval.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\TimesheetApproval_Submission.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\UserRights.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\TimesheetEntry.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\UserChangePassword.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\ProjectInfoScreen.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\Report.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\User_ApprovalHierarchy.baml
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\About.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\PeriodMaintenance.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\AdminTools_EditProject_NewSection.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\AdminTools.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\CustomDateTimePicker.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\TimesheetEntry_Edit.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\MainWindow.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\AdminTools_EditProject.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\DbLoadAndMaint.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\AdminTools_CreateProject.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\UserDefaults.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\UserLogin.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\User_CreateEdit.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\TimesheetApproval.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\TimesheetApproval_Submission.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\UserRights.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\TimesheetEntry.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\UserChangePassword.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\ProjectInfoScreen.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\Report.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\Forms\User_ApprovalHierarchy.g.cs
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\TimesheetManagement_MarkupCompile.cache
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\TimesheetManagement.g.resources
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\FivesBronxTimesheetManagement.Properties.Resources.resources
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\TimesheetManagement.csproj.GenerateResource.cache
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\TimesheetManagement.csproj.CoreCompileInputs.cache
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\TimesheetManagement.csproj.CopyComplete
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\TimesheetManagement.exe
+C:\Users\mdray\Documents\Timesheet Project\Timesheet\obj\x86\Debug\TimesheetManagement.pdb
