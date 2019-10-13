@@ -32,6 +32,7 @@ namespace FivesBronxTimesheetManagement.Classes
             string first = ((char)(Encoding.ASCII.GetBytes(startRange.Substring(0, 1))[0] + colCount - 1)).ToString();
             string last = (Int32.Parse(startRange.Substring(1, 1)) + rowCount - 1).ToString();
             _range = _sheet.get_Range(startRange, string.Concat(first, last));
+            _range.HorizontalAlignment = XlHAlign.xlHAlignCenter;
             _range.Value2 = values;
 		}
 
@@ -40,7 +41,8 @@ namespace FivesBronxTimesheetManagement.Classes
             string first = ((char)(Encoding.ASCII.GetBytes(startRange.Substring(0, 1))[0] + colCount - 1)).ToString();
             string last = (Int32.Parse(startRange.Substring(1, 1)) + rowCount - 1).ToString();
             _range = _sheet.get_Range(startRange, string.Concat(first, last));
-			_range.Columns.AutoFit();
+            _range.HorizontalAlignment = XlHAlign.xlHAlignCenter;
+            _range.Columns.AutoFit();
 		}
 
 		private void CreateExcelRef()
