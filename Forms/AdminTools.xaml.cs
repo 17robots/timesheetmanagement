@@ -56,5 +56,10 @@ namespace FivesBronxTimesheetManagement.Forms
         {
 
         }
+
+        private void BtnUserOptions_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
