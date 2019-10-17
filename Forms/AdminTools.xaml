@@ -16,9 +16,7 @@
       <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateUser" Storyboard.TargetProperty="Visibility">
         <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
       </ObjectAnimationUsingKeyFrames>
-      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditUser" Storyboard.TargetProperty="Visibility">
-        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
-      </ObjectAnimationUsingKeyFrames>
+      
       <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnApprovalHierarchy" Storyboard.TargetProperty="Visibility">
         <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
       </ObjectAnimationUsingKeyFrames>
@@ -85,9 +83,7 @@
       <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateUser" Storyboard.TargetProperty="Visibility">
         <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
       </ObjectAnimationUsingKeyFrames>
-      <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditUser" Storyboard.TargetProperty="Visibility">
-        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
-      </ObjectAnimationUsingKeyFrames>
+      
       <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateTimesheetCodes" Storyboard.TargetProperty="Visibility">
         <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
       </ObjectAnimationUsingKeyFrames>
@@ -127,9 +123,8 @@
       </Button>
       <Button Name="btnPasswordReset" Content="Password Reset" Margin="0,5,0,0" Visibility="Collapsed" Click="btnPasswordReset_Click" />
       <Button Name="btnSubmitForApproval" Content="Submit for Approval" Margin="0,5,0,0" Visibility="Collapsed" />
-      <Button Name="btnCreateUser" Content="Create User" Margin="0,5,0,0" Visibility="Collapsed" Click="btnCreateUser_Click" />
-      <Button Name="btnEditUser" Content="Edit User" Margin="0,5,0,0" Visibility="Collapsed" />
-      <Button Name="btnApprovalHierarchy" Content="Approval Hierarchy" Margin="0,5,0,0" Visibility="Collapsed" Click="btnApprovalHierarchy_Click" />
+            <Button Name="btnCreateUser" Content="Create User" Margin="0,5,0,0" Visibility="Collapsed" Click="btnCreateUser_Click" />
+            <Button Name="btnApprovalHierarchy" Content="Approval Hierarchy" Margin="0,5,0,0" Visibility="Collapsed" Click="btnApprovalHierarchy_Click" />
       <Button Name="btnTimesheetCodes" Content="Timesheet Codes" Margin="0,5,0,0">
         <Button.Triggers>
           <EventTrigger RoutedEvent="Button.Click">
