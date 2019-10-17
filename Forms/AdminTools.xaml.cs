@@ -1,16 +1,11 @@
 using FivesBronxTimesheetManagement.Classes;
 using Microsoft.VisualBasic;
 using System;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
-	public partial class AdminTools : Window
+    public partial class AdminTools : Window
 	{
 		private Queries queries;
 
@@ -56,5 +51,10 @@ namespace FivesBronxTimesheetManagement.Forms
 				MessageBox.Show(exception.ToString());
 			}
 		}
-	}
+
+        private void BtnTaskTypes_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }
