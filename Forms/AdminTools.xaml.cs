@@ -51,15 +51,5 @@ namespace FivesBronxTimesheetManagement.Forms
 				MessageBox.Show(exception.ToString());
 			}
 		}
-
-        private void BtnTaskTypes_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void BtnUserOptions_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
