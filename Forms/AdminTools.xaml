@@ -16,14 +16,9 @@
       <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateUser" Storyboard.TargetProperty="Visibility">
         <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
       </ObjectAnimationUsingKeyFrames>
-      
       <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnApprovalHierarchy" Storyboard.TargetProperty="Visibility">
         <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
       </ObjectAnimationUsingKeyFrames>
-    </Storyboard>
-    <Storyboard x:Key="Show_TimesheetCodes">
-    </Storyboard>
-    <Storyboard x:Key="Show_TaskTypes">
     </Storyboard>
     <Storyboard x:Key="Show_Projects">
       <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnCreateProject" Storyboard.TargetProperty="Visibility">
