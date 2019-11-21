@@ -56,7 +56,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			return project;
 		}
 
-		private bool IsValidData() {
+		private bool IsValidData() { 
 
             if (string.IsNullOrEmpty(this.txtSerialNumber.Text)) {
                 MessageBox.Show("Error Creating Project: Engineering Serial Number Cannot Be Blank");
