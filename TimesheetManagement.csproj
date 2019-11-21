@@ -23,7 +23,7 @@
     <UpdateUrl>https://raw.githubusercontent.com/17robots/timesheetmanagement/master/publish/</UpdateUrl>
     <WebPage>publish.htm</WebPage>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -56,16 +56,22 @@
     <StartupObject>FivesBronxTimesheetManagement.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>160987A182E77E9B0F455A70205E4584509A0412</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>122D96CC9E1519652B29A534C71E53F48D02D570</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>TimesheetManagement_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>TimesheetManagement_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>TimesheetManagement.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
@@ -311,6 +317,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="TimesheetManagement.pfx" />
+    <None Include="TimesheetManagement_1_TemporaryKey.pfx" />
     <None Include="TimesheetManagement_TemporaryKey.pfx" />
     <Page Include="Forms\About.xaml">
       <Generator>MSBuild:Compile</Generator>
