@@ -57,32 +57,33 @@ namespace FivesBronxTimesheetManagement.Forms
 		}
 
 		private bool IsValidData() {
-			if (string.IsNullOrEmpty(this.txtBFCNumber.Text)) {
-				MessageBox.Show("Invalid Data, Must have BFC Number");
+
+            if (string.IsNullOrEmpty(this.txtSerialNumber.Text)) {
+                MessageBox.Show("Error Creating Project: Engineering Serial Number Cannot Be Blank");
+                return false;
+            }
+            else if (string.IsNullOrEmpty(this.txtSAPNumber.Text)) {
+                MessageBox.Show("Error Creating Project: SAP Number Cannot Be Blank");
+                return false;
+            }
+            else if (string.IsNullOrEmpty(this.txtBFCNumber.Text)) {
+				MessageBox.Show("Error Creating Project: BFC Number Cannot Be Blank");
                 return false;
 			}
-			else if (string.IsNullOrEmpty(this.txtCountry.Text)) {
-				MessageBox.Show("Invalid Data, Must have Country");
+            else if (!(string.IsNullOrEmpty(this.txtNetworkNumber.Text) ? false : this.functions.IsNumeric(this.txtNetworkNumber.Text))) {
+                MessageBox.Show("Error Creating Project: Network Number Cannot Be Blank And Must Be An Integer (Number with no decimal places)");
                 return false;
-			}
-			else if (string.IsNullOrEmpty(this.txtCustomer.Text)) {
-				MessageBox.Show("Invalid Data, Must have Customer");
+            }
+            else if (string.IsNullOrEmpty(this.txtCustomer.Text)) {
+                MessageBox.Show("Error Creating Project: Customer Cannot Be Blank");
                 return false;
-			}
-			else if (string.IsNullOrEmpty(this.txtMachine.Text)) {
-				MessageBox.Show("Invalid Data, Must have Machine Description");
+            }
+            else if (string.IsNullOrEmpty(this.txtMachine.Text)) {
+                MessageBox.Show("Error Creating Project: Description Cannot Be Blank");
                 return false;
-			}
-			else if (!(string.IsNullOrEmpty(this.txtNetworkNumber.Text) ? false : this.functions.IsNumeric(this.txtNetworkNumber.Text))) {
-				MessageBox.Show("Invalid Data, Must have Network Number that is an integer value (Number with no decimal places)");
-                return false;
-			}
-			else if (string.IsNullOrEmpty(this.txtSAPNumber.Text)) {
-				MessageBox.Show("Invalid Data, Must have SAP Number");
-                return false;
-			}
-			else if (string.IsNullOrEmpty(this.txtSerialNumber.Text)) {
-				MessageBox.Show("Invalid Data, Must have Engineering Serial Number");
+            }
+            else if (string.IsNullOrEmpty(this.txtCountry.Text)) {
+				MessageBox.Show("Error Creating Project: Country Cannot Be Blank");
                 return false;
 			}
 			else if ((string.IsNullOrEmpty(this.txtWarrantyNetworkNumber.Text) ? false : this.functions.IsNumeric(this.txtWarrantyNetworkNumber.Text))) {
@@ -92,7 +93,7 @@ namespace FivesBronxTimesheetManagement.Forms
                 return true;
             }
             else if (!this.functions.IsNumeric(this.txtWarrantyNetworkNumber.Text)) {
-                MessageBox.Show("Invalid Data, Warranty Must Be A Number Or Must Be Left Blank");
+                MessageBox.Show("Error Creating Project: Warranty Must Be A Number Or Must Be Left Blank");
                 return false;
             }
             return false;
