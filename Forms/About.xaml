@@ -6,8 +6,16 @@
       <Label Margin="10,0,10,0" Content="Fives Bronx Timesheet Management" FontWeight="ExtraBold" />
       <StackPanel Orientation="Horizontal">
         <Label Margin="10,0,10,0" Content="Version:" FontWeight="ExtraBold" />
-        <Label Name="lblVersion" Content="" />
+        <Label Name="lblVersion" Content="1.1.1" />
       </StackPanel>
-    </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="10,0,10,0" Content="Created By:" FontWeight="ExtraBold" />
+                <Label Name="creatorName" Content="Chris Hunyadai" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Margin="10,0,10,0" Content="Maintained By:" FontWeight="ExtraBold" />
+                <Label Name="maintainer" Content="Matthew Dray" />
+            </StackPanel>
+        </StackPanel>
   </Grid>
 </Window>

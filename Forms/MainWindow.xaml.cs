@@ -40,6 +40,11 @@ namespace FivesBronxTimesheetManagement.Forms
 			(new Report(this.user)).Show();
 		}
 
+        private void btnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            (new About()).Show();
+        }
+
 		private void btnTimeEntryScreen_Click(object sender, RoutedEventArgs e)
 		{
 			(new TimesheetEntry(this.user)).Show();

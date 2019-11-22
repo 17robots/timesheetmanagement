@@ -6,7 +6,8 @@
       <Button Name="btnApprovalScreen" Content="Approval Screen" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="154" Click="btnApprovalScreen_Click" />
       <Button Name="btnTimeEntryScreen" Content="Time Entry Screen" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="154" Click="btnTimeEntryScreen_Click" />
       <Button Name="btnReports" Content="Run Reports" HorizontalAlignment="Left" Margin="10,5,0,10" VerticalAlignment="Top" Width="154" Click="btnReports_Click" />
-    </StackPanel>
+            <Button x:Name="btnReports_Copy" Content="About" HorizontalAlignment="Right" Margin="0,5,10,10" VerticalAlignment="Top" Width="100" Click="btnAbout_Click" />
+        </StackPanel>
     <Image HorizontalAlignment="Left" Height="76" Margin="169,10,0,0" VerticalAlignment="Top" Width="112" Source="/Pics/Fives_logo.jpg" />
   </Grid>
 </Window>

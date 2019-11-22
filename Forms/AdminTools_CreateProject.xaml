@@ -9,7 +9,7 @@
           <Label Content="BFC Number" />
           <Label Content="Network Number" />
           <Label Content="Customer" />
-          <Label Content="Machine" />
+          <Label Content="Machine Description" />
           <Label Content="Country" />
           <CheckBox Name="ckbxIsOpen" Content="IsOpen" Height="26" />
           <CheckBox Name="ckbxIsWarrantyOpen" Content="IsWarrantyOpen" Height="26" />
