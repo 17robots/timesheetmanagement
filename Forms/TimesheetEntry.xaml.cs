@@ -350,15 +350,17 @@ namespace FivesBronxTimesheetManagement.Forms
 			if ((this.dgHours.SelectedItems == null ? false : MessageBox.Show("Are you sure you want to copy?", "Copy?", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
 			{
 				DateTime now = DateTime.Now;
+				double hours = hoursMin;
 				CustomDateTimePicker customDateTimePicker = new CustomDateTimePicker();
 				bool? nullable = customDateTimePicker.ShowDialog();
 				if ((!nullable.GetValueOrDefault() ? 0 : Convert.ToInt32(nullable.HasValue)) != 0)
 				{
 					now = customDateTimePicker.date;
+					hours = customDateTimePicker.hours;
 					List<Entry> entries = new List<Entry>();
 					foreach (Entry selectedItem in this.dgHours.SelectedItems)
 					{
-						entries.Add(new Entry(selectedItem, now));
+						entries.Add(new Entry(selectedItem, now, hours));
 					}
 					this.queries.SaveTimeEntry(this.queries.t_Timesheet_Prelim, entries, ApprovalStatus.NotSubmitted, ApprovalStatus.NotSubmitted);
 					this.RefreshDGHoursFromClassList();
