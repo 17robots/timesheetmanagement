@@ -59,10 +59,10 @@
     <StartupObject>FivesBronxTimesheetManagement.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>122D96CC9E1519652B29A534C71E53F48D02D570</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>11C02FA0C1E52E5AA084D36BC3A3AA2255A22DF4</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>TimesheetManagement_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>TimesheetManagement.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
