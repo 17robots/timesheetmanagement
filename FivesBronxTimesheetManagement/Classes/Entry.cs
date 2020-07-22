@@ -208,5 +208,33 @@ namespace FivesBronxTimesheetManagement.Classes
 			this.date_modified = this.date_modified;
 			this.date_approved = this.date_approved;
 		}
+
+		public Entry(FivesBronxTimesheetManagement.Classes.Entry Entry, DateTime Date, double Hours)
+		{
+			Functions function = new Functions();
+			this.user_id = Entry.user_id;
+			this.user_name = Entry.user_name;
+			this.section_id = Entry.section_id;
+			this.project_serial = Entry.project_serial;
+			this.project_sap = Entry.project_sap;
+			this.number_section = Entry.number_section;
+			this.number_network = Entry.number_network;
+			this.number_activity = Entry.number_activity;
+			this.date = Date;
+			this.period = Date.Month;
+			this.year = Date.Year;
+			this.hours = Hours;
+			this.description = Entry.description;
+			this.timesheet_code = Entry.timesheet_code;
+			this.task_type = Entry.task_type;
+			this.submitted_status = function.approvalStatus(ApprovalStatus.NotSubmitted);
+			this.approval_status = ApprovalStatus.Submitted;
+			this.rejection_reason = this.rejection_reason;
+			this.approved_by_user_id = this.approved_by_user_id;
+			this.approved_by_user_name = this.approved_by_user_name;
+			this.date_created = this.date_created;
+			this.date_modified = this.date_modified;
+			this.date_approved = this.date_approved;
+		}
 	}
 }
