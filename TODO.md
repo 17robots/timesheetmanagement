@@ -59,3 +59,14 @@
 3. Future Predictions (Idea Needs Fleshed Out More) - 10 hours - 15 hours
 4. Multiple Selection Support - 10 hours - 15 Hours
 5. Analytics Dashboard - 20 hours - 30 hours of work
+
+# Review Notes
+## 7/21/2020
+
+1. Reviewed Add Edit Hours To Copy Window
+2. Discussed renaming Copy to Duplicate
+3. Discussed Edit Window Instead Of CustomDatePicker To Create Duplicates
+4. Make Multiple Day Selection
+5. Make Calendar Entry?
+
+

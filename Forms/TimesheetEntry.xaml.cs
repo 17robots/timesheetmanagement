@@ -40,6 +40,8 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private List<Entry> itemsSourceEntriesApproved;
 
+		private List<Entry> itemSourceEntriesPrevWeek;
+
 		private List<Entry> itemsSourceEntriesFiltered;
 
 		private List<Section> sectionsAll;
@@ -54,33 +56,36 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private bool approvedQueryHasRun = false;
 
+		private bool preWeekQueryHasRun = false;
+
 		private DateTime filteredDate = DateTime.Now;
 
 		public TimesheetEntry(FivesBronxTimesheetManagement.Classes.User User)
 		{
-			this.InitializeComponent();
-			this.user = User;
-			this.myConnection = new Connection();
-			this.queries = new Queries();
-			this.functions = new Functions();
-			this.user_Defaults = new User_Defaults(this.user);
-			this.itemsSourceEntriesApproved = new List<Entry>();
-			this.LoadConstantsFromDb();
-			this.RefreshDGHoursFromClassList();
-			this.BindDataGrid(this.dgHours);
-			this.BindDataGrid(this.dgHoursUnapproved);
-			this.BindDataGrid(this.dgHoursApproved);
-			this.RefreshDefaultSelections(this.user_Defaults);
-			this.hoursMax = 24;
-			this.hoursMin = 0.5;
-			this.hoursIncrement = 0.5;
-			this.txtHours.Text = this.hoursMin.ToString();
-			object[] userID = new object[] { "Time Entry for Employee #: ", this.user.UserID, " - ", this.user.UserName };
+			InitializeComponent();
+			user = User;
+			myConnection = new Connection();
+			queries = new Queries();
+			functions = new Functions();
+			user_Defaults = new User_Defaults(user);
+			itemsSourceEntriesApproved = new List<Entry>();
+			LoadConstantsFromDb();
+			RefreshDGHoursFromClassList();
+			BindDataGrid(dgHours);
+			BindDataGrid(dgHoursUnapproved);
+			BindDataGrid(dgHoursApproved);
+			BindDataGrid(dgHoursPrevWeek);
+			RefreshDefaultSelections(user_Defaults);
+			hoursMax = 24;
+			hoursMin = 0.5;
+			hoursIncrement = 0.5;
+			txtHours.Text = hoursMin.ToString();
+			object[] userID = new object[] { "Time Entry for Employee #: ", user.UserID, " - ", user.UserName };
 			base.Title = string.Concat(userID);
-			this.lblSectionDescription.Content = "";
-			this.dtpDate.SelectedDate = new DateTime?(DateTime.Now);
-			this.weekEnding = this.functions.WeekEnding(DateTime.Now);
-			this.RefreshDateList(this.weekEnding);
+			lblSectionDescription.Content = "";
+			dtpDate.SelectedDate = new DateTime?(DateTime.Now);
+			weekEnding = functions.WeekEnding(DateTime.Now);
+			RefreshDateList(weekEnding);
 		}
 
 		private void BindDataGrid(DataGrid dataGrid)
@@ -171,25 +176,25 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
 		{
-			this.myConnection.Close();
+			myConnection.Close();
 			base.Close();
 		}
 
 		private void btnHoursDecrement_Click(object sender, RoutedEventArgs e)
 		{
-			double num = double.Parse(this.txtHours.Text);
-			num -= this.hoursIncrement;
-			TextBox str = this.txtHours;
-			double num1 = this.functions.RoundedValueInRange(num, this.hoursMin, this.hoursMax);
+			double num = double.Parse(txtHours.Text);
+			num -= hoursIncrement;
+			TextBox str = txtHours;
+			double num1 = functions.RoundedValueInRange(num, hoursMin, hoursMax);
 			str.Text = num1.ToString();
 		}
 
 		private void btnHoursIncrement_Click(object sender, RoutedEventArgs e)
 		{
-			double num = double.Parse(this.txtHours.Text);
-			num += this.hoursIncrement;
-			TextBox str = this.txtHours;
-			double num1 = this.functions.RoundedValueInRange(num, this.hoursMin, this.hoursMax);
+			double num = double.Parse(txtHours.Text);
+			num += hoursIncrement;
+			TextBox str = txtHours;
+			double num1 = functions.RoundedValueInRange(num, hoursMin, hoursMax);
 			str.Text = num1.ToString();
 		}
 
@@ -201,20 +206,20 @@ namespace FivesBronxTimesheetManagement.Forms
 			string numberSection;
 			int? nullable1;
 			string numberActivity;
-			double num = double.Parse(this.txtHours.Text);
+			double num = double.Parse(txtHours.Text);
 			string text = "";
 			string code = "";
 			string str = "";
-			if (this.IsValidEntry())
+			if (IsValidEntry())
 			{
-				code = ((TimesheetCode)this.cbxTimeCode.SelectedItem).Code;
-				if (!(this.cbxTaskType.SelectedItem.ToString() == "(N/A)"))
+				code = ((TimesheetCode)cbxTimeCode.SelectedItem).Code;
+				if (!(cbxTaskType.SelectedItem.ToString() == "(N/A)"))
 				{
-					str = this.cbxTaskType.SelectedItem.ToString();
-					Project selectedItem = (Project)this.cbxJob.SelectedItem;
+					str = cbxTaskType.SelectedItem.ToString();
+					Project selectedItem = (Project)cbxJob.SelectedItem;
 					numberSerial = selectedItem.Number_Serial;
 					numberSAP = selectedItem.Number_SAP;
-					Section section = (Section)this.cbxSection.SelectedItem;
+					Section section = (Section)cbxSection.SelectedItem;
 					numberSection = section.Number_Section;
 					nullable = new int?(section.Id);
 					nullable1 = new int?(int.Parse(section.Number_ProjectNetwork));
@@ -222,7 +227,7 @@ namespace FivesBronxTimesheetManagement.Forms
 				}
 				else
 				{
-					str = this.cbxTaskType.SelectedItem.ToString();
+					str = cbxTaskType.SelectedItem.ToString();
 					numberSerial = "";
 					numberSAP = "";
 					numberSection = "";
@@ -230,86 +235,86 @@ namespace FivesBronxTimesheetManagement.Forms
 					nullable1 = null;
 					numberActivity = "";
 				}
-				DateTime? selectedDate = this.dtpDate.SelectedDate;
+				DateTime? selectedDate = dtpDate.SelectedDate;
 				DateTime value = selectedDate.Value;
 				int month = value.Month;
 				int year = value.Year;
-				text = this.txtDescription.Text;
+				text = txtDescription.Text;
 				int? nullable2 = null;
 				int? nullable3 = nullable2;
-				int userID = this.user.UserID;
-				string userName = this.user.UserName;
-				string str1 = this.functions.approvalStatus(ApprovalStatus.Submitted);
+				int userID = user.UserID;
+				string userName = user.UserName;
+				string str1 = functions.approvalStatus(ApprovalStatus.Submitted);
 				nullable2 = null;
 				selectedDate = null;
 				Entry entry = new Entry(nullable3, userID, userName, nullable, numberSerial, numberSAP, numberSection, nullable1, numberActivity, value, month, year, num, text, code, str, str1, ApprovalStatus.Submitted, "", nullable2, "", DateTime.Now, DateTime.Now, selectedDate);
-				this.queries.SaveTimeEntry(this.queries.t_Timesheet_Prelim, entry, ApprovalStatus.NotSubmitted, ApprovalStatus.NotSubmitted);
-				this.RefreshDGHoursFromClassList();
-				this.RefreshDateList(this.functions.WeekEnding(entry.date));
-				if (this.isDayfiltered)
+				queries.SaveTimeEntry(queries.t_Timesheet_Prelim, entry, ApprovalStatus.NotSubmitted, ApprovalStatus.NotSubmitted);
+				RefreshDGHoursFromClassList();
+				RefreshDateList(functions.WeekEnding(entry.date));
+				if (isDayfiltered)
 				{
-					this.Filter_Filter(this.filteredDate);
+					Filter_Filter(filteredDate);
 				}
 			}
 		}
 
 		private void btnWeekDecrement_Click(object sender, RoutedEventArgs e)
 		{
-			this.currentWeekEnding = this.currentWeekEnding.AddDays(-7);
-			this.RefreshDateList(this.currentWeekEnding);
+			currentWeekEnding = currentWeekEnding.AddDays(-7);
+			RefreshDateList(currentWeekEnding);
 		}
 
 		private void btnWeekIncrement_Click(object sender, RoutedEventArgs e)
 		{
-			this.currentWeekEnding = this.currentWeekEnding.AddDays(7);
-			this.RefreshDateList(this.currentWeekEnding);
+			currentWeekEnding = currentWeekEnding.AddDays(7);
+			RefreshDateList(currentWeekEnding);
 		}
 
 		private void cbxJob_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			Project project = new Project();
-			if ((this.cbxTaskType.SelectedItem == null ? false : !(this.cbxTaskType.SelectedItem.ToString() == "(N/A)")))
+			if ((cbxTaskType.SelectedItem == null ? false : !(cbxTaskType.SelectedItem.ToString() == "(N/A)")))
 			{
-				project = (Project)this.cbxJob.SelectedItem;
+				project = (Project)cbxJob.SelectedItem;
 			}
 			else
 			{
-				this.cbxJob.SelectedItem = null;
+				cbxJob.SelectedItem = null;
 			}
-			this.UpdateSections(project);
+			UpdateSections(project);
 		}
 
 		private void cbxSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			string str = "";
 			string str1 = "";
-			Project selectedItem = (Project)this.cbxJob.SelectedItem;
+			Project selectedItem = (Project)cbxJob.SelectedItem;
 			try
 			{
-				str = this.cbxSection.SelectedItem.ToString();
-				if (this.functions.IntToBool(selectedItem.IsOpen))
+				str = cbxSection.SelectedItem.ToString();
+				if (functions.IntToBool(selectedItem.IsOpen))
 				{
 					str1 = selectedItem.Number_Network.ToString();
 				}
-				else if (this.functions.IntToBool(selectedItem.IsWarrantyOpen))
+				else if (functions.IntToBool(selectedItem.IsWarrantyOpen))
 				{
 					str1 = selectedItem.Number_WarrantyNetwork.ToString();
 				}
-				this.lblSectionDescription.Content = string.Concat(((Section)this.cbxSection.SelectedItem).Number_ProjectNetwork.ToString(), " - ", ((Section)this.cbxSection.SelectedItem).Number_Activity.ToString());
+				lblSectionDescription.Content = string.Concat(((Section)cbxSection.SelectedItem).Number_ProjectNetwork.ToString(), " - ", ((Section)cbxSection.SelectedItem).Number_Activity.ToString());
 			}
 			catch
 			{
-				this.lblSectionDescription.Content = "";
+				lblSectionDescription.Content = "";
 			}
 		}
 
 		private void cbxTaskType_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if ((this.cbxTaskType.SelectedItem == null ? true : this.cbxTaskType.SelectedItem.ToString() == "(N/A)"))
+			if ((cbxTaskType.SelectedItem == null ? true : cbxTaskType.SelectedItem.ToString() == "(N/A)"))
 			{
-				this.cbxJob.SelectedItem = null;
+				cbxJob.SelectedItem = null;
 			}
-			this.UpdateSections((Project)this.cbxJob.SelectedItem);
+			UpdateSections((Project)cbxJob.SelectedItem);
 		}
 
 		private void cbxTimeCode_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -318,13 +323,13 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		public void ClearSelection()
 		{
-			this.cbxSection.SelectedItem = null;
-			this.cbxJob.SelectedItem = null;
-			this.cbxTaskType.SelectedItem = null;
-			this.cbxTimeCode.SelectedItem = null;
-			this.txtDescription.Text = "";
-			this.txtHours.Text = this.hoursMin.ToString();
-			this.dtpDate.SelectedDate = null;
+			cbxSection.SelectedItem = null;
+			cbxJob.SelectedItem = null;
+			cbxTaskType.SelectedItem = null;
+			cbxTimeCode.SelectedItem = null;
+			txtDescription.Text = "";
+			txtHours.Text = hoursMin.ToString();
+			dtpDate.SelectedDate = null;
 		}
 
 		private void DeleteEntry()
@@ -333,11 +338,11 @@ namespace FivesBronxTimesheetManagement.Forms
 			{
 				try
 				{
-					Queries query = this.queries;
-					string tTimesheetPrelim = this.queries.t_Timesheet_Prelim;
-					int? entryId = ((Entry)this.dgHours.SelectedItems[0]).entry_id;
+					Queries query = queries;
+					string tTimesheetPrelim = queries.t_Timesheet_Prelim;
+					int? entryId = ((Entry)dgHours.SelectedItems[0]).entry_id;
 					query.DeleteTimeEntry(tTimesheetPrelim, entryId.Value);
-					this.RefreshDGHoursFromClassList();
+					RefreshDGHoursFromClassList();
 				}
 				catch
 				{
@@ -347,7 +352,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void dgContextMenu_Copy_Click(object sender, RoutedEventArgs e)
 		{
-			if ((this.dgHours.SelectedItems == null ? false : MessageBox.Show("Are you sure you want to copy?", "Copy?", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
+			if ((dgHours.SelectedItems == null ? false : MessageBox.Show("Are you sure you want to copy?", "Copy?", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
 			{
 				DateTime now = DateTime.Now;
 				double hours = hoursMin;
@@ -358,16 +363,16 @@ namespace FivesBronxTimesheetManagement.Forms
 					now = customDateTimePicker.date;
 					hours = customDateTimePicker.hours;
 					List<Entry> entries = new List<Entry>();
-					foreach (Entry selectedItem in this.dgHours.SelectedItems)
+					foreach (Entry selectedItem in dgHours.SelectedItems)
 					{
 						entries.Add(new Entry(selectedItem, now, hours));
 					}
-					this.queries.SaveTimeEntry(this.queries.t_Timesheet_Prelim, entries, ApprovalStatus.NotSubmitted, ApprovalStatus.NotSubmitted);
-					this.RefreshDGHoursFromClassList();
-					this.RefreshSummaryByDate(this.functions.WeekEnding(now));
-					if (this.isDayfiltered)
+					queries.SaveTimeEntry(queries.t_Timesheet_Prelim, entries, ApprovalStatus.NotSubmitted, ApprovalStatus.NotSubmitted);
+					RefreshDGHoursFromClassList();
+					RefreshSummaryByDate(functions.WeekEnding(now));
+					if (isDayfiltered)
 					{
-						this.Filter_Filter(this.filteredDate);
+						Filter_Filter(filteredDate);
 					}
 				}
 			}
@@ -375,48 +380,48 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void dgContextMenu_Delete_Click(object sender, RoutedEventArgs e)
 		{
-			this.DeleteEntry();
+			DeleteEntry();
 		}
 
 		private void dgContextMenu_Edit_Click(object sender, RoutedEventArgs e)
 		{
-			this.LaunchEditor();
+			LaunchEditor();
 		}
 
 		private void dgHours_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
 			if (VisualTreeHelper.GetParent((DependencyObject)e.OriginalSource).GetType() == typeof(ContentPresenter))
 			{
-				this.LaunchEditor();
+				LaunchEditor();
 			}
 		}
 
 		private void dtpDate_GotFocus(object sender, RoutedEventArgs e)
 		{
-			this.dtpDate.Focus();
+			dtpDate.Focus();
 		}
 
 		private void dtpDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
 		{
 			try
 			{
-				this.ValidateDate(this.dtpDate.SelectedDate.Value, this.lblDateError);
+				ValidateDate(dtpDate.SelectedDate.Value, lblDateError);
 			}
 			catch
 			{
-				this.lblDateError.Content = "Date must be selected";
+				lblDateError.Content = "Date must be selected";
 			}
 		}
 
 		private void Filter_Check(Label label)
 		{
-			if (!this.isDayfiltered)
+			if (!isDayfiltered)
 			{
-				this.Filter_Filter(label);
+				Filter_Filter(label);
 			}
 			else
 			{
-				this.Filter_Unfilter();
+				Filter_Unfilter();
 			}
 		}
 
@@ -428,39 +433,39 @@ namespace FivesBronxTimesheetManagement.Forms
 			Label lblWeekDay1Total = new Label();
 			if (label.Name.Contains("Day1"))
 			{
-				lblWeekDay1 = this.lblWeek_Day1;
-				lblSundayDay1 = this.lblSunday_Day1;
-				lblWeekDay1Total = this.lblWeek_Day1_Total;
+				lblWeekDay1 = lblWeek_Day1;
+				lblSundayDay1 = lblSunday_Day1;
+				lblWeekDay1Total = lblWeek_Day1_Total;
 			}
 			else if (label.Name.Contains("Day2"))
 			{
-				lblWeekDay1 = this.lblWeek_Day2;
-				lblSundayDay1 = this.lblMonday_Day2;
-				lblWeekDay1Total = this.lblWeek_Day2_Total;
+				lblWeekDay1 = lblWeek_Day2;
+				lblSundayDay1 = lblMonday_Day2;
+				lblWeekDay1Total = lblWeek_Day2_Total;
 			}
 			else if (label.Name.Contains("Day3"))
 			{
-				lblWeekDay1 = this.lblWeek_Day3;
-				lblSundayDay1 = this.lblTuesday_Day3;
-				lblWeekDay1Total = this.lblWeek_Day3_Total;
+				lblWeekDay1 = lblWeek_Day3;
+				lblSundayDay1 = lblTuesday_Day3;
+				lblWeekDay1Total = lblWeek_Day3_Total;
 			}
 			else if (label.Name.Contains("Day4"))
 			{
-				lblWeekDay1 = this.lblWeek_Day4;
-				lblSundayDay1 = this.lblWednesday_Day4;
-				lblWeekDay1Total = this.lblWeek_Day4_Total;
+				lblWeekDay1 = lblWeek_Day4;
+				lblSundayDay1 = lblWednesday_Day4;
+				lblWeekDay1Total = lblWeek_Day4_Total;
 			}
 			else if (label.Name.Contains("Day5"))
 			{
-				lblWeekDay1 = this.lblWeek_Day5;
-				lblSundayDay1 = this.lblThursday_Day5;
-				lblWeekDay1Total = this.lblWeek_Day5_Total;
+				lblWeekDay1 = lblWeek_Day5;
+				lblSundayDay1 = lblThursday_Day5;
+				lblWeekDay1Total = lblWeek_Day5_Total;
 			}
 			else if (label.Name.Contains("Day6"))
 			{
-				lblWeekDay1 = this.lblWeek_Day6;
-				lblSundayDay1 = this.lblFriday_Day6;
-				lblWeekDay1Total = this.lblWeek_Day6_Total;
+				lblWeekDay1 = lblWeek_Day6;
+				lblSundayDay1 = lblFriday_Day6;
+				lblWeekDay1Total = lblWeek_Day6_Total;
 			}
 			else if (!label.Name.Contains("Day7"))
 			{
@@ -468,9 +473,9 @@ namespace FivesBronxTimesheetManagement.Forms
 			}
 			else
 			{
-				lblWeekDay1 = this.lblWeek_Day7;
-				lblSundayDay1 = this.lblSaturday_Day7;
-				lblWeekDay1Total = this.lblWeek_Day7_Total;
+				lblWeekDay1 = lblWeek_Day7;
+				lblSundayDay1 = lblSaturday_Day7;
+				lblWeekDay1Total = lblWeek_Day7_Total;
 			}
 			if (!flag)
 			{
@@ -483,25 +488,25 @@ namespace FivesBronxTimesheetManagement.Forms
 				lblSundayDay1.ToolTip = string.Concat("Filtered on ", dateTime.ToShortDateString());
 				dateTime = DateTime.Parse(lblWeekDay1.Content.ToString());
 				lblWeekDay1Total.ToolTip = string.Concat("Filtered on ", dateTime.ToShortDateString());
-				this.isDayfiltered = true;
-				this.filteredDate = DateTime.Parse(lblWeekDay1.Content.ToString());
-				this.Filter_Filter(this.filteredDate);
+				isDayfiltered = true;
+				filteredDate = DateTime.Parse(lblWeekDay1.Content.ToString());
+				Filter_Filter(filteredDate);
 			}
 		}
 
 		private void Filter_Filter(DateTime date)
 		{
-			this.itemsSourceEntriesFiltered = (
-				from x in this.itemsSourceEntries
+			itemsSourceEntriesFiltered = (
+				from x in itemsSourceEntries
 				where x.date.ToShortDateString() == date.ToShortDateString()
 				select x).ToList<Entry>();
-			this.dgHours.ItemsSource = this.itemsSourceEntriesFiltered;
+			dgHours.ItemsSource = itemsSourceEntriesFiltered;
 		}
 
 		private void Filter_Unfilter()
 		{
 			//FrameworkElement child = null;
-			foreach (FrameworkElement child in this.SummaryByDate_Date.Children)
+			foreach (FrameworkElement child in SummaryByDate_Date.Children)
 			{
 				if (child is Label)
 				{
@@ -509,7 +514,7 @@ namespace FivesBronxTimesheetManagement.Forms
 					(child as Label).ToolTip = null;
 				}
 			}
-			foreach (FrameworkElement transparent in this.SummaryByDate_DayOfWeek.Children)
+			foreach (FrameworkElement transparent in SummaryByDate_DayOfWeek.Children)
 			{
 				if (transparent is Label)
 				{
@@ -517,7 +522,7 @@ namespace FivesBronxTimesheetManagement.Forms
 					(transparent as Label).ToolTip = null;
 				}
 			}
-			foreach (FrameworkElement frameworkElement in this.SummaryByDate_Amount.Children)
+			foreach (FrameworkElement frameworkElement in SummaryByDate_Amount.Children)
 			{
 				if (frameworkElement is Label)
 				{
@@ -525,10 +530,10 @@ namespace FivesBronxTimesheetManagement.Forms
 					(frameworkElement as Label).ToolTip = null;
 				}
 			}
-			this.isDayfiltered = false;
-			this.filteredDate = DateTime.Now;
-			this.dgHours.ItemsSource = 
-				from x in this.itemsSourceEntries
+			isDayfiltered = false;
+			filteredDate = DateTime.Now;
+			dgHours.ItemsSource = 
+				from x in itemsSourceEntries
 				orderby x.date
 				select x;
 		}
@@ -538,7 +543,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			bool flag;
 			try
 			{
-				flag = this.queries.Period_Open(date.Month, date.Year);
+				flag = queries.Period_Open(date.Month, date.Year);
 			}
 			catch
 			{
@@ -550,39 +555,39 @@ namespace FivesBronxTimesheetManagement.Forms
 		private bool IsValidEntry()
 		{
 			bool flag;
-			if (this.cbxTimeCode.SelectedItem == null)
+			if (cbxTimeCode.SelectedItem == null)
 			{
 				MessageBox.Show("You must select a timecode");
 				flag = false;
 			}
-			else if (this.cbxTaskType.SelectedItem != null)
+			else if (cbxTaskType.SelectedItem != null)
 			{
-				if (!(this.cbxTaskType.SelectedItem.ToString() == "(N/A)"))
+				if (!(cbxTaskType.SelectedItem.ToString() == "(N/A)"))
 				{
-					if (this.cbxJob.SelectedItem == null)
+					if (cbxJob.SelectedItem == null)
 					{
 						MessageBox.Show("You must select a project");
 						flag = false;
 						return flag;
 					}
-					else if (this.cbxSection.SelectedItem == null)
+					else if (cbxSection.SelectedItem == null)
 					{
 						MessageBox.Show("You must select a section");
 						flag = false;
 						return flag;
 					}
 				}
-				if (!this.dtpDate.SelectedDate.HasValue)
+				if (!dtpDate.SelectedDate.HasValue)
 				{
 					MessageBox.Show("You must select a date");
 					flag = false;
 				}
-				else if (!this.IsValidDate(this.dtpDate.SelectedDate.Value))
+				else if (!IsValidDate(dtpDate.SelectedDate.Value))
 				{
 					MessageBox.Show("The Date you have selected is in a closed period");
 					flag = false;
 				}
-				else if (!string.IsNullOrEmpty(this.txtDescription.Text))
+				else if (!string.IsNullOrEmpty(txtDescription.Text))
 				{
 					flag = true;
 				}
@@ -604,9 +609,9 @@ namespace FivesBronxTimesheetManagement.Forms
 		{
 			try
 			{
-				if (this.dgHours.SelectedItem != null)
+				if (dgHours.SelectedItem != null)
 				{
-					Entry item = this.dgHours.SelectedItems[0] as Entry;
+					Entry item = dgHours.SelectedItems[0] as Entry;
 					(new TimesheetEntry_Edit(item, this)).Show();
 				}
 			}
@@ -618,49 +623,49 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void LoadConstantsFromDb()
 		{
-			this.cbxJob.DisplayMemberPath = "Serial_Customer_Machine";
-			this.cbxJob.SelectedValuePath = "Serial_Customer_Machine";
-			this.cbxTimeCode.DisplayMemberPath = "Code_Description";
-			this.cbxTimeCode.SelectedValuePath = "Code_Description";
-			this.cbxSection.DisplayMemberPath = "SectionNumber_SectionDescription";
-			this.cbxSection.SelectedValuePath = "SectionNumber_SectionDescription";
-			foreach (TimesheetCode timesheetCode in this.queries.TimesheetCodeAll())
+			cbxJob.DisplayMemberPath = "Serial_Customer_Machine";
+			cbxJob.SelectedValuePath = "Serial_Customer_Machine";
+			cbxTimeCode.DisplayMemberPath = "Code_Description";
+			cbxTimeCode.SelectedValuePath = "Code_Description";
+			cbxSection.DisplayMemberPath = "SectionNumber_SectionDescription";
+			cbxSection.SelectedValuePath = "SectionNumber_SectionDescription";
+			foreach (TimesheetCode timesheetCode in queries.TimesheetCodeAll())
 			{
-				this.cbxTimeCode.Items.Add(timesheetCode);
+				cbxTimeCode.Items.Add(timesheetCode);
 			}
-			foreach (string str in this.queries.TaskTypes())
+			foreach (string str in queries.TaskTypes())
 			{
-				this.cbxTaskType.Items.Add(str);
+				cbxTaskType.Items.Add(str);
 			}
-			foreach (Project project in this.queries.ProjectAll())
+			foreach (Project project in queries.ProjectAll())
 			{
-				if ((this.functions.IntToBool(project.IsOpen) ? true : this.functions.IntToBool(project.IsWarrantyOpen)))
+				if ((functions.IntToBool(project.IsOpen) ? true : functions.IntToBool(project.IsWarrantyOpen)))
 				{
-					this.cbxJob.Items.Add(project);
+					cbxJob.Items.Add(project);
 				}
 			}
-			this.sectionsAll = this.queries.Sections();
-			this.myConnection.Close();
+			sectionsAll = queries.Sections();
+			myConnection.Close();
 		}
 
 		private void menuEditDeleteEntry_Click(object sender, RoutedEventArgs e)
 		{
-			this.DeleteEntry();
+			DeleteEntry();
 		}
 
 		private void menuEditEditEntry_Click(object sender, RoutedEventArgs e)
 		{
-			this.LaunchEditor();
+			LaunchEditor();
 		}
 
 		private void menuEditSubmitForApproval_Click(object sender, RoutedEventArgs e)
 		{
-			this.SubmitForApproval();
+			SubmitForApproval();
 		}
 
 		private void menuFileChangePassword_Click(object sender, RoutedEventArgs e)
 		{
-			(new UserChangePassword(this.user)).Show();
+			(new UserChangePassword(user)).Show();
 		}
 
 		private void menuFileClose_Click(object sender, RoutedEventArgs e)
@@ -672,7 +677,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		{
 			ExportToExcel<Entry, List<Entry>> exportToExcel = new ExportToExcel<Entry, List<Entry>>()
 			{
-				dataToPrint = this.queries.Entries(this.queries.t_Timesheet_Prelim, this.queries.User_AllEntries(this.user.UserID, this.queries.t_Timesheet_Prelim))
+				dataToPrint = queries.Entries(queries.t_Timesheet_Prelim, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim))
 			};
 			exportToExcel.GenerateReport();
 		}
@@ -683,18 +688,18 @@ namespace FivesBronxTimesheetManagement.Forms
 			bool? nullable = printDialog.ShowDialog();
 			if ((!nullable.GetValueOrDefault() ? 0 : Convert.ToInt32(nullable.HasValue)) != 0)
 			{
-				printDialog.PrintVisual(this.dgHours, "Print Grid");
+				printDialog.PrintVisual(dgHours, "Print Grid");
 			}
 		}
 
 		private void menuOptionsUserPreferences_Click(object sender, RoutedEventArgs e)
 		{
-			bool? nullable = (new UserDefaults(this.user)).ShowDialog();
+			bool? nullable = (new UserDefaults(user)).ShowDialog();
 			if ((!nullable.GetValueOrDefault() ? 0 : Convert.ToInt32(nullable.HasValue)) != 0)
 			{
-				this.user_Defaults = new User_Defaults(this.user);
-				this.ClearSelection();
-				this.RefreshDefaultSelections(this.user_Defaults);
+				user_Defaults = new User_Defaults(user);
+				ClearSelection();
+				RefreshDefaultSelections(user_Defaults);
 			}
 		}
 
@@ -710,52 +715,52 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void menuViewReports_Click(object sender, RoutedEventArgs e)
 		{
-			this.RunReports();
+			RunReports();
 		}
 
 		private void menuViewUserRights_Click(object sender, RoutedEventArgs e)
 		{
-			(new UserRights(this.user)).Show();
+			(new UserRights(user)).Show();
 		}
 
 		public void RefreshDateList(DateTime WeekEnding)
 		{
-			this.currentWeekEnding = this.functions.WeekEnding(WeekEnding);
-			this.lblWeek_Day7.Content = this.currentWeekEnding.ToShortDateString();
-			Label lblWeekDay6 = this.lblWeek_Day6;
-			DateTime dateTime = this.currentWeekEnding.AddDays(-1);
+			currentWeekEnding = functions.WeekEnding(WeekEnding);
+			lblWeek_Day7.Content = currentWeekEnding.ToShortDateString();
+			Label lblWeekDay6 = lblWeek_Day6;
+			DateTime dateTime = currentWeekEnding.AddDays(-1);
 			lblWeekDay6.Content = dateTime.ToShortDateString();
-			Label lblWeekDay5 = this.lblWeek_Day5;
-			dateTime = this.currentWeekEnding.AddDays(-2);
+			Label lblWeekDay5 = lblWeek_Day5;
+			dateTime = currentWeekEnding.AddDays(-2);
 			lblWeekDay5.Content = dateTime.ToShortDateString();
-			Label lblWeekDay4 = this.lblWeek_Day4;
-			dateTime = this.currentWeekEnding.AddDays(-3);
+			Label lblWeekDay4 = lblWeek_Day4;
+			dateTime = currentWeekEnding.AddDays(-3);
 			lblWeekDay4.Content = dateTime.ToShortDateString();
-			Label lblWeekDay3 = this.lblWeek_Day3;
-			dateTime = this.currentWeekEnding.AddDays(-4);
+			Label lblWeekDay3 = lblWeek_Day3;
+			dateTime = currentWeekEnding.AddDays(-4);
 			lblWeekDay3.Content = dateTime.ToShortDateString();
-			Label lblWeekDay2 = this.lblWeek_Day2;
-			dateTime = this.currentWeekEnding.AddDays(-5);
+			Label lblWeekDay2 = lblWeek_Day2;
+			dateTime = currentWeekEnding.AddDays(-5);
 			lblWeekDay2.Content = dateTime.ToShortDateString();
-			Label lblWeekDay1 = this.lblWeek_Day1;
-			dateTime = this.currentWeekEnding.AddDays(-6);
+			Label lblWeekDay1 = lblWeek_Day1;
+			dateTime = currentWeekEnding.AddDays(-6);
 			lblWeekDay1.Content = dateTime.ToShortDateString();
-			this.RefreshSummaryByDate(this.currentWeekEnding);
+			RefreshSummaryByDate(currentWeekEnding);
 		}
 
 		public void RefreshDefaultSelections(User_Defaults defaults)
 		{
 			if (defaults.TimesheetCode != null)
 			{
-				this.cbxTimeCode.SelectedValue = defaults.TimesheetCode.Code_Description;
+				cbxTimeCode.SelectedValue = defaults.TimesheetCode.Code_Description;
 			}
 			if (!string.IsNullOrEmpty(defaults.TaskType))
 			{
-				this.cbxTaskType.SelectedItem = defaults.TaskType;
+				cbxTaskType.SelectedItem = defaults.TaskType;
 			}
 			if (defaults.Project != null)
 			{
-				this.cbxJob.SelectedValue = defaults.Project.Serial_Customer_Machine;
+				cbxJob.SelectedValue = defaults.Project.Serial_Customer_Machine;
 			}
 		}
 
@@ -764,17 +769,17 @@ namespace FivesBronxTimesheetManagement.Forms
 			WaitCursor waitCursor = new WaitCursor();
 			try
 			{
-				this.dgHours.ItemsSource = null;
+				dgHours.ItemsSource = null;
 				try
 				{
-					this.itemsSourceEntries = this.queries.Entries(this.queries.t_Timesheet_Prelim, this.queries.User_AllEntries(this.user.UserID, this.queries.t_Timesheet_Prelim));
-					this.dgHours.ItemsSource = 
-						from E in this.itemsSourceEntries
+					itemsSourceEntries = queries.Entries(queries.t_Timesheet_Prelim, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim));
+					dgHours.ItemsSource = 
+						from E in itemsSourceEntries
 						orderby E.date
 						select E;
-					this.itemsSourceEntriesUnapproved = this.queries.Entries(this.queries.t_Timesheet_Limbo, this.queries.User_AllEntries(this.user.UserID, this.queries.t_Timesheet_Limbo));
-					this.dgHoursUnapproved.ItemsSource = 
-						from E in this.itemsSourceEntriesUnapproved
+					itemsSourceEntriesUnapproved = queries.Entries(queries.t_Timesheet_Limbo, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Limbo));
+					dgHoursUnapproved.ItemsSource = 
+						from E in itemsSourceEntriesUnapproved
 						orderby E.date
 						select E;
 				}
@@ -795,31 +800,31 @@ namespace FivesBronxTimesheetManagement.Forms
 		public void RefreshSummaryByDate(DateTime weekEnding)
 		{
 			double num = (
-				from E in this.itemsSourceEntries
+				from E in itemsSourceEntries
 				where E.date.Date == weekEnding.AddDays(-6).Date
 				select E).Sum<Entry>((Entry E) => E.hours);
 			double num1 = (
-				from E in this.itemsSourceEntries
+				from E in itemsSourceEntries
 				where E.date.Date == weekEnding.AddDays(-5).Date
 				select E).Sum<Entry>((Entry E) => E.hours);
 			double num2 = (
-				from E in this.itemsSourceEntries
+				from E in itemsSourceEntries
 				where E.date.Date == weekEnding.AddDays(-4).Date
 				select E).Sum<Entry>((Entry E) => E.hours);
 			double num3 = (
-				from E in this.itemsSourceEntries
+				from E in itemsSourceEntries
 				where E.date.Date == weekEnding.AddDays(-3).Date
 				select E).Sum<Entry>((Entry E) => E.hours);
 			double num4 = (
-				from E in this.itemsSourceEntries
+				from E in itemsSourceEntries
 				where E.date.Date == weekEnding.AddDays(-2).Date
 				select E).Sum<Entry>((Entry E) => E.hours);
 			double num5 = (
-				from E in this.itemsSourceEntries
+				from E in itemsSourceEntries
 				where E.date.Date == weekEnding.AddDays(-1).Date
 				select E).Sum<Entry>((Entry E) => E.hours);
 			double num6 = (
-				from E in this.itemsSourceEntries
+				from E in itemsSourceEntries
 				where E.date.Date == weekEnding.Date
 				select E).Sum<Entry>((Entry E) => E.hours);
 			List<double> nums = new List<double>()
@@ -836,13 +841,13 @@ namespace FivesBronxTimesheetManagement.Forms
 			double num7 = nums1.Sum();
 			List<Label> labels = new List<Label>()
 			{
-				this.lblWeek_Day1_Total,
-				this.lblWeek_Day2_Total,
-				this.lblWeek_Day3_Total,
-				this.lblWeek_Day4_Total,
-				this.lblWeek_Day5_Total,
-				this.lblWeek_Day6_Total,
-				this.lblWeek_Day7_Total
+				lblWeek_Day1_Total,
+				lblWeek_Day2_Total,
+				lblWeek_Day3_Total,
+				lblWeek_Day4_Total,
+				lblWeek_Day5_Total,
+				lblWeek_Day6_Total,
+				lblWeek_Day7_Total
 			};
 			List<Label> normal = labels;
 			string str = "There are only 24 hours in a day!  Please Correct!";
@@ -864,89 +869,113 @@ namespace FivesBronxTimesheetManagement.Forms
 					normal[i].Background = Brushes.Red;
 				}
 			}
-			this.lblWeek_Total.Content = num7.ToString();
+			lblWeek_Total.Content = num7.ToString();
 		}
 
 		private void RunReports()
 		{
-			(new Report(this.user)).Show();
+			(new Report(user)).Show();
 		}
 
 		private void SubmitForApproval()
 		{
-			(new TimesheetApproval_Submission(this.user, this)).Show();
+			(new TimesheetApproval_Submission(user, this)).Show();
 		}
 
 		private void SummaryByDate_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
-			this.Filter_Check(sender as Label);
+			Filter_Check(sender as Label);
 		}
 
 		private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if ((((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Approved" ? false : !this.approvedQueryHasRun))
+			Console.WriteLine(((sender as TabControl).SelectedItem as TabItem).Header.ToString());
+			if (((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Approved" ? false : !approvedQueryHasRun)
 			{
 				if (MessageBox.Show("Display All Approved Time Entries?  This may take a while.", "Display Approved?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
 				{
-					this.itemsSourceEntriesApproved = this.queries.Entries(this.queries.t_Timesheet_Final, this.queries.User_AllEntries(this.user.UserID, this.queries.t_Timesheet_Final));
-					this.dgHoursApproved.ItemsSource = 
-						from E in this.itemsSourceEntriesApproved
+					itemsSourceEntriesApproved = queries.Entries(queries.t_Timesheet_Final, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
+					dgHoursApproved.ItemsSource = 
+						from E in itemsSourceEntriesApproved
 						orderby E.date
 						select E;
-					this.approvedQueryHasRun = true;
+					approvedQueryHasRun = true;
 				}
+			}
+			else if (((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Last Week" ? false : !preWeekQueryHasRun)
+			{
+				MessageBox.Show("Last Week");
+				MessageBox.Show(weekEnding.Date.ToString());
+				itemSourceEntriesPrevWeek = queries.Entries(queries.t_Timesheet_Final, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
+				List<Entry> filteredList = new List<Entry>();
+				filteredList.AddRange(
+					from E in itemSourceEntriesPrevWeek
+					where E.date.Date == weekEnding.AddDays(-6).Date 
+					|| E.date.Date == weekEnding.AddDays(-5).Date 
+					|| E.date.Date == weekEnding.AddDays(-4).Date 
+					|| E.date.Date == weekEnding.AddDays(-3).Date
+					|| E.date.Date == weekEnding.AddDays(-2).Date
+					|| E.date.Date == weekEnding.AddDays(-1).Date
+					|| E.date.Date == weekEnding.Date
+					select E
+				);
+				dgHoursPrevWeek.ItemsSource =
+					from E in filteredList
+					orderby E.date
+					select E;
+				preWeekQueryHasRun = true;
 			}
 		}
 
 		private void txtHours_LostFocus(object sender, RoutedEventArgs e)
 		{
-			if (this.functions.IsNumeric(this.txtHours.Text))
+			if (functions.IsNumeric(txtHours.Text))
 			{
-				TextBox str = this.txtHours;
-				double num = this.functions.RoundedValueInRange(double.Parse(this.txtHours.Text), this.hoursMin, this.hoursMax);
+				TextBox str = txtHours;
+				double num = functions.RoundedValueInRange(double.Parse(txtHours.Text), hoursMin, hoursMax);
 				str.Text = num.ToString();
 			}
 			else
 			{
-				this.txtHours.Text = this.hoursMin.ToString();
+				txtHours.Text = hoursMin.ToString();
 			}
 		}
 
 		private void TxtHoursSelectAll(object sender, RoutedEventArgs e)
 		{
-			this.txtHours.SelectAll();
+			txtHours.SelectAll();
 		}
 
 		private void UpdateSections(Project project)
 		{
 			// Section section = null;
-			this.cbxSection.Items.Clear();
-			this.lblSectionDescription.Content = "";
-			if ((project == null || this.cbxTaskType.SelectedItem == null || project.Number_Serial == "" ? false : !(this.cbxTaskType.SelectedItem.ToString() == "")))
+			cbxSection.Items.Clear();
+			lblSectionDescription.Content = "";
+			if ((project == null || cbxTaskType.SelectedItem == null || project.Number_Serial == "" ? false : !(cbxTaskType.SelectedItem.ToString() == "")))
 			{
-				string str = this.cbxTaskType.SelectedItem.ToString();
-				if (!this.functions.IntToBool(project.IsOpen))
+				string str = cbxTaskType.SelectedItem.ToString();
+				if (!functions.IntToBool(project.IsOpen))
 				{
 					foreach (Section section in 
-						from n in this.sectionsAll
+						from n in sectionsAll
 						where n.Number_ProjectNetwork == project.Number_Network.ToString()
 						select n into t
 						where t.TaskType == str
 						select t)
 					{
-						this.cbxSection.Items.Add(section);
+						cbxSection.Items.Add(section);
 					}
 				}
 				else
 				{
 					foreach (Section section1 in 
-						from n in this.sectionsAll
+						from n in sectionsAll
 						where n.Number_ProjectNetwork == project.Number_Network.ToString()
 						select n into t
 						where t.TaskType == str
 						select t)
 					{
-						this.cbxSection.Items.Add(section1);
+						cbxSection.Items.Add(section1);
 					}
 				}
 			}
@@ -954,7 +983,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		public void ValidateDate(DateTime date, Label label)
 		{
-			if (!this.IsValidDate(date))
+			if (!IsValidDate(date))
 			{
 				label.Content = "Period closed.";
 			}
