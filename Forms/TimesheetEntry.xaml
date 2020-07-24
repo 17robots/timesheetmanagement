@@ -157,6 +157,9 @@
       <TabItem Header="Approved">
         <DataGrid Name="dgHoursApproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
       </TabItem>
+        <TabItem Header="Last Week">
+        <DataGrid Name="dgHoursPrevWeek" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
+      </TabItem>
     </TabControl>
   </Grid>
 </Window>
