@@ -352,7 +352,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void dgContextMenu_Copy_Click(object sender, RoutedEventArgs e)
 		{
-			if ((dgHours.SelectedItems == null ? false : MessageBox.Show("Are you sure you want to copy?", "Copy?", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
+			if (dgHours.SelectedItems == null ? false : true)
 			{
 				DateTime now = DateTime.Now;
 				double hours = hoursMin;
@@ -364,6 +364,34 @@ namespace FivesBronxTimesheetManagement.Forms
 					hours = customDateTimePicker.hours;
 					List<Entry> entries = new List<Entry>();
 					foreach (Entry selectedItem in dgHours.SelectedItems)
+					{
+						entries.Add(new Entry(selectedItem, now, hours));
+					}
+					queries.SaveTimeEntry(queries.t_Timesheet_Prelim, entries, ApprovalStatus.NotSubmitted, ApprovalStatus.NotSubmitted);
+					RefreshDGHoursFromClassList();
+					RefreshSummaryByDate(functions.WeekEnding(now));
+					if (isDayfiltered)
+					{
+						Filter_Filter(filteredDate);
+					}
+				}
+			}
+		}
+
+		private void dgContextMenu_Copy_Click_Prev(object sender, RoutedEventArgs e)
+		{
+			if (dgHoursPrevWeek.SelectedItems == null ? false : true)
+			{
+				DateTime now = DateTime.Now;
+				double hours = hoursMin;
+				CustomDateTimePicker customDateTimePicker = new CustomDateTimePicker();
+				bool? nullable = customDateTimePicker.ShowDialog();
+				if ((!nullable.GetValueOrDefault() ? 0 : Convert.ToInt32(nullable.HasValue)) != 0)
+				{
+					now = customDateTimePicker.date;
+					hours = customDateTimePicker.hours;
+					List<Entry> entries = new List<Entry>();
+					foreach (Entry selectedItem in dgHoursPrevWeek.SelectedItems)
 					{
 						entries.Add(new Entry(selectedItem, now, hours));
 					}
@@ -919,6 +947,7 @@ namespace FivesBronxTimesheetManagement.Forms
 					|| E.date.Date == weekEnding.Date
 					select E
 				);
+
 				dgHoursPrevWeek.ItemsSource =
 					from E in filteredList
 					orderby E.date
