@@ -144,8 +144,7 @@
           <DataGrid.ContextMenu>
             <ContextMenu>
               <MenuItem Name="dgContextMenu_Edit" Header="Edit this Entry" Click="dgContextMenu_Edit_Click" />
-              <MenuItem Name="dgContextMenu_Copy" Header="Copy Selected" Click="dgContextMenu_Copy_Click" />
-              <Separator />
+              <MenuItem Name="dgContextMenu_Copy" Header="Duplicate Selected" Click="dgContextMenu_Copy_Click" />
               <MenuItem Name="dgContextMenu_Delete" Header="Delete this Entry" Click="dgContextMenu_Delete_Click" />
             </ContextMenu>
           </DataGrid.ContextMenu>
@@ -158,7 +157,17 @@
         <DataGrid Name="dgHoursApproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
       </TabItem>
         <TabItem Header="Last Week">
-        <DataGrid Name="dgHoursPrevWeek" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
+          <DataGrid Name="dgHoursPrevWeek" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
+            </DataGrid.Resources>
+          <DataGrid.ContextMenu>
+            <ContextMenu>
+              <MenuItem Name="dgContextMenu_Copy_Prev" Header="Duplicate Selected" Click="dgContextMenu_Copy_Click_Prev" />
+            </ContextMenu>
+          </DataGrid.ContextMenu>
+        </DataGrid>
       </TabItem>
     </TabControl>
   </Grid>
