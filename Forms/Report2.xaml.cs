@@ -87,25 +87,25 @@ namespace FivesBronxTimesheetManagement.Forms
 
             if(timesheet_code.SelectedItems != null)
             {
-                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_Codes_c_Timesheet_Code, "in (", string.Join(",", timesheet_code.SelectedItems), ")'" };
+                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_Codes_c_Timesheet_Code, " in (", string.Join(",", timesheet_code.SelectedItems), ")'" };
                 str = string.Concat(tTimesheetCTimesheetCode);
             }
 
             if(task_type.SelectedItems != null)
             {
-                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Task_Type, "in (", string.Join(",", task_type.SelectedItems), ")'" };
+                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Task_Type, " in (", string.Join(",", task_type.SelectedItems), ")'" };
                 str1 = string.Concat(tTimesheetCTimesheetCode);
             }
 
             if(projectSelect.SelectedItems != null)
             {
-                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Project_Serial, "in (", string.Join(",", projectSelect.SelectedItems), ")'" };
+                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Project_Serial, " in (", string.Join(",", projectSelect.SelectedItems), ")'" };
                 str2 = string.Concat(tTimesheetCTimesheetCode);
             }
 
             if(section.SelectedItems != null)
             {
-                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Number_Section, "in (", string.Join(",", section.SelectedItems), ")'" };
+                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Number_Section, " in (", string.Join(",", section.SelectedItems), ")'" };
                 str3 = string.Concat(tTimesheetCTimesheetCode);
             }
 
@@ -142,8 +142,8 @@ namespace FivesBronxTimesheetManagement.Forms
                     }
                     if(hasValue1)
                     {
-                        tTimesheetCTimesheetCode = new string[] { "AND ", this.queries.t_Timesheet_c_Date, ">= '", 
-                            from.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "' AND", 
+                        tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Date, ">= '", 
+                            from.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "' AND ", 
                             this.queries.t_Timesheet_c_Date, "<= '", this.from.SelectedDate.Value.ToString("yyyy-MM-dd", 
                             CultureInfo.InvariantCulture), "'" };
                         str4 = string.Concat(tTimesheetCTimesheetCode);
