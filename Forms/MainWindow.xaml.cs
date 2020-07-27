@@ -37,7 +37,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void btnReports_Click(object sender, RoutedEventArgs e)
 		{
-			(new Report(this.user)).Show();
+			(new Report2(this.user)).Show();
 		}
 
         private void btnAbout_Click(object sender, RoutedEventArgs e)
