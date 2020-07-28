@@ -208,6 +208,7 @@ namespace FivesBronxTimesheetManagement.Forms
             List<Entry> entries = new List<Entry>();
             foreach(string table in Tables)
             {
+                MessageBox.Show(table);
                 List<string> strs = new List<string>()
                 {
                     table

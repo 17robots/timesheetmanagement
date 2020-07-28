@@ -1512,6 +1512,7 @@ namespace FivesBronxTimesheetManagement.Classes
 		{
 			List<int> nums = new List<int>();
 			this.myConnection.Open();
+			MessageBox.Show(qString);
 			this.myCommand = new MySqlCommand(qString, this.myConnection.MySqlConnection);
 			MySqlDataReader mySqlDataReader = this.myCommand.ExecuteReader();
 			try
@@ -1536,6 +1537,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			this.myConnection.Open();
 			foreach (string qString in qStrings)
 			{
+				MessageBox.Show(qString);
 				this.myCommand = new MySqlCommand(qString, this.myConnection.MySqlConnection);
 				MySqlDataReader mySqlDataReader = this.myCommand.ExecuteReader();
 				while (mySqlDataReader.Read())
