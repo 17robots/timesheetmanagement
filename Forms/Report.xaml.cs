@@ -34,11 +34,11 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		public Report(FivesBronxTimesheetManagement.Classes.User User)
 		{
-			this.InitializeComponent();
-			this.user = User;
-			this.queries = new Queries();
-			this.functions = new Functions();
-			this.LoadConstantsFromDb();
+			InitializeComponent();
+			user = User;
+			queries = new Queries();
+			functions = new Functions();
+			LoadConstantsFromDb();
 		}
 
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -48,161 +48,161 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void btnOk_Click(object sender, RoutedEventArgs e)
 		{
-			this.export = new ExportToExcel<Entry, List<Entry>>()
+			export = new ExportToExcel<Entry, List<Entry>>()
 			{
-				dataToPrint = this.GetEntries(this.SelectedUsers(), this.SelectedTables())
+				dataToPrint = GetEntries(SelectedUsers(), SelectedTables())
 			};
-			this.export.GenerateReport();
+			export.GenerateReport();
 		}
 
 		private void cbxProject_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (this.cbxProject.SelectedItem != null)
+			if (cbxProject.SelectedItem != null)
 			{
-				this.chbxProjectSelectAll.IsChecked = new bool?(false);
-				this.UpdateSections();
+				chbxProjectSelectAll.IsChecked = new bool?(false);
+				UpdateSections();
 			}
 		}
 
 		private void cbxSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (this.cbxSection.SelectedItem != null)
+			if (cbxSection.SelectedItem != null)
 			{
-				this.chbxSectionSelectAll.IsChecked = new bool?(false);
+				chbxSectionSelectAll.IsChecked = new bool?(false);
 			}
 		}
 
 		private void cbxTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (this.cbxTable.SelectedItem != null)
+			if (cbxTable.SelectedItem != null)
 			{
-				this.chbxTableSelectAll.IsChecked = new bool?(false);
+				chbxTableSelectAll.IsChecked = new bool?(false);
 			}
 		}
 
 		private void cbxTaskType_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (this.cbxTaskType.SelectedItem != null)
+			if (cbxTaskType.SelectedItem != null)
 			{
-				this.chbxTaskTypeSelectAll.IsChecked = new bool?(false);
+				chbxTaskTypeSelectAll.IsChecked = new bool?(false);
 			}
 		}
 
 		private void cbxTimesheetCode_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (this.cbxTimesheetCode.SelectedItem != null)
+			if (cbxTimesheetCode.SelectedItem != null)
 			{
-				this.chbxTimesheetCodeSelectAll.IsChecked = new bool?(false);
+				chbxTimesheetCodeSelectAll.IsChecked = new bool?(false);
 			}
 		}
 
 		private void cbxUserName_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if (this.cbxUserName.SelectedItem != null)
+			if (cbxUserName.SelectedItem != null)
 			{
-				this.chbxUserNameSelectAll.IsChecked = new bool?(false);
+				chbxUserNameSelectAll.IsChecked = new bool?(false);
 			}
 		}
 
 		private void chbxProjectSelectAll_CheckedChanged(object sender, RoutedEventArgs e)
 		{
-			bool? isChecked = this.chbxProjectSelectAll.IsChecked;
+			bool? isChecked = chbxProjectSelectAll.IsChecked;
 			if ((!isChecked.GetValueOrDefault() ? 0 : Convert.ToInt32(isChecked.HasValue)) == 0)
 			{
-				isChecked = this.chbxProjectSelectAll.IsChecked;
-				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : this.cbxProject.SelectedItem == null))
+				isChecked = chbxProjectSelectAll.IsChecked;
+				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : cbxProject.SelectedItem == null))
 				{
-					this.chbxProjectSelectAll.IsChecked = new bool?(true);
+					chbxProjectSelectAll.IsChecked = new bool?(true);
 				}
 			}
 			else
 			{
-				this.cbxProject.SelectedItem = null;
+				cbxProject.SelectedItem = null;
 			}
 		}
 
 		private void chbxSectionSelectAll_CheckedChanged(object sender, RoutedEventArgs e)
 		{
-			bool? isChecked = this.chbxSectionSelectAll.IsChecked;
+			bool? isChecked = chbxSectionSelectAll.IsChecked;
 			if ((!isChecked.GetValueOrDefault() ? 0 : Convert.ToInt32(isChecked.HasValue)) == 0)
 			{
-				isChecked = this.chbxSectionSelectAll.IsChecked;
-				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : this.cbxSection.SelectedItem == null))
+				isChecked = chbxSectionSelectAll.IsChecked;
+				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : cbxSection.SelectedItem == null))
 				{
-					this.chbxSectionSelectAll.IsChecked = new bool?(true);
+					chbxSectionSelectAll.IsChecked = new bool?(true);
 				}
 			}
 			else
 			{
-				this.cbxSection.SelectedItem = null;
+				cbxSection.SelectedItem = null;
 			}
 		}
 
 		private void chbxTableSelectAll_CheckedChanged(object sender, RoutedEventArgs e)
 		{
-			bool? isChecked = this.chbxTableSelectAll.IsChecked;
+			bool? isChecked = chbxTableSelectAll.IsChecked;
 			if ((!isChecked.GetValueOrDefault() ? 0 : Convert.ToInt32(isChecked.HasValue)) == 0)
 			{
-				isChecked = this.chbxTableSelectAll.IsChecked;
-				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : this.cbxTable.SelectedItem == null))
+				isChecked = chbxTableSelectAll.IsChecked;
+				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : cbxTable.SelectedItem == null))
 				{
-					this.chbxTableSelectAll.IsChecked = new bool?(true);
+					chbxTableSelectAll.IsChecked = new bool?(true);
 				}
 			}
 			else
 			{
-				this.cbxTable.SelectedItem = null;
+				cbxTable.SelectedItem = null;
 			}
 		}
 
 		private void chbxTaskTypeSelectAll_CheckedChanged(object sender, RoutedEventArgs e)
 		{
-			bool? isChecked = this.chbxTaskTypeSelectAll.IsChecked;
+			bool? isChecked = chbxTaskTypeSelectAll.IsChecked;
 			if ((!isChecked.GetValueOrDefault() ? 0 : Convert.ToInt32(isChecked.HasValue)) == 0)
 			{
-				isChecked = this.chbxTaskTypeSelectAll.IsChecked;
-				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : this.cbxTaskType.SelectedItem == null))
+				isChecked = chbxTaskTypeSelectAll.IsChecked;
+				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : cbxTaskType.SelectedItem == null))
 				{
-					this.chbxTaskTypeSelectAll.IsChecked = new bool?(true);
+					chbxTaskTypeSelectAll.IsChecked = new bool?(true);
 				}
 			}
 			else
 			{
-				this.cbxTaskType.SelectedItem = null;
+				cbxTaskType.SelectedItem = null;
 			}
 		}
 
 		private void chbxTimesheetCodeSelectAll_CheckedChanged(object sender, RoutedEventArgs e)
 		{
-			bool? isChecked = this.chbxTimesheetCodeSelectAll.IsChecked;
+			bool? isChecked = chbxTimesheetCodeSelectAll.IsChecked;
 			if ((!isChecked.GetValueOrDefault() ? 0 : Convert.ToInt32(isChecked.HasValue)) == 0)
 			{
-				isChecked = this.chbxTimesheetCodeSelectAll.IsChecked;
-				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : this.cbxTimesheetCode.SelectedItem == null))
+				isChecked = chbxTimesheetCodeSelectAll.IsChecked;
+				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : cbxTimesheetCode.SelectedItem == null))
 				{
-					this.chbxTimesheetCodeSelectAll.IsChecked = new bool?(true);
+					chbxTimesheetCodeSelectAll.IsChecked = new bool?(true);
 				}
 			}
 			else
 			{
-				this.cbxTimesheetCode.SelectedItem = null;
+				cbxTimesheetCode.SelectedItem = null;
 			}
 		}
 
 		private void chbxUserNameSelectAll_CheckedChanged(object sender, RoutedEventArgs e)
 		{
-			bool? isChecked = this.chbxUserNameSelectAll.IsChecked;
+			bool? isChecked = chbxUserNameSelectAll.IsChecked;
 			if ((!isChecked.GetValueOrDefault() ? 0 : Convert.ToInt32(isChecked.HasValue)) == 0)
 			{
-				isChecked = this.chbxUserNameSelectAll.IsChecked;
-				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : this.cbxUserName.SelectedItem == null))
+				isChecked = chbxUserNameSelectAll.IsChecked;
+				if (((isChecked.GetValueOrDefault() ? true : !isChecked.HasValue) ? false : cbxUserName.SelectedItem == null))
 				{
-					this.chbxUserNameSelectAll.IsChecked = new bool?(true);
+					chbxUserNameSelectAll.IsChecked = new bool?(true);
 				}
 			}
 			else
 			{
-				this.cbxUserName.SelectedItem = null;
+				cbxUserName.SelectedItem = null;
 			}
 		}
 
@@ -220,74 +220,74 @@ namespace FivesBronxTimesheetManagement.Forms
 			string str2 = "";
 			string str3 = "";
 			string str4 = "";
-			if (this.cbxTimesheetCode.SelectedItem != null)
+			if (cbxTimesheetCode.SelectedItem != null)
 			{
-				tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Timesheet_Code, "= '", this.cbxTimesheetCode.SelectedValue.ToString(), "'" };
+				tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Timesheet_Code, "= '", cbxTimesheetCode.SelectedValue.ToString(), "'" };
 				str = string.Concat(tTimesheetCTimesheetCode);
 			}
-			if (this.cbxTaskType.SelectedItem != null)
+			if (cbxTaskType.SelectedItem != null)
 			{
-				tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Task_Type, "= '", this.cbxTaskType.SelectedItem.ToString(), "'" };
+				tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Task_Type, "= '", cbxTaskType.SelectedItem.ToString(), "'" };
 				str1 = string.Concat(tTimesheetCTimesheetCode);
 			}
-			if (this.cbxProject.SelectedItem != null)
+			if (cbxProject.SelectedItem != null)
 			{
-				tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Project_Serial, "= '", this.cbxProject.SelectedItem.ToString(), "'" };
+				tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Project_Serial, "= '", cbxProject.SelectedItem.ToString(), "'" };
 				str2 = string.Concat(tTimesheetCTimesheetCode);
 			}
-			if (this.cbxSection.SelectedItem != null)
+			if (cbxSection.SelectedItem != null)
 			{
-				tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Number_Section, "= '", this.cbxSection.SelectedItem.ToString(), "'" };
+				tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Number_Section, "= '", cbxSection.SelectedItem.ToString(), "'" };
 				str3 = string.Concat(tTimesheetCTimesheetCode);
 			}
-			if (this.dtpFrom.SelectedDate.HasValue)
+			if (dtpFrom.SelectedDate.HasValue)
 			{
 				hasValue = false;
 			}
 			else
 			{
-				selectedDate = this.dtpTo.SelectedDate;
+				selectedDate = dtpTo.SelectedDate;
 				hasValue = !selectedDate.HasValue;
 			}
 			if (!hasValue)
 			{
-				if (this.dtpFrom.SelectedDate.HasValue)
+				if (dtpFrom.SelectedDate.HasValue)
 				{
 					flag = true;
 				}
 				else
 				{
-					selectedDate = this.dtpTo.SelectedDate;
+					selectedDate = dtpTo.SelectedDate;
 					flag = !selectedDate.HasValue;
 				}
 				if (flag)
 				{
-					if (!this.dtpFrom.SelectedDate.HasValue)
+					if (!dtpFrom.SelectedDate.HasValue)
 					{
 						hasValue1 = true;
 					}
 					else
 					{
-						selectedDate = this.dtpTo.SelectedDate;
+						selectedDate = dtpTo.SelectedDate;
 						hasValue1 = !selectedDate.HasValue;
 					}
 					if (!hasValue1)
 					{
-						tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Date, ">= '", null, null, null, null, null, null };
-						value = this.dtpFrom.SelectedDate.Value;
+						tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Date, ">= '", null, null, null, null, null, null };
+						value = dtpFrom.SelectedDate.Value;
 						tTimesheetCTimesheetCode[3] = value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 						tTimesheetCTimesheetCode[4] = "' AND ";
-						tTimesheetCTimesheetCode[5] = this.queries.t_Timesheet_c_Date;
+						tTimesheetCTimesheetCode[5] = queries.t_Timesheet_c_Date;
 						tTimesheetCTimesheetCode[6] = "<= '";
-						value = this.dtpTo.SelectedDate.Value;
+						value = dtpTo.SelectedDate.Value;
 						tTimesheetCTimesheetCode[7] = value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 						tTimesheetCTimesheetCode[8] = "'";
 						str4 = string.Concat(tTimesheetCTimesheetCode);
 					}
-					else if ((!this.dtpFrom.SelectedDate.HasValue ? false : !this.dtpTo.SelectedDate.HasValue))
+					else if ((!dtpFrom.SelectedDate.HasValue ? false : !dtpTo.SelectedDate.HasValue))
 					{
-						tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Date, "='", null, null };
-						value = this.dtpFrom.SelectedDate.Value;
+						tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Date, "='", null, null };
+						value = dtpFrom.SelectedDate.Value;
 						tTimesheetCTimesheetCode[3] = value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 						tTimesheetCTimesheetCode[4] = "'";
 						str4 = string.Concat(tTimesheetCTimesheetCode);
@@ -295,8 +295,8 @@ namespace FivesBronxTimesheetManagement.Forms
 				}
 				else
 				{
-					tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Date, "<= '", null, null };
-					value = this.dtpTo.SelectedDate.Value;
+					tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Date, "<= '", null, null };
+					value = dtpTo.SelectedDate.Value;
 					tTimesheetCTimesheetCode[3] = value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
 					tTimesheetCTimesheetCode[4] = "'";
 					str4 = string.Concat(tTimesheetCTimesheetCode);
@@ -322,7 +322,7 @@ namespace FivesBronxTimesheetManagement.Forms
 				{
 					table
 				};
-				foreach (Entry entry in this.queries.Entries(table, this.queries.ReturnIntList(this.CreateListQString(strs, Users), this.queries.t_Timesheet_c_Entry_Id)))
+				foreach (Entry entry in queries.Entries(table, queries.ReturnIntList(CreateListQString(strs, Users), queries.t_Timesheet_c_Entry_Id)))
 				{
 					entries.Add(entry);
 				}
@@ -332,134 +332,134 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void LoadConstantsFromDb()
 		{
-			this.LoadUsersRules();
-			this.availableTables = new List<string>()
+			LoadUsersRules();
+			availableTables = new List<string>()
 			{
 				"Not Submitted",
 				"Submitted, Not Approved",
 				"Approved",
 				"Archived"
 			};
-			this.cbxTable.ItemsSource = this.availableTables;
-			foreach (TimesheetCode timesheetCode in this.queries.TimesheetCodeAll())
+			cbxTable.ItemsSource = availableTables;
+			foreach (TimesheetCode timesheetCode in queries.TimesheetCodeAll())
 			{
-				this.cbxTimesheetCode.Items.Add(timesheetCode);
+				cbxTimesheetCode.Items.Add(timesheetCode);
 			}
-			foreach (string str in this.queries.TaskTypes())
+			foreach (string str in queries.TaskTypes())
 			{
-				this.cbxTaskType.Items.Add(str);
+				cbxTaskType.Items.Add(str);
 			}
-			foreach (Project project in this.queries.ProjectAll())
+			foreach (Project project in queries.ProjectAll())
 			{
-				if (!this.functions.IntToBool(project.IsOpen))
+				if (!functions.IntToBool(project.IsOpen))
 				{
 					continue;
 				}
-				this.cbxProject.Items.Add(project.Number_Serial);
+				cbxProject.Items.Add(project.Number_Serial);
 			}
-			this.cbxTimesheetCode.DisplayMemberPath = "Code_Description";
-			this.cbxTimesheetCode.SelectedValuePath = "Code";
+			cbxTimesheetCode.DisplayMemberPath = "Code_Description";
+			cbxTimesheetCode.SelectedValuePath = "Code";
 		}
 
 		private void LoadUsersRules()
 		{
-			this.users = new List<User>();
-			if ((this.functions.IntToBool(this.user.IsValidator) ? true : this.functions.IntToBool(this.user.IsAdmin)))
+			users = new List<User>();
+			if ((functions.IntToBool(user.IsValidator) ? true : functions.IntToBool(user.IsAdmin)))
 			{
-				this.chbxUserNameSelectAll.IsChecked = new bool?(true);
-				this.users = (
-					from X in this.queries.GetUser_All()
-					where this.functions.IntToBool(X.IsActive)
+				chbxUserNameSelectAll.IsChecked = new bool?(true);
+				users = (
+					from X in queries.GetUser_All()
+					where functions.IntToBool(X.IsActive)
 					orderby X.UserName
 					select X).ToList<User>();
-				this.cbxUserName.ItemsSource = this.users;
+				cbxUserName.ItemsSource = users;
 			}
 			else
 			{
-				this.users.Add(this.user);
-				this.chbxUserNameSelectAll.Visibility = System.Windows.Visibility.Hidden;
-				this.cbxUserName.SelectedItem = this.user;
-				this.cbxUserName.ItemsSource = this.users;
+				users.Add(user);
+				chbxUserNameSelectAll.Visibility = System.Windows.Visibility.Hidden;
+				cbxUserName.SelectedItem = user;
+				cbxUserName.ItemsSource = users;
 			}
-			this.cbxUserName.DisplayMemberPath = "UserName";
+			cbxUserName.DisplayMemberPath = "UserName";
 		}
 
 		private List<string> SelectedTables()
 		{
-			this.selectedTables = new List<string>();
+			selectedTables = new List<string>();
 			string str = "";
-			if (this.cbxTable.SelectedValue != null)
+			if (cbxTable.SelectedValue != null)
 			{
-				str = this.cbxTable.SelectedValue.ToString();
+				str = cbxTable.SelectedValue.ToString();
 			}
-			bool? isChecked = this.chbxTableSelectAll.IsChecked;
+			bool? isChecked = chbxTableSelectAll.IsChecked;
 			if ((!isChecked.GetValueOrDefault() ? 0 : Convert.ToInt32(isChecked.HasValue)) != 0)
 			{
-				this.selectedTables.Add(this.queries.t_Timesheet_Prelim);
-				this.selectedTables.Add(this.queries.t_Timesheet_Limbo);
-				this.selectedTables.Add(this.queries.t_Timesheet_Final);
-				this.selectedTables.Add(this.queries.t_Timesheet_Archive);
+				selectedTables.Add(queries.t_Timesheet_Prelim);
+				selectedTables.Add(queries.t_Timesheet_Limbo);
+				selectedTables.Add(queries.t_Timesheet_Final);
+				selectedTables.Add(queries.t_Timesheet_Archive);
 			}
-			else if (this.cbxTable.SelectedItem.ToString() == "Not Submitted")
+			else if (cbxTable.SelectedItem.ToString() == "Not Submitted")
 			{
-				this.selectedTables.Add(this.queries.t_Timesheet_Prelim);
+				selectedTables.Add(queries.t_Timesheet_Prelim);
 			}
-			else if (this.cbxTable.SelectedItem.ToString() == "Submitted, Not Approved")
+			else if (cbxTable.SelectedItem.ToString() == "Submitted, Not Approved")
 			{
-				this.selectedTables.Add(this.queries.t_Timesheet_Limbo);
+				selectedTables.Add(queries.t_Timesheet_Limbo);
 			}
-			else if (this.cbxTable.SelectedItem.ToString() == "Approved")
+			else if (cbxTable.SelectedItem.ToString() == "Approved")
 			{
-				this.selectedTables.Add(this.queries.t_Timesheet_Final);
+				selectedTables.Add(queries.t_Timesheet_Final);
 			}
-			else if (this.cbxTable.SelectedItem.ToString() == "Archived")
+			else if (cbxTable.SelectedItem.ToString() == "Archived")
 			{
-				this.selectedTables.Add(this.queries.t_Timesheet_Archive);
+				selectedTables.Add(queries.t_Timesheet_Archive);
 			}
-			return this.selectedTables;
+			return selectedTables;
 		}
 
 		private List<User> SelectedUsers()
 		{
-			this.selectedUsers = new List<User>();
-			bool? isChecked = this.chbxUserNameSelectAll.IsChecked;
+			selectedUsers = new List<User>();
+			bool? isChecked = chbxUserNameSelectAll.IsChecked;
 			if ((!isChecked.GetValueOrDefault() ? 0 : Convert.ToInt32(isChecked.HasValue)) != 0)
 			{
-				this.selectedUsers = this.users;
+				selectedUsers = users;
 			}
-			else if (this.cbxUserName.SelectedItem != null)
+			else if (cbxUserName.SelectedItem != null)
 			{
-				this.selectedUsers.Add((User)this.cbxUserName.SelectedValue);
+				selectedUsers.Add((User)cbxUserName.SelectedValue);
 			}
 			else
 			{
-				this.selectedUsers = this.users;
+				selectedUsers = users;
 			}
-			return this.selectedUsers;
+			return selectedUsers;
 		}
 
 		private void UpdateSections()
 		{
 			// string str = null;
-			this.cbxSection.Items.Clear();
-			if ((this.cbxProject.SelectedItem == null ? false : this.cbxTaskType.SelectedItem != null))
+			cbxSection.Items.Clear();
+			if ((cbxProject.SelectedItem == null ? false : cbxTaskType.SelectedItem != null))
 			{
-				if ((this.cbxProject.SelectedItem.ToString() == "" ? false : !(this.cbxTaskType.SelectedItem.ToString() == "")))
+				if ((cbxProject.SelectedItem.ToString() == "" ? false : !(cbxTaskType.SelectedItem.ToString() == "")))
 				{
-					string str1 = this.cbxProject.SelectedItem.ToString();
-					string str2 = this.cbxTaskType.SelectedItem.ToString();
-					if (!this.queries.ProjectIsOpen(str1))
+					string str1 = cbxProject.SelectedItem.ToString();
+					string str2 = cbxTaskType.SelectedItem.ToString();
+					if (!queries.ProjectIsOpen(str1))
 					{
-						foreach (string str in this.queries.SectionNumbers(this.queries.ProjectNumber_WarrantyNetwork(str1), str2))
+						foreach (string str in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(str1), str2))
 						{
-							this.cbxSection.Items.Add(str);
+							cbxSection.Items.Add(str);
 						}
 					}
 					else
 					{
-						foreach (string str3 in this.queries.SectionNumbers(this.queries.ProjectNumber_Network(str1), str2))
+						foreach (string str3 in queries.SectionNumbers(queries.ProjectNumber_Network(str1), str2))
 						{
-							this.cbxSection.Items.Add(str3);
+							cbxSection.Items.Add(str3);
 						}
 					}
 				}

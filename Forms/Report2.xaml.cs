@@ -1,20 +1,12 @@
 ﻿using FivesBronxTimesheetManagement.Classes;
-using MySqlX.XDevAPI.Relational;
-using Org.BouncyCastle.Asn1.Cmp;
+using Google.Protobuf.Collections;
+using Org.BouncyCastle.Utilities;
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Forms;
-using System.Windows.Markup;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -38,12 +30,12 @@ namespace FivesBronxTimesheetManagement.Forms
 
         public Report2(User User)
         {
-            this.InitializeComponent();
-            this.user = User;
-            this.queries = new Queries();
-            this.functions = new Functions();
-            this.LoadConstantsFromDB();
-            this.table.SelectedItem = this.table.Items[0]; // force at least one to be selected
+            InitializeComponent();
+            user = User;
+            queries = new Queries();
+            functions = new Functions();
+            LoadConstantsFromDB();
+            table.SelectedItem = table.Items[0]; // force at least one to be selected
         }
 
         private void btn_cancel_Click(object sender, RoutedEventArgs e)
@@ -53,28 +45,27 @@ namespace FivesBronxTimesheetManagement.Forms
 
         private void btn_generate_Click(object sender, RoutedEventArgs e)
         {
-            this.export = new ExportToExcel<Entry, List<Entry>>()
+            export = new ExportToExcel<Entry, List<Entry>>()
             {
-                dataToPrint = this.GetEntries(this.SelectedUsers(), this.SelectedTables())
+                dataToPrint = GetEntries(SelectedUsers(), SelectedTables())
             };
-            this.export.GenerateReport();
+            export.GenerateReport();
         }
 
         private void task_type_ItemSelectionChanged(object sender, SelectionChangedEventArgs e) // used
         {
-            this.UpdateSections();
+            UpdateSections();
         }
 
         private void project_ItemSelectionChanged(object sender, SelectionChangedEventArgs e) // used
         {
-            this.UpdateSections();
+            UpdateSections();
         }
 
         private List<string> CreateListQString(List<string> _tables, List<User> _users)
         {
             string[] tTimesheetCTimesheetCode;
             DateTime? selectedDate;
-            DateTime value;
             bool hasValue;
             bool flag;
             bool hasValue1;
@@ -84,79 +75,120 @@ namespace FivesBronxTimesheetManagement.Forms
             string str2 = "";
             string str3 = "";
             string str4 = "";
+            string listString;
 
-            if(timesheet_code.SelectedItems != null)
+            if (timesheet_code.SelectedItems.Count != 0)
             {
-                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_Codes_c_Timesheet_Code, " in (", string.Join(",", timesheet_code.SelectedItems), ")'" };
+                listString = "";
+                foreach(var item in timesheet_code.SelectedItems)
+                {
+                    listString += "'";
+                    listString += (item as TimesheetCode).Code;
+                    listString += "',";
+                }
+
+                listString = listString.Substring(0, listString.Length - 1);
+
+                tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_Codes_c_Timesheet_Code, " in (", listString, ")" };
                 str = string.Concat(tTimesheetCTimesheetCode);
             }
 
-            if(task_type.SelectedItems != null)
+            if (task_type.SelectedItems.Count != 0)
             {
-                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Task_Type, " in (", string.Join(",", task_type.SelectedItems), ")'" };
+                listString = "";
+                foreach (var item in task_type.SelectedItems)
+                {
+                    listString += "'";
+                    listString += item;
+                    listString += "',";
+                }
+
+                listString = listString.Substring(0, listString.Length - 1);
+
+                tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Task_Type, " in (", listString, ")" };
                 str1 = string.Concat(tTimesheetCTimesheetCode);
             }
 
-            if(projectSelect.SelectedItems != null)
+            if (projectSelect.SelectedItems.Count != 0)
             {
-                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Project_Serial, " in (", string.Join(",", projectSelect.SelectedItems), ")'" };
+                listString = "";
+                foreach (var item in projectSelect.SelectedItems)
+                {
+                    listString += "'";
+                    listString += item;
+                    listString += "',";
+                }
+
+                listString = listString.Substring(0, listString.Length - 1);
+
+                tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Project_Serial, " in (", listString, ")" };
                 str2 = string.Concat(tTimesheetCTimesheetCode);
             }
 
-            if(section.SelectedItems != null)
+            if (section.SelectedItems.Count != 0)
             {
-                tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Number_Section, " in (", string.Join(",", section.SelectedItems), ")'" };
+                listString = "";
+                foreach (var item in section.SelectedItems)
+                {
+                    listString += "'";
+                    listString += item;
+                    listString += "',";
+                }
+
+                listString = listString.Substring(0, listString.Length - 1);
+
+                tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Number_Section, " in (", listString, ")" };
                 str3 = string.Concat(tTimesheetCTimesheetCode);
             }
 
-            if(from.SelectedDate.HasValue)
+            if (from.SelectedDate.HasValue)
             {
                 hasValue = false;
             }
             else
             {
-                selectedDate = this.to.SelectedDate;
+                selectedDate = to.SelectedDate;
                 hasValue = !selectedDate.HasValue;
             }
-            if(!hasValue)
+            if (!hasValue)
             {
-                if(this.from.SelectedDate.HasValue)
+                if (from.SelectedDate.HasValue)
                 {
                     flag = true;
                 }
                 else
                 {
-                    selectedDate = this.to.SelectedDate;
+                    selectedDate = to.SelectedDate;
                     flag = !selectedDate.HasValue;
                 }
-                if(flag)
+                if (flag)
                 {
-                    if(!this.from.SelectedDate.HasValue)
+                    if (!from.SelectedDate.HasValue)
                     {
                         hasValue1 = true;
                     }
                     else
                     {
-                        selectedDate = this.to.SelectedDate;
-                        hasValue1 = this.to.SelectedDate.HasValue;
+                        selectedDate = to.SelectedDate;
+                        hasValue1 = to.SelectedDate.HasValue;
                     }
-                    if(hasValue1)
+                    if (hasValue1)
                     {
-                        tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Date, ">= '", 
-                            from.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "' AND ", 
-                            this.queries.t_Timesheet_c_Date, "<= '", this.from.SelectedDate.Value.ToString("yyyy-MM-dd", 
+                        tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Date, ">= '",
+                            from.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "' AND ",
+                            queries.t_Timesheet_c_Date, "<= '", from.SelectedDate.Value.ToString("yyyy-MM-dd",
                             CultureInfo.InvariantCulture), "'" };
                         str4 = string.Concat(tTimesheetCTimesheetCode);
                     }
-                    else if(!this.from.SelectedDate.HasValue ? false : !this.to.SelectedDate.HasValue)
+                    else if (!from.SelectedDate.HasValue ? false : !to.SelectedDate.HasValue)
                     {
-                        tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Date, "='", this.from.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "'" };
+                        tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Date, "='", from.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "'" };
                         str4 = string.Concat(tTimesheetCTimesheetCode);
                     }
                 }
                 else
                 {
-                    tTimesheetCTimesheetCode = new string[] { " AND ", this.queries.t_Timesheet_c_Date, "='", this.to.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "'" };
+                    tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Date, "='", to.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "'" };
                     str4 = string.Concat(tTimesheetCTimesheetCode);
                 }
             }
@@ -180,7 +212,7 @@ namespace FivesBronxTimesheetManagement.Forms
                 {
                     table
                 };
-                foreach (Entry entry in this.queries.Entries(table, this.queries.ReturnIntList(this.CreateListQString(strs, Users), this.queries.t_Timesheet_c_Entry_Id)))
+                foreach (Entry entry in queries.Entries(table, queries.ReturnIntList(CreateListQString(strs, Users), queries.t_Timesheet_c_Entry_Id)))
                 {
                     entries.Add(entry);
                 }
@@ -190,8 +222,8 @@ namespace FivesBronxTimesheetManagement.Forms
 
         private void LoadConstantsFromDB()
         {
-            this.LoadUsersRules();
-            this.availableTables = new List<string>()
+            LoadUsersRules();
+            availableTables = new List<string>()
             {
                 "Not Submitted",
                 "Submitted, Not Approved",
@@ -199,10 +231,10 @@ namespace FivesBronxTimesheetManagement.Forms
                 "Archived"
             };
 
-            table.ItemsSource = this.availableTables;
-            foreach(TimesheetCode timesheetCode in this.queries.TimesheetCodeAll()) timesheet_code.Items.Add(timesheetCode);
-            foreach (string str in this.queries.TaskTypes()) task_type.Items.Add(str);
-            foreach (Project project in this.queries.ProjectAll()) if(this.functions.IntToBool(project.IsOpen)) projectSelect.Items.Add(project.Number_Serial);
+            table.ItemsSource = availableTables;
+            foreach(TimesheetCode timesheetCode in queries.TimesheetCodeAll()) timesheet_code.Items.Add(timesheetCode);
+            foreach (string str in queries.TaskTypes()) task_type.Items.Add(str);
+            foreach (Project project in queries.ProjectAll()) if(functions.IntToBool(project.IsOpen)) projectSelect.Items.Add(project.Number_Serial);
             timesheet_code.DisplayMemberPath = "Code_Description";
             timesheet_code.SelectedValuePath = "Code";
 
@@ -210,77 +242,80 @@ namespace FivesBronxTimesheetManagement.Forms
 
         private void LoadUsersRules()
         {
-            this.users = new List<User>();
-            if (this.functions.IntToBool(this.user.IsValidator) ? true : this.functions.IntToBool(user.IsAdmin))
+            users = new List<User>();
+            if (functions.IntToBool(user.IsValidator) ? true : functions.IntToBool(user.IsAdmin))
             {
-                this.user_name.ItemsSource = !(this.activeUsers.IsChecked ?? false) ? 
+                user_name.ItemsSource = !(activeUsers.IsChecked ?? false) ? 
                     (
-                        from X in this.queries.GetUser_All()
-                        where this.functions.IntToBool(X.IsActive)
+                        from X in queries.GetUser_All()
+                        where functions.IntToBool(X.IsActive)
                         orderby X.UserName
                         select X
                     ).ToList<User>() :
                     (
-                        from X in this.queries.GetUser_All()
+                        from X in queries.GetUser_All()
                         orderby X.UserName
                         select X
                     ).ToList<User>();
             }
             else
             {
-                this.users.Add(this.user);
-                this.activeUsers.Visibility = System.Windows.Visibility.Hidden;
-                this.user_name.SelectedItem = this.user;
-                this.user_name.ItemsSource = this.users;
+                users.Add(user);
+                activeUsers.Visibility = System.Windows.Visibility.Hidden;
+                user_name.SelectedItem = user;
+                user_name.ItemsSource = users;
             }
+            user_name.DisplayMemberPath = "UserName";
         }
 
         private List<string> SelectedTables()
         {
-            this.selectedTables = new List<string>();
-            if(this.table.SelectedItems != null)
+            selectedTables = new List<string>();
+            if(table.SelectedItems != null)
             {
-                if (this.table.SelectedItems.Contains("Not Submitted")) this.selectedTables.Add(this.queries.t_Timesheet_Prelim);
-                if (this.table.SelectedItems.Contains("Submitted, Not Approved")) this.selectedTables.Add(this.queries.t_Timesheet_Limbo);
-                if (this.table.SelectedItems.Contains("Approved")) this.selectedTables.Add(this.queries.t_Timesheet_Final);
-                if (this.table.SelectedItems.Contains("Archived")) this.selectedTables.Add(this.queries.t_Timesheet_Archive);
+                if (table.SelectedItems.Contains("Not Submitted")) selectedTables.Add(queries.t_Timesheet_Prelim);
+                if (table.SelectedItems.Contains("Submitted, Not Approved")) selectedTables.Add(queries.t_Timesheet_Limbo);
+                if (table.SelectedItems.Contains("Approved")) selectedTables.Add(queries.t_Timesheet_Final);
+                if (table.SelectedItems.Contains("Archived")) selectedTables.Add(queries.t_Timesheet_Archive);
             }
             else
             {
-                this.selectedTables.Add(this.queries.t_Timesheet_Prelim);
-                this.selectedTables.Add(this.queries.t_Timesheet_Limbo);
-                this.selectedTables.Add(this.queries.t_Timesheet_Final);
-                this.selectedTables.Add(this.queries.t_Timesheet_Archive);
+                selectedTables.Add(queries.t_Timesheet_Prelim);
+                selectedTables.Add(queries.t_Timesheet_Limbo);
+                selectedTables.Add(queries.t_Timesheet_Final);
+                selectedTables.Add(queries.t_Timesheet_Archive);
             }
 
-            return this.selectedTables;
+            return selectedTables;
         }
 
         private void table_ItemSelectionChanged(object sender, SelectionChangedEventArgs e) // used
         {
-            this.selectedTables = SelectedTables();
+            selectedTables = SelectedTables();
         }
 
         private void activeUsers_CheckedChanged(object sender, EventArgs e) //used 
         {
-            this.LoadUsersRules();
+            LoadUsersRules();
         }
 
         private List<User> SelectedUsers()
         {
-            this.selectedUsers = new List<User>();
-            if(this.user_name.SelectedItems != null)
+            selectedUsers = new List<User>();
+            if(user_name.SelectedItems != null)
             {
-                foreach(User user in this.user_name.SelectedItems)
+                foreach(User user in user_name.SelectedItems)
                 {
-                    this.selectedUsers.Add(user);
+                    selectedUsers.Add(user);
+                    Console.WriteLine(user);
                 }
             }
             else
             {
-                foreach(User user in this.user_name.Items)
+                foreach(User user in user_name.Items)
                 {
-                    this.selectedUsers.Add(user);
+                    selectedUsers.Add(user);
+                    Console.WriteLine(user);
                 }
             }
             return selectedUsers;
@@ -288,32 +323,32 @@ namespace FivesBronxTimesheetManagement.Forms
 
         private void user_name_ItemSelectionChanged(object sender, SelectionChangedEventArgs e) // used 
         {
-            this.selectedUsers = SelectedUsers();
+            selectedUsers = SelectedUsers();
         }
 
         private void UpdateSections()
         {
-            this.section.Items.Clear();
-            if(this.projectSelect.SelectedItems != null || this.section.SelectedItems != null)
+            section.Items.Clear();
+            if(projectSelect.SelectedItems != null || section.SelectedItems != null)
             {
-                if(this.projectSelect.SelectedItems != null)
+                if(projectSelect.SelectedItems != null)
                 {
 
                     List<string> openProjects = new List<string>();
-                    foreach(string x in this.projectSelect.SelectedItems)
+                    foreach(string x in projectSelect.SelectedItems)
                     {
-                        if (this.queries.ProjectIsOpen(x)) openProjects.Add(x);
+                        if (queries.ProjectIsOpen(x)) openProjects.Add(x);
                     }
 
-                    if(this.task_type.SelectedItems != null)
+                    if(task_type.SelectedItems != null)
                     {
                         foreach (string x in openProjects)
                         {
-                            foreach(string y in this.task_type.SelectedItems)
+                            foreach(string y in task_type.SelectedItems)
                             {
-                                foreach(string z in this.queries.SectionNumbers(this.queries.ProjectNumber_WarrantyNetwork(x), y))
+                                foreach(string z in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x), y))
                                 {
-                                    this.section.Items.Add(z);
+                                    section.Items.Add(z);
                                 }
                             }
                         }
@@ -322,9 +357,9 @@ namespace FivesBronxTimesheetManagement.Forms
                     {
                         foreach (string x in openProjects)
                         {
-                            foreach (string y in this.queries.SectionNumbers(this.queries.ProjectNumber_WarrantyNetwork(x)))
+                            foreach (string y in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x)))
                             {
-                                this.section.Items.Add(y);
+                                section.Items.Add(y);
                             }
                         }
                     }
@@ -332,18 +367,18 @@ namespace FivesBronxTimesheetManagement.Forms
                 else
                 {
                     List<string> openProjects = new List<string>();
-                    foreach (string x in this.projectSelect.Items)
+                    foreach (string x in projectSelect.Items)
                     {
-                        if (this.queries.ProjectIsOpen(x)) openProjects.Add(x);
+                        if (queries.ProjectIsOpen(x)) openProjects.Add(x);
                     }
                     
                     foreach(string x in openProjects)
                     {
-                        foreach(string y in this.task_type.SelectedItems)
+                        foreach(string y in task_type.SelectedItems)
                         {
-                            foreach(string z in this.queries.SectionNumbers(this.queries.ProjectNumber_WarrantyNetwork(x), y))
+                            foreach(string z in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x), y))
                             {
-                                this.section.Items.Add(z);
+                                section.Items.Add(z);
                             }
                         }
                     }
@@ -352,16 +387,16 @@ namespace FivesBronxTimesheetManagement.Forms
             else
             {
                 List<string> openProjects = new List<string>();
-                foreach (string x in this.projectSelect.Items)
+                foreach (string x in projectSelect.Items)
                 {
-                    if (this.queries.ProjectIsOpen(x)) openProjects.Add(x);
+                    if (queries.ProjectIsOpen(x)) openProjects.Add(x);
                 }
 
                 foreach(string x in openProjects)
                 {
-                    foreach(string y in this.queries.SectionNumbers(this.queries.ProjectNumber_WarrantyNetwork(x)))
+                    foreach(string y in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x)))
                     {
-                        this.section.Items.Add(y);
+                        section.Items.Add(y);
                     }
                 }
             }

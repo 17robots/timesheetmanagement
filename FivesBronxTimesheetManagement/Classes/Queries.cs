@@ -1537,7 +1537,6 @@ namespace FivesBronxTimesheetManagement.Classes
 			foreach (string qString in qStrings)
 			{
 				this.myCommand = new MySqlCommand(qString, this.myConnection.MySqlConnection);
-				MessageBox.Show(qString);
 				MySqlDataReader mySqlDataReader = this.myCommand.ExecuteReader();
 				while (mySqlDataReader.Read())
 				{

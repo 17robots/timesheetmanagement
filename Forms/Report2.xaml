@@ -27,31 +27,31 @@
             <RowDefinition Height=".3*" />
             <RowDefinition Height=".05*" />
         </Grid.RowDefinitions>
-        <CheckBox Name="activeUsers" Grid.Column="1" Grid.Row="1" Checked="activeUsers_CheckedChanged" Margin="0.333,0,0,0"> Show Hidden Users?</CheckBox>
+        <CheckBox Name="activeUsers" Grid.Column="1" Grid.Row="1" Unchecked="activeUsers_CheckedChanged" Checked="activeUsers_CheckedChanged" Margin="0.333,0,0,0"> Show Hidden Users?</CheckBox>
         <Label Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="5">Leave Column Blank To Choose All Items In The List</Label>
         <DockPanel Grid.Column="1" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">User Name</Label>
-            <ListView SelectionChanged="user_name_ItemSelectionChanged" Name="user_name"/>
+            <ListView SelectionMode="Multiple" SelectionChanged="user_name_ItemSelectionChanged" Name="user_name"/>
         </DockPanel>
         <DockPanel Grid.Column="3" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Status</Label>
-            <ListView SelectionChanged="table_ItemSelectionChanged" Name="table"></ListView>
+            <ListView SelectionMode="Multiple" SelectionChanged="table_ItemSelectionChanged" Name="table"></ListView>
         </DockPanel>
         <DockPanel Grid.Column="5" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Timesheet Code</Label>
-            <ListView Name="timesheet_code"></ListView>
+            <ListView SelectionMode="Multiple" Name="timesheet_code"></ListView>
         </DockPanel>
         <DockPanel Grid.Column="7" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Task Type</Label>
-            <ListView SelectionChanged="task_type_ItemSelectionChanged" Name="task_type"></ListView>
+            <ListView SelectionMode="Multiple" SelectionChanged="task_type_ItemSelectionChanged" Name="task_type"></ListView>
         </DockPanel>
         <DockPanel Grid.Column="9" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Project</Label>
-            <ListView SelectionChanged="project_ItemSelectionChanged" Name="projectSelect" HorizontalAlignment="Stretch"></ListView>
+            <ListView SelectionMode="Multiple" SelectionChanged="project_ItemSelectionChanged" Name="projectSelect" HorizontalAlignment="Stretch"></ListView>
         </DockPanel>
         <DockPanel Grid.Column="11" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Section</Label>
-            <ListView Name="section"></ListView>
+            <ListView SelectionMode="Multiple" Name="section"></ListView>
         </DockPanel>
         <DockPanel Grid.Column="3" Grid.Row="3">
             <Label DockPanel.Dock="Top">To</Label>
