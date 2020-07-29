@@ -988,65 +988,36 @@ namespace FivesBronxTimesheetManagement.Classes
 			List<Entry> entries = new List<Entry>();
 			foreach (String qString in qStrings)
 			{
-				int dummy;
-				DateTime dummy2;
 				myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
 				myConnection.Open();
 				MySqlDataReader reader = myCommand.ExecuteReader();
 				while (reader.Read())
 				{
-					/*
-					string str = reader.GetString(0);
-					string str1 = reader.GetString(1);
-					string str2 = reader.GetString(2);
-					string str3 = reader.GetString(3);
-					string str4 = reader.GetString(4);
-					string str5 = reader.GetString(5);
-					string str6 = reader.GetString(6);
-					string str7 = reader.GetString(7);
-					string str8 = reader.GetString(8);
-					string str9 = reader.GetString(9);
-					string str10 = reader.GetString(10);
-					string str11 = reader.GetString(11);
-					string str12 = reader.GetString(12);
-					string str13 = reader.GetString(13);
-					string str14 = reader.GetString(14);
-					string str15 = reader.GetString(15);
-					string str16 = reader.GetString(16);
-					string str17 = reader.GetString(17);
-					// string str18 = reader.GetString(18);
-					string str19 = reader.GetString(19);
-					string str20 = reader.GetString(20);
-					string str21 = reader.GetString(21);
-					string str22 = reader.GetString(22);
-					string str23 = reader.GetString(23);
-					*/
-
 					entries.Add(new Entry(
 						int.Parse(reader.GetString(0)), // entry_id
 						int.Parse(reader.GetString(1)), // user_id
 						reader.GetString(2), // user_name
-						reader.IsDBNull(reader.GetOrdinal("section_id")) ? null : new int?(int.Parse(reader.GetString(3))), // section_id - check this
-						reader.IsDBNull(reader.GetOrdinal("project_serial")) ? "" : reader.GetString(4), // project_serial - check
-						reader.IsDBNull(reader.GetOrdinal("project_sap")) ? "" : reader.GetString(5), // project_sap - check
-						reader.IsDBNull(reader.GetOrdinal("number_section")) ? "" : reader.GetString(6), // number_section - check
-						reader.IsDBNull(reader.GetOrdinal("number_network")) ? null : new int?(int.Parse(reader.GetString(7))), // number_network - check
-						reader.IsDBNull(reader.GetOrdinal("number_activity")) ? "" : reader.GetString(8), // number_activity - check
+						reader.IsDBNull(reader.GetOrdinal("section_id")) ? null : new int?(int.Parse(reader.GetString(3))), // section_id
+						reader.IsDBNull(reader.GetOrdinal("project_serial")) ? "" : reader.GetString(4), // project_serial
+						reader.IsDBNull(reader.GetOrdinal("project_sap")) ? "" : reader.GetString(5), // project_sap
+						reader.IsDBNull(reader.GetOrdinal("number_section")) ? "" : reader.GetString(6), // number_section
+						reader.IsDBNull(reader.GetOrdinal("number_network")) ? null : new int?(int.Parse(reader.GetString(7))), // number_network
+						reader.IsDBNull(reader.GetOrdinal("number_activity")) ? "" : reader.GetString(8), // number_activity
 						DateTime.Parse(reader.GetString(9)), // date
 						int.Parse(reader.GetString(10)), // period
 						int.Parse(reader.GetString(11)), // year
 						double.Parse(reader.GetString(12)), // hours
-						reader.GetString(13), // description
-						reader.GetString(14), // timesheet_code
-						reader.GetString(15), // task_type
-						reader.GetString(16), // submitted_status
-						functions.approvalStatus(reader.GetString(17)), // approval_status
+						reader.IsDBNull(reader.GetOrdinal("description")) ? "" : reader.GetString(13), // description
+						reader.IsDBNull(reader.GetOrdinal("timesheet_code")) ? "" : reader.GetString(14), // timesheet_code
+						reader.IsDBNull(reader.GetOrdinal("task_type")) ? "" : reader.GetString(15), // task_type
+						reader.IsDBNull(reader.GetOrdinal("submitted_status")) ? "" : reader.GetString(16), // submitted_status
+						reader.IsDBNull(reader.GetOrdinal("approval_status")) ? functions.approvalStatus(null) : functions.approvalStatus(reader.GetString(17)), // approval_status
 						reader.IsDBNull(reader.GetOrdinal("rejection_reason")) ? "" : reader.GetString(18), // rejection_reason - check
-						int.TryParse(reader.GetString(19), out dummy) ? new int?(int.Parse(reader.GetString(19))) : null, // approved_by_user_id
-						reader.GetString(20), // approved_by_user_name
+						reader.IsDBNull(reader.GetOrdinal("approved_by_user_id")) ? null : new int?(int.Parse(reader.GetString(19))), // approved_by_user_id
+						reader.IsDBNull(reader.GetOrdinal("approved_by_user_name")) ? "" : reader.GetString(20), // approved_by_user_name
 						DateTime.Parse(reader.GetString(21)), // date_created
 						DateTime.Parse(reader.GetString(22)), // date_modified
-						DateTime.TryParse(reader.GetString(23), out dummy2) ? new DateTime?(DateTime.Parse(reader.GetString(22))) : null // date_approved
+						reader.IsDBNull(reader.GetOrdinal("date_approved")) ? null : new DateTime?(DateTime.Parse(reader.GetString(22))) // date_approved
 					));
 				}
 				myConnection.Close();
