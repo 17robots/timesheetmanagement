@@ -122,7 +122,8 @@ namespace FivesBronxTimesheetManagement.Classes
 			{
 				try
 				{
-					Marshal.ReleaseComObject(obj);
+					if(obj != null)
+						Marshal.ReleaseComObject(obj);
 					obj = null;
 				}
 				catch

@@ -1,174 +1,179 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Window x:Class="FivesBronxTimesheetManagement.Forms.TimesheetEntry" Title="Time Entry" SizeToContent="WidthAndHeight" Width="1150" MinWidth="865" MinHeight="300" MaxHeight="{x:Static SystemParameters.PrimaryScreenHeight}" MaxWidth="{x:Static SystemParameters.PrimaryScreenWidth}" Background="#FFFFFFFF" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:src="clr-namespace:FivesBronxTimesheetManagement.Classes;assembly=TimesheetManagement">
-  <Window.Resources>
-    <!-- srcDateTimeConverter x:Key="DateTimeConverter" /-->
-    <!-- srcHoursWorkedConverter x:Key="HoursWorkedConverter" /-->
-    <Style x:Key="alignRight" TargetType="{x:Type DataGridCell}">
-      <Setter Property="Control.Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="{x:Type DataGridCell}">
-            <Grid Background="{TemplateBinding Control.Background}">
-              <ContentPresenter HorizontalAlignment="Right" />
+    <Window.Resources>
+        <!-- srcDateTimeConverter x:Key="DateTimeConverter" /-->
+        <!-- srcHoursWorkedConverter x:Key="HoursWorkedConverter" /-->
+        <Style x:Key="alignRight" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridCell}">
+                        <Grid Background="{TemplateBinding Control.Background}">
+                            <ContentPresenter HorizontalAlignment="Right" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="61*"/>
+            <ColumnDefinition Width="679*"/>
+            <ColumnDefinition Width="404*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Name="rowDefInput" MinHeight="259" Height="Auto" MaxHeight="337" />
+            <RowDefinition Name="rowDefTabControl" MinHeight="100" />
+        </Grid.RowDefinitions>
+        <Menu Height="auto" VerticalAlignment="Top" Background="#FFB2B2B2" Grid.Row="0" Grid.ColumnSpan="3">
+            <MenuItem Header="File">
+                <MenuItem Name="menuFileChangePassword" Header="Change Password" Click="menuFileChangePassword_Click" />
+                <MenuItem Name="menuFileExport" Header="Export" Click="menuFileExport_Click" />
+                <Separator />
+                <MenuItem Name="menuFileClose" Header="Close" Click="menuFileClose_Click" />
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Name="menuEditEditEntry" Header="Edit Entry" Click="menuEditEditEntry_Click" />
+                <Separator />
+                <MenuItem Name="menuEditDeleteEntry" Header="Delete Entry" Click="menuEditDeleteEntry_Click" />
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Name="menuViewProjectInformation" Header="Project Information" Click="menuViewProjectInformation_Click" />
+                <MenuItem Name="menuViewUserRights" Header="User Rights" Click="menuViewUserRights_Click" />
+                <Separator />
+                <MenuItem Name="menuViewReports" Header="Reports" Click="menuViewReports_Click" />
+                <Separator />
+                <MenuItem Name="menuViewAbout" Header="About" Click="menuViewAbout_Click" />
+            </MenuItem>
+            <MenuItem Header="Options">
+                <MenuItem Name="menuOptionsUserPreferences" Header="User Preferences" Click="menuOptionsUserPreferences_Click" />
+            </MenuItem>
+            <MenuItem Header="Approval">
+                <MenuItem Name="menuEditSubmitForApproval" Header="Submit for Approval" ToolTip="Opens a Menu that allows the selection of items to be sent to the Approver" Click="menuEditSubmitForApproval_Click" />
+            </MenuItem>
+        </Menu>
+        <Image Height="70" Margin="0,32,13,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="88" Grid.Row="0" Source="/Pics/Fives_logo.jpg" Grid.Column="2" />
+        <StackPanel Margin="10,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="104" Height="Auto" Grid.Row="0" Grid.ColumnSpan="2">
+            <Label Content="Timesheet Code" Margin="0,0,0,0" Height="26" />
+            <Label Content="Task Type" Margin="0,0,0,0" Height="26" />
+            <Label Content="Project" Margin="0,0,0,0" Height="26" />
+            <Label Content="Section" Margin="0,0,0,0" Height="26" />
+            <Label Content="Date" Margin="0,0,0,0" Width="104" Height="26" />
+            <Label Content="Hours" Margin="0,0,0,0" Width="104" Height="26" />
+            <Label Content="Description" Margin="0,0,0,0" Width="104" Height="26" />
+        </StackPanel>
+        <StackPanel Margin="63.543,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="333" Height="Auto" Grid.Row="0" Grid.Column="1">
+            <ComboBox Name="cbxTimeCode" TabIndex="1" Margin="0,4,0,0" Height="22" SelectionChanged="cbxTimeCode_SelectionChanged" />
+            <ComboBox Name="cbxTaskType" TabIndex="2" Margin="0,4,0,0" Height="22" SelectionChanged="cbxTaskType_SelectionChanged" />
+            <ComboBox Name="cbxJob" TabIndex="3" Margin="0,4,0,0" Height="22" SelectionChanged="cbxJob_SelectionChanged" />
+            <ComboBox Name="cbxSection" TabIndex="4" Margin="0,4,0,0" Height="22" SelectionChanged="cbxSection_SelectionChanged" />
+            <StackPanel Orientation="Horizontal">
+                <DatePicker Name="dtpDate" TabIndex="5" Margin="0,4,0,0" HorizontalAlignment="Left" Height="24" Width="221" GotFocus="dtpDate_GotFocus" SelectedDateChanged="dtpDate_SelectedDateChanged" />
+                <Label Name="lblDateError" Content="*Error if in closed month" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="282" Height="26" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                <TextBox Name="txtHours" TabIndex="6" Height="24" TextWrapping="Wrap" Text="Enter # of hours here" Width="186" GotFocus="TxtHoursSelectAll" LostFocus="txtHours_LostFocus" />
+                <StackPanel Margin="5,0,0,0">
+                    <Button Name="btnHoursIncrement" Width="30" Height="14" Margin="0,0,0,0" Click="btnHoursIncrement_Click">
+                        <Image Source="/Pics/UpTriangle.png" Stretch="Fill" />
+                    </Button>
+                    <Button Name="btnHoursDecrement" Width="30" Height="14" Margin="0,0,0,0" Click="btnHoursDecrement_Click">
+                        <Image Source="/Pics/DownTriangle.png" Stretch="Fill" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <TextBox Name="txtDescription" TabIndex="7" Height="24" Margin="0,2,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Width="221" />
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Left" Margin="418.543,32,0,0.2" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1">
+            <Label Name="lblSectionDescription" Content="Update - Section Description" HorizontalAlignment="Left" Margin="0,78,0,0" VerticalAlignment="Top" Width="300" Height="26" />
+            <StackPanel Orientation="Horizontal" Margin="0,42,0,0">
+                <Button Name="btnCancel" TabIndex="8" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,3,0" VerticalAlignment="Top" Width="75" Height="22" ToolTip="Close This Screen" Click="btnCancel_Click" />
+                <Button Name="btnSubmit" TabIndex="9" Content="Save" HorizontalAlignment="Right" Margin="3,0,0,0" VerticalAlignment="Top" Width="75" Height="22" ToolTip="Create Entry on Timesheet" Click="btnSubmit_Click" />
+            </StackPanel>
+        </StackPanel>
+        <Expander Header="Summary By Date" Margin="13,226,10,10.2" IsExpanded="True" FontWeight="Bold" Grid.Row="0" Grid.ColumnSpan="3">
+            <Grid Background="#00FFFFFF">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Name="SummaryByDate_Date" Orientation="Horizontal">
+                        <Label Name="lblWeek_Day1" Content="lblWeek_Day1" Width="100" HorizontalAlignment="Left" Margin="0,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day2" Content="Monday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day3" Content="Tuesday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day4" Content="Wednesday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day5" Content="Thursday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day6" Content="Friday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day7" Content="12/31/XX" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Button Name="btnWeekDecrement" HorizontalAlignment="Right" VerticalAlignment="Top" Width="26" Height="26" Margin="19,0,2,0" ToolTip="Previous Week Totals" Click="btnWeekDecrement_Click">
+                            <Image Source="/Pics/LeftTriangle.png" Stretch="Fill" />
+                        </Button>
+                        <Button Name="btnWeekIncrement" HorizontalAlignment="Right" VerticalAlignment="Top" Width="26" Height="26" Margin="0,0,0,0" ToolTip="Previous Week Totals" Click="btnWeekIncrement_Click">
+                            <Image Source="/Pics/RightTriangle.png" Stretch="Fill" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Name="SummaryByDate_DayOfWeek" Orientation="Horizontal">
+                        <Label Name="lblSunday_Day1" Content="Sunday" Width="100" HorizontalAlignment="Left" Margin="0,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblMonday_Day2" Content="Monday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblTuesday_Day3" Content="Tuesday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWednesday_Day4" Content="Wednesday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblThursday_Day5" Content="Thursday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblFriday_Day6" Content="Friday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblSaturday_Day7" Content="Saturday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblTotal" Content="Total" Width="77" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                    </StackPanel>
+                    <StackPanel Name="SummaryByDate_Amount" Orientation="Horizontal">
+                        <Label Name="lblWeek_Day1_Total" Content="Suns" Width="100" HorizontalAlignment="Left" Margin="0,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day2_Total" Content="Mon" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day3_Total" Content="Tue" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day4_Total" Content="Wed" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day5_Total" Content="Thu" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day6_Total" Content="Fri" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Day7_Total" Content="Sat" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
+                        <Label Name="lblWeek_Total" Content="TotalHours" Width="77" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" />
+                    </StackPanel>
+                </StackPanel>
+                <Canvas Margin="0,0,0,0">
+                    <Line X1="0" Y1="50" X2="817" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
+                    <Line X1="735" Y1="0" X2="735" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
+                    <Line X1="0" Y1="0" X2="0" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
+                    <Line X1="0" Y1="0" X2="817" Y2="0" Stroke="#FF000000" StrokeThickness="1" />
+                    <Line X1="817" Y1="0" X2="817" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
+                </Canvas>
             </Grid>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-  </Window.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Name="rowDefInput" MinHeight="259" Height="Auto" MaxHeight="337" />
-      <RowDefinition Name="rowDefTabControl" MinHeight="100" />
-    </Grid.RowDefinitions>
-    <Menu Height="auto" VerticalAlignment="Top" Background="#FFB2B2B2" Grid.Row="0">
-      <MenuItem Header="File">
-        <MenuItem Name="menuFileChangePassword" Header="Change Password" Click="menuFileChangePassword_Click" />
-        <MenuItem Name="menuFileExport" Header="Export" Click="menuFileExport_Click" />
-        <Separator />
-        <MenuItem Name="menuFileClose" Header="Close" Click="menuFileClose_Click" />
-      </MenuItem>
-      <MenuItem Header="Edit">
-        <MenuItem Name="menuEditEditEntry" Header="Edit Entry" Click="menuEditEditEntry_Click" />
-        <Separator />
-        <MenuItem Name="menuEditDeleteEntry" Header="Delete Entry" Click="menuEditDeleteEntry_Click" />
-      </MenuItem>
-      <MenuItem Header="View">
-        <MenuItem Name="menuViewProjectInformation" Header="Project Information" Click="menuViewProjectInformation_Click" />
-        <MenuItem Name="menuViewUserRights" Header="User Rights" Click="menuViewUserRights_Click" />
-        <Separator />
-        <MenuItem Name="menuViewReports" Header="Reports" Click="menuViewReports_Click" />
-        <Separator />
-        <MenuItem Name="menuViewAbout" Header="About" Click="menuViewAbout_Click" />
-      </MenuItem>
-      <MenuItem Header="Options">
-        <MenuItem Name="menuOptionsUserPreferences" Header="User Preferences" Click="menuOptionsUserPreferences_Click" />
-      </MenuItem>
-      <MenuItem Header="Approval">
-        <MenuItem Name="menuEditSubmitForApproval" Header="Submit for Approval" ToolTip="Opens a Menu that allows the selection of items to be sent to the Approver" Click="menuEditSubmitForApproval_Click" />
-      </MenuItem>
-    </Menu>
-    <Image Height="70" Margin="0,32,13,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="88" Grid.Row="0" Source="/Pics/Fives_logo.jpg" />
-    <StackPanel Margin="10,32,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="104" Height="Auto" Grid.Row="0">
-      <Label Content="Timesheet Code" Margin="0,0,0,0" Height="26" />
-      <Label Content="Task Type" Margin="0,0,0,0" Height="26" />
-      <Label Content="Project" Margin="0,0,0,0" Height="26" />
-      <Label Content="Section" Margin="0,0,0,0" Height="26" />
-      <Label Content="Date" Margin="0,0,0,0" Width="104" Height="26" />
-      <Label Content="Hours" Margin="0,0,0,0" Width="104" Height="26" />
-      <Label Content="Description" Margin="0,0,0,0" Width="104" Height="26" />
-    </StackPanel>
-    <StackPanel Margin="125,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="333" Height="Auto" Grid.Row="0">
-      <ComboBox Name="cbxTimeCode" TabIndex="1" Margin="0,4,0,0" Height="22" SelectionChanged="cbxTimeCode_SelectionChanged" />
-      <ComboBox Name="cbxTaskType" TabIndex="2" Margin="0,4,0,0" Height="22" SelectionChanged="cbxTaskType_SelectionChanged" />
-      <ComboBox Name="cbxJob" TabIndex="3" Margin="0,4,0,0" Height="22" SelectionChanged="cbxJob_SelectionChanged" />
-      <ComboBox Name="cbxSection" TabIndex="4" Margin="0,4,0,0" Height="22" SelectionChanged="cbxSection_SelectionChanged" />
-      <StackPanel Orientation="Horizontal">
-        <DatePicker Name="dtpDate" TabIndex="5" Margin="0,4,0,0" HorizontalAlignment="Left" Height="24" Width="221" GotFocus="dtpDate_GotFocus" SelectedDateChanged="dtpDate_SelectedDateChanged" />
-        <Label Name="lblDateError" Content="*Error if in closed month" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="282" Height="26" />
-      </StackPanel>
-      <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-        <TextBox Name="txtHours" TabIndex="6" Height="24" TextWrapping="Wrap" Text="Enter # of hours here" Width="186" GotFocus="TxtHoursSelectAll" LostFocus="txtHours_LostFocus" />
-        <StackPanel Margin="5,0,0,0">
-          <Button Name="btnHoursIncrement" Width="30" Height="14" Margin="0,0,0,0" Click="btnHoursIncrement_Click">
-            <Image Source="/Pics/UpTriangle.png" Stretch="Fill" />
-          </Button>
-          <Button Name="btnHoursDecrement" Width="30" Height="14" Margin="0,0,0,0" Click="btnHoursDecrement_Click">
-            <Image Source="/Pics/DownTriangle.png" Stretch="Fill" />
-          </Button>
-        </StackPanel>
-      </StackPanel>
-      <TextBox Name="txtDescription" TabIndex="7" Height="24" Margin="0,2,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Width="221" />
-    </StackPanel>
-    <StackPanel HorizontalAlignment="Left" Margin="480,32,0,0" Grid.Row="0">
-      <Label Name="lblSectionDescription" Content="Update - Section Description" HorizontalAlignment="Left" Margin="0,78,0,0" VerticalAlignment="Top" Width="300" Height="26" />
-      <StackPanel Orientation="Horizontal" Margin="0,42,0,0">
-        <Button Name="btnCancel" TabIndex="8" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,3,0" VerticalAlignment="Top" Width="75" Height="22" ToolTip="Close This Screen" Click="btnCancel_Click" />
-        <Button Name="btnSubmit" TabIndex="9" Content="Save" HorizontalAlignment="Right" Margin="3,0,0,0" VerticalAlignment="Top" Width="75" Height="22" ToolTip="Create Entry on Timesheet" Click="btnSubmit_Click" />
-      </StackPanel>
-    </StackPanel>
-    <Expander Header="Summary By Date" Margin="13,226,10,10" IsExpanded="True" FontWeight="Bold" Grid.Row="0">
-      <Grid Background="#00FFFFFF">
-        <StackPanel Orientation="Vertical">
-          <StackPanel Name="SummaryByDate_Date" Orientation="Horizontal">
-            <Label Name="lblWeek_Day1" Content="lblWeek_Day1" Width="100" HorizontalAlignment="Left" Margin="0,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day2" Content="Monday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day3" Content="Tuesday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day4" Content="Wednesday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day5" Content="Thursday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day6" Content="Friday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day7" Content="12/31/XX" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Bold" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Button Name="btnWeekDecrement" HorizontalAlignment="Right" VerticalAlignment="Top" Width="26" Height="26" Margin="19,0,2,0" ToolTip="Previous Week Totals" Click="btnWeekDecrement_Click">
-              <Image Source="/Pics/LeftTriangle.png" Stretch="Fill" />
-            </Button>
-            <Button Name="btnWeekIncrement" HorizontalAlignment="Right" VerticalAlignment="Top" Width="26" Height="26" Margin="0,0,0,0" ToolTip="Previous Week Totals" Click="btnWeekIncrement_Click">
-              <Image Source="/Pics/RightTriangle.png" Stretch="Fill" />
-            </Button>
-          </StackPanel>
-          <StackPanel Name="SummaryByDate_DayOfWeek" Orientation="Horizontal">
-            <Label Name="lblSunday_Day1" Content="Sunday" Width="100" HorizontalAlignment="Left" Margin="0,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblMonday_Day2" Content="Monday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblTuesday_Day3" Content="Tuesday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWednesday_Day4" Content="Wednesday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblThursday_Day5" Content="Thursday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblFriday_Day6" Content="Friday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblSaturday_Day7" Content="Saturday" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblTotal" Content="Total" Width="77" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-          </StackPanel>
-          <StackPanel Name="SummaryByDate_Amount" Orientation="Horizontal">
-            <Label Name="lblWeek_Day1_Total" Content="Suns" Width="100" HorizontalAlignment="Left" Margin="0,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day2_Total" Content="Mon" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day3_Total" Content="Tue" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day4_Total" Content="Wed" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day5_Total" Content="Thu" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day6_Total" Content="Fri" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Day7_Total" Content="Sat" Width="100" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" MouseDoubleClick="SummaryByDate_MouseDoubleClick" />
-            <Label Name="lblWeek_Total" Content="TotalHours" Width="77" HorizontalAlignment="Left" Margin="5,0,0,0" Height="auto" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontWeight="Normal" />
-          </StackPanel>
-        </StackPanel>
-        <Canvas Margin="0,0,0,0">
-          <Line X1="0" Y1="50" X2="817" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
-          <Line X1="735" Y1="0" X2="735" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
-          <Line X1="0" Y1="0" X2="0" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
-          <Line X1="0" Y1="0" X2="817" Y2="0" Stroke="#FF000000" StrokeThickness="1" />
-          <Line X1="817" Y1="0" X2="817" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
-        </Canvas>
-      </Grid>
-    </Expander>
-    <TabControl Grid.Row="1" Margin="13,0,10,10" SelectionChanged="TabControl_SelectionChanged">
-      <TabItem Header="Entered Not Submitted" Selector.IsSelected="True">
-        <DataGrid Name="dgHours" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" MouseDoubleClick="dgHours_MouseDoubleClick">
-          <DataGrid.Resources>
-            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
-            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
-          </DataGrid.Resources>
-          <DataGrid.ContextMenu>
-            <ContextMenu>
-              <MenuItem Name="dgContextMenu_Edit" Header="Edit this Entry" Click="dgContextMenu_Edit_Click" />
-              <MenuItem Name="dgContextMenu_Copy" Header="Duplicate Selected" Click="dgContextMenu_Copy_Click" />
-              <MenuItem Name="dgContextMenu_Delete" Header="Delete this Entry" Click="dgContextMenu_Delete_Click" />
-            </ContextMenu>
-          </DataGrid.ContextMenu>
-        </DataGrid>
-      </TabItem>
-      <TabItem Header="Submitted Not Approved">
-        <DataGrid Name="dgHoursUnapproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
-      </TabItem>
-      <TabItem Header="Approved">
-        <DataGrid Name="dgHoursApproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
-      </TabItem>
-        <TabItem Header="Last Week">
-          <DataGrid Name="dgHoursPrevWeek" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False">
-            <DataGrid.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
-            </DataGrid.Resources>
-          <DataGrid.ContextMenu>
-            <ContextMenu>
-              <MenuItem Name="dgContextMenu_Copy_Prev" Header="Duplicate Selected" Click="dgContextMenu_Copy_Click_Prev" />
-            </ContextMenu>
-          </DataGrid.ContextMenu>
-        </DataGrid>
-      </TabItem>
-    </TabControl>
-  </Grid>
+        </Expander>
+        <TabControl Margin="13,335,10,10.2" SelectionChanged="TabControl_SelectionChanged" Grid.ColumnSpan="3" Grid.RowSpan="2">
+            <TabItem Header="Entered Not Submitted" Selector.IsSelected="True">
+                <DataGrid Name="dgHours" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" MouseDoubleClick="dgHours_MouseDoubleClick">
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
+                    </DataGrid.Resources>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Name="dgContextMenu_Edit" Header="Edit this Entry" Click="dgContextMenu_Edit_Click" />
+                            <MenuItem Name="dgContextMenu_Copy" Header="Duplicate Selected" Click="dgContextMenu_Copy_Click" />
+                            <MenuItem Name="dgContextMenu_Delete" Header="Delete this Entry" Click="dgContextMenu_Delete_Click" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Submitted Not Approved">
+                <DataGrid Name="dgHoursUnapproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
+            </TabItem>
+            <TabItem Header="Approved">
+                <DataGrid Name="dgHoursApproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
+            </TabItem>
+            <TabItem Header="Last Week">
+                <DataGrid Name="dgHoursPrevWeek" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False">
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
+                    </DataGrid.Resources>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Name="dgContextMenu_Copy_Prev" Header="Duplicate Selected" Click="dgContextMenu_Copy_Click_Prev" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </Window>

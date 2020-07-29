@@ -932,8 +932,6 @@ namespace FivesBronxTimesheetManagement.Forms
 			}
 			else if (((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Last Week" ? false : !preWeekQueryHasRun)
 			{
-				MessageBox.Show("Last Week");
-				MessageBox.Show(weekEnding.Date.ToString());
 				itemSourceEntriesPrevWeek = queries.Entries(queries.t_Timesheet_Final, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
 				List<Entry> filteredList = new List<Entry>();
 				filteredList.AddRange(
