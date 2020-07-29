@@ -1,14 +1,10 @@
 ﻿using FivesBronxTimesheetManagement.Classes;
-using Google.Protobuf.Collections;
-using Org.BouncyCastle.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -37,7 +33,6 @@ namespace FivesBronxTimesheetManagement.Forms
             queries = new Queries();
             functions = new Functions();
             LoadConstantsFromDB();
-            table.SelectedItem = table.Items[0]; // force at least one to be selected
         }
 
         private void btn_cancel_Click(object sender, RoutedEventArgs e)
