@@ -7,6 +7,8 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -40,7 +42,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
         private void btn_cancel_Click(object sender, RoutedEventArgs e)
         {
-            base.Close();
+            Close();
         }
 
         private void btn_generate_Click(object sender, RoutedEventArgs e)
@@ -175,7 +177,7 @@ namespace FivesBronxTimesheetManagement.Forms
                     if (hasValue1)
                     {
                         tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Date, ">= '",
-                            from.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "' AND ",
+                            to.SelectedDate.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), "' AND ",
                             queries.t_Timesheet_c_Date, "<= '", from.SelectedDate.Value.ToString("yyyy-MM-dd",
                             CultureInfo.InvariantCulture), "'" };
                         str4 = string.Concat(tTimesheetCTimesheetCode);
@@ -208,12 +210,12 @@ namespace FivesBronxTimesheetManagement.Forms
             List<Entry> entries = new List<Entry>();
             foreach(string table in Tables)
             {
-                MessageBox.Show(table);
                 List<string> strs = new List<string>()
                 {
                     table
                 };
-                foreach (Entry entry in queries.Entries(table, queries.ReturnIntList(CreateListQString(strs, Users), queries.t_Timesheet_c_Entry_Id)))
+                foreach (Entry entry in queries.Entries(CreateListQString(strs, Users)))
+                // foreach(Entry entry in queries.Entries(table, queries.ReturnIntList(CreateListQString(strs, Users), queries.t_Timesheet_c_Entry_Id)))
                 {
                     entries.Add(entry);
                 }
@@ -252,12 +254,12 @@ namespace FivesBronxTimesheetManagement.Forms
                         where functions.IntToBool(X.IsActive)
                         orderby X.UserName
                         select X
-                    ).ToList<User>() :
+                    ).ToList() :
                     (
                         from X in queries.GetUser_All()
                         orderby X.UserName
                         select X
-                    ).ToList<User>();
+                    ).ToList();
             }
             else
             {
@@ -272,7 +274,7 @@ namespace FivesBronxTimesheetManagement.Forms
         private List<string> SelectedTables()
         {
             selectedTables = new List<string>();
-            if(table.SelectedItems != null)
+            if(table.SelectedItems.Count != 0)
             {
                 if (table.SelectedItems.Contains("Not Submitted")) selectedTables.Add(queries.t_Timesheet_Prelim);
                 if (table.SelectedItems.Contains("Submitted, Not Approved")) selectedTables.Add(queries.t_Timesheet_Limbo);
@@ -286,7 +288,6 @@ namespace FivesBronxTimesheetManagement.Forms
                 selectedTables.Add(queries.t_Timesheet_Final);
                 selectedTables.Add(queries.t_Timesheet_Archive);
             }
-
             return selectedTables;
         }
 
@@ -303,12 +304,11 @@ namespace FivesBronxTimesheetManagement.Forms
         private List<User> SelectedUsers()
         {
             selectedUsers = new List<User>();
-            if(user_name.SelectedItems != null)
+            if(user_name.SelectedItems.Count != 0)
             {
                 foreach(User user in user_name.SelectedItems)
                 {
-                    selectedUsers.Add(user);
-                    Console.WriteLine(user);
+                    selectedUsers.Add((User)user);
                 }
             }
             else
@@ -316,7 +316,6 @@ namespace FivesBronxTimesheetManagement.Forms
                 foreach(User user in user_name.Items)
                 {
                     selectedUsers.Add(user);
-                    Console.WriteLine(user);
                 }
             }
             return selectedUsers;

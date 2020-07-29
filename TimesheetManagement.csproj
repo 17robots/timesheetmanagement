@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Compile Include="FivesBronxTimesheetManagement\Classes\Queries2.cs" />
     <Compile Include="Forms\Report2.xaml.cs">
       <DependentUpon>Report2.xaml</DependentUpon>
     </Compile>
