@@ -1,20 +1,17 @@
 using FivesBronxTimesheetManagement.Classes;
 using System;
-using System.CodeDom.Compiler;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media;
+using Binding = System.Windows.Data.Binding;
+using Label = System.Windows.Controls.Label;
+using MessageBox = System.Windows.Forms.MessageBox;
+using PrintDialog = System.Windows.Controls.PrintDialog;
+using TabControl = System.Windows.Controls.TabControl;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -88,13 +85,13 @@ namespace FivesBronxTimesheetManagement.Forms
 			RefreshDateList(weekEnding);
 		}
 
-		private void BindDataGrid(DataGrid dataGrid)
+		private void BindDataGrid(System.Windows.Controls.DataGrid dataGrid)
 		{
 			List<DataGridTextColumn> dataGridTextColumns = new List<DataGridTextColumn>();
-			SetterBaseCollection setters = (new System.Windows.Style(typeof(DataGridCell))).Setters;
+			SetterBaseCollection setters = (new System.Windows.Style(typeof(System.Windows.Controls.DataGridCell))).Setters;
 			Setter setter = new Setter()
 			{
-				Property = Control.HorizontalContentAlignmentProperty,
+				Property = System.Windows.Controls.Control.HorizontalContentAlignmentProperty,
 				Value = System.Windows.HorizontalAlignment.Right
 			};
 			setters.Add(setter);
@@ -334,7 +331,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void DeleteEntry()
 		{
-			if (MessageBox.Show("Are you sure you want to delete this Entry?", "Delete Entry?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+			if (System.Windows.MessageBox.Show("Are you sure you want to delete this Entry?", "Delete Entry?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
 			{
 				try
 				{
@@ -533,7 +530,6 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void Filter_Unfilter()
 		{
-			//FrameworkElement child = null;
 			foreach (FrameworkElement child in SummaryByDate_Date.Children)
 			{
 				if (child is Label)
@@ -920,7 +916,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			Console.WriteLine(((sender as TabControl).SelectedItem as TabItem).Header.ToString());
 			if (((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Approved" ? false : !approvedQueryHasRun)
 			{
-				if (MessageBox.Show("Display All Approved Time Entries?  This may take a while.", "Display Approved?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+				if (System.Windows.MessageBox.Show("Display All Approved Time Entries?  This may take a while.", "Display Approved?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
 				{
 					itemsSourceEntriesApproved = queries.Entries(queries.t_Timesheet_Final, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
 					dgHoursApproved.ItemsSource = 
@@ -934,15 +930,17 @@ namespace FivesBronxTimesheetManagement.Forms
 			{
 				itemSourceEntriesPrevWeek = queries.Entries(queries.t_Timesheet_Final, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
 				List<Entry> filteredList = new List<Entry>();
+
 				filteredList.AddRange(
 					from E in itemSourceEntriesPrevWeek
-					where E.date.Date == weekEnding.AddDays(-6).Date 
-					|| E.date.Date == weekEnding.AddDays(-5).Date 
-					|| E.date.Date == weekEnding.AddDays(-4).Date 
-					|| E.date.Date == weekEnding.AddDays(-3).Date
-					|| E.date.Date == weekEnding.AddDays(-2).Date
-					|| E.date.Date == weekEnding.AddDays(-1).Date
-					|| E.date.Date == weekEnding.Date
+					where E.date.Date == weekEnding.AddDays(-13).Date
+					|| E.date.Date == weekEnding.AddDays(-12).Date
+					|| E.date.Date == weekEnding.AddDays(-11).Date
+					|| E.date.Date == weekEnding.AddDays(-10).Date
+					|| E.date.Date == weekEnding.AddDays(-9).Date
+					|| E.date.Date == weekEnding.AddDays(-8).Date
+					|| E.date.Date == weekEnding.AddDays(-7).Date
+					orderby E.date
 					select E
 				);
 
@@ -975,7 +973,6 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void UpdateSections(Project project)
 		{
-			// Section section = null;
 			cbxSection.Items.Clear();
 			lblSectionDescription.Content = "";
 			if ((project == null || cbxTaskType.SelectedItem == null || project.Number_Serial == "" ? false : !(cbxTaskType.SelectedItem.ToString() == "")))
