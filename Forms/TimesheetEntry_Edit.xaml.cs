@@ -7,7 +7,10 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Forms;
 using System.Windows.Markup;
+using MessageBox = System.Windows.Forms.MessageBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -127,6 +130,12 @@ namespace FivesBronxTimesheetManagement.Forms
 						DateTime value = this.dtpDate.SelectedDate.Value;
 						int month = value.Month;
 						int year = value.Year;
+						if(!queries.Period_Open(month, year))
+						{
+							MessageBox.Show("Date Must Be Within The Period");
+							return;
+						}
+
 						if (!string.IsNullOrEmpty(this.txtDescription.Text))
 						{
 							text = this.txtDescription.Text;
