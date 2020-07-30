@@ -5,127 +5,7 @@ namespace FivesBronxTimesheetManagement.Classes
 {
 	public class Entry
 	{
-		public ApprovalStatus approval_status
-		{
-			get;
-			set;
-		}
-
-		public int? approved_by_user_id
-		{
-			get;
-			set;
-		}
-
-		public string approved_by_user_name
-		{
-			get;
-			set;
-		}
-
-		public DateTime date
-		{
-			get;
-			set;
-		}
-
-		public DateTime? date_approved
-		{
-			get;
-			set;
-		}
-
-		public DateTime date_created
-		{
-			get;
-			set;
-		}
-
-		public DateTime date_modified
-		{
-			get;
-			set;
-		}
-
-		public string description
-		{
-			get;
-			set;
-		}
-
 		public int? entry_id
-		{
-			get;
-			set;
-		}
-
-		public double hours
-		{
-			get;
-			set;
-		}
-
-		public string number_activity
-		{
-			get;
-			set;
-		}
-
-		public int? number_network
-		{
-			get;
-			set;
-		}
-
-		public string number_section
-		{
-			get;
-			set;
-		}
-
-		public int period
-		{
-			get;
-			set;
-		}
-
-		public string project_sap
-		{
-			get;
-			set;
-		}
-
-		public string project_serial
-		{
-			get;
-			set;
-		}
-
-		public string rejection_reason
-		{
-			get;
-			set;
-		}
-
-		public int? section_id
-		{
-			get;
-			set;
-		}
-
-		public string submitted_status
-		{
-			get;
-			set;
-		}
-
-		public string task_type
-		{
-			get;
-			set;
-		}
-
-		public string timesheet_code
 		{
 			get;
 			set;
@@ -143,7 +23,127 @@ namespace FivesBronxTimesheetManagement.Classes
 			set;
 		}
 
+		public int? section_id
+		{
+			get;
+			set;
+		}
+
+		public string project_serial
+		{
+			get;
+			set;
+		}
+
+		public string project_sap
+		{
+			get;
+			set;
+		}
+
+		public string number_section
+		{
+			get;
+			set;
+		}
+
+		public int? number_network
+		{
+			get;
+			set;
+		}
+
+		public string number_activity
+		{
+			get;
+			set;
+		}
+
+		public DateTime date
+		{
+			get;
+			set;
+		}
+
+		public int period
+		{
+			get;
+			set;
+		}
+
 		public int year
+		{
+			get;
+			set;
+		}
+
+		public double hours
+		{
+			get;
+			set;
+		}
+
+		public string description
+		{
+			get;
+			set;
+		}
+
+		public string timesheet_code
+		{
+			get;
+			set;
+		}
+
+		public string task_type
+		{
+			get;
+			set;
+		}
+
+		public string submitted_status
+		{
+			get;
+			set;
+		}
+
+		public ApprovalStatus approval_status
+		{
+			get;
+			set;
+		}
+
+		public string rejection_reason
+		{
+			get;
+			set;
+		}
+
+		public int? approved_by_user_id
+		{
+			get;
+			set;
+		}
+
+		public string approved_by_user_name
+		{
+			get;
+			set;
+		}
+
+		public DateTime date_created
+		{
+			get;
+			set;
+		}
+
+		public DateTime date_modified
+		{
+			get;
+			set;
+		}
+
+		public DateTime? date_approved
 		{
 			get;
 			set;
