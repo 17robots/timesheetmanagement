@@ -57,13 +57,17 @@ namespace FivesBronxTimesheetManagement.Classes
 		private object[] CreateHeader()
 		{
 			PropertyInfo[] properties = typeof(T).GetProperties();
+			foreach(PropertyInfo item in properties)
+			{
+				MessageBox.Show(item.Name);
+			}
 			List<object> objs = new List<object>();
-			for (int i = 0; i < (int)properties.Length; i++)
+			for (int i = 0; i < properties.Length; i++)
 			{
 				objs.Add(properties[i].Name);
 			}
 			object[] array = objs.ToArray();
-			AddExcelRows("A1", 1, (int)array.Length, array);
+			AddExcelRows("A1", 1, array.Length, array);
 			SetHeaderStyle();
 			return array;
 		}
@@ -139,24 +143,24 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		private void SetHeaderStyle()
 		{
-			_font = this._range.Font;
+			_font = _range.Font;
 			_font.Bold = true;
 		}
 
 		private void WriteData(object[] header)
 		{
-			object[,] objArray = new object[dataToPrint.Count, (int)header.Length];
+			object[,] objArray = new object[dataToPrint.Count, header.Length];
 			for (int i = 0; i < dataToPrint.Count; i++)
 			{
 				T item = dataToPrint[i];
-				for (int j = 0; j < (int)header.Length; j++)
+				for (int j = 0; j < header.Length; j++)
 				{
 					object obj = typeof(T).InvokeMember(header[j].ToString(), BindingFlags.GetProperty, null, item, null);
-					objArray[i, j] = (obj == null ? "" : obj.ToString());
+					objArray[i, j] = obj == null ? "" : obj.ToString();
 				}
 			}
-			AddExcelRows("A2", dataToPrint.Count, (int)header.Length, objArray);
-			AutoFitColumns("A1", dataToPrint.Count + 1, (int)header.Length);
+			AddExcelRows("A2", dataToPrint.Count, header.Length, objArray);
+			AutoFitColumns("A1", dataToPrint.Count + 1, header.Length);
 		}
 	}
 }
