@@ -210,7 +210,6 @@ namespace FivesBronxTimesheetManagement.Forms
                     table
                 };
                 foreach (Entry entry in queries.Entries(CreateListQString(strs, Users)))
-                // foreach(Entry entry in queries.Entries(table, queries.ReturnIntList(CreateListQString(strs, Users), queries.t_Timesheet_c_Entry_Id)))
                 {
                     entries.Add(entry);
                 }

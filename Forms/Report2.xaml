@@ -27,8 +27,8 @@
             <RowDefinition Height=".3*" />
             <RowDefinition Height=".05*" />
         </Grid.RowDefinitions>
-        <CheckBox Name="activeUsers" Grid.Column="1" Grid.Row="1" Unchecked="activeUsers_CheckedChanged" Checked="activeUsers_CheckedChanged" Margin="0.333,0,0,0"> Show Hidden Users?</CheckBox>
-        <Label Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="5">Leave Column Blank To Choose All Items In The List</Label>
+        <CheckBox Name="activeUsers" Grid.Column="1" Grid.Row="1" Unchecked="activeUsers_CheckedChanged" Checked="activeUsers_CheckedChanged" Margin="0.333,0,0,0">Show Hidden Users?</CheckBox>
+        <Label Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="4">Leave Column Blank To Choose All Items In The List</Label>
         <DockPanel Grid.Column="1" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">User Name</Label>
             <ListView SelectionMode="Multiple" SelectionChanged="user_name_ItemSelectionChanged" Name="user_name"/>
@@ -53,13 +53,16 @@
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Section</Label>
             <ListView SelectionMode="Multiple" Name="section"></ListView>
         </DockPanel>
-        <DockPanel Grid.Column="3" Grid.Row="3">
+        <DockPanel Grid.Column="1" Grid.Row="3">
             <Label DockPanel.Dock="Top">To</Label>
             <DatePicker Name="to"></DatePicker>
         </DockPanel>
-        <DockPanel Grid.Column="5" Grid.Row="3">
+        <DockPanel Grid.Column="3" Grid.Row="3">
             <Label DockPanel.Dock="Top">From</Label>
             <DatePicker Name="from"></DatePicker>
+        </DockPanel>
+        <DockPanel Grid.Column="5" Grid.Row="3">
+            <CheckBox Name="singleUserReport" DockPanel.Dock="Bottom">One Report Per User?</CheckBox>
         </DockPanel>
         <DockPanel Grid.Column="9" Grid.Row="3" LastChildFill="False">
             <Button Click="btn_generate_Click" Name="btn_generate" DockPanel.Dock="Bottom">Generate</Button>
