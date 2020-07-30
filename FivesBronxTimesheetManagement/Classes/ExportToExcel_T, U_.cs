@@ -57,10 +57,6 @@ namespace FivesBronxTimesheetManagement.Classes
 		private object[] CreateHeader()
 		{
 			PropertyInfo[] properties = typeof(T).GetProperties();
-			foreach(PropertyInfo item in properties)
-			{
-				MessageBox.Show(item.Name);
-			}
 			List<object> objs = new List<object>();
 			for (int i = 0; i < properties.Length; i++)
 			{
