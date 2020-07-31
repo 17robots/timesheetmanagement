@@ -5,144 +5,168 @@ namespace FivesBronxTimesheetManagement.Classes
 {
 	public class Entry
 	{
+		[Order]
 		public int? entry_id
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public int user_id
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string user_name
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public int? section_id
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string project_serial
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string project_sap
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string number_section
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public int? number_network
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string number_activity
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public DateTime date
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public int period
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public int year
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public double hours
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string description
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string timesheet_code
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string task_type
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string submitted_status
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public ApprovalStatus approval_status
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string rejection_reason
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public int? approved_by_user_id
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public string approved_by_user_name
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public DateTime date_created
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public DateTime date_modified
 		{
 			get;
 			set;
 		}
 
+		[Order]
 		public DateTime? date_approved
 		{
 			get;
