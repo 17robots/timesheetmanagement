@@ -1,11 +1,15 @@
 using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
+using Cursors = System.Windows.Input.Cursors;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace FivesBronxTimesheetManagement.Classes
 {
@@ -25,6 +29,13 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public ExportToExcel()
 		{
+        }
+
+		public static IOrderedEnumerable<PropertyInfo> GetSortedProperties<T>()
+        {
+			return typeof(T)
+			.GetProperties()
+			.OrderBy(p => ((OrderAttribute)p.GetCustomAttributes(typeof(OrderAttribute), false)[0]).Order);
         }
 
 		private void AddExcelRows(string startRange, int rowCount, int colCount, object values)
@@ -56,21 +67,36 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		private object[] CreateHeader()
 		{
-			PropertyInfo[] properties = typeof(T).GetProperties();
+			var properties = (
+				from property in typeof(T).GetProperties()
+				where Attribute.IsDefined(property, typeof(OrderAttribute))
+				orderby ((OrderAttribute)property.GetCustomAttributes(typeof(OrderAttribute), false).Single()).Order
+				select property
+			).ToArray();
+
 			List<object> objs = new List<object>();
+			List<string> output = new List<string>();
+
 			for (int i = 0; i < properties.Length; i++)
 			{
 				objs.Add(properties[i].Name);
 			}
 			object[] array = objs.ToArray();
-			AddExcelRows("A1", 1, array.Length, array);
-			SetHeaderStyle();
+			// AddExcelRows("A1", 1, array.Length, array);
+			//SetHeaderStyle();
 			return array;
 		}
 
 		private void FillSheet()
-		{
+        {
 			WriteData(CreateHeader());
+        }
+
+		private void FillSheet(string separateBy)
+		{
+			WriteData(CreateHeader(), separateBy);
+			_sheet = _sheets.Add();
+			_sheet.Select();
 		}
 
 		public void GenerateReport()
@@ -92,6 +118,48 @@ namespace FivesBronxTimesheetManagement.Classes
 						Mouse.SetCursor(Cursors.Wait);
 						CreateExcelRef();
 						FillSheet();
+						OpenReport();
+						Mouse.SetCursor(Cursors.Arrow);
+					}
+				}
+				catch (Exception exception)
+				{
+					MessageBox.Show(string.Concat("Error while generating Excel report", exception.ToString()));
+				}
+			}
+			finally
+			{
+				ReleaseObject(_sheet);
+				ReleaseObject(_sheets);
+				ReleaseObject(_book);
+				ReleaseObject(_books);
+				ReleaseObject(_excelApp);
+			}
+		}
+
+		public void GenerateReport(List<User> users)
+		{
+			try
+			{
+				try
+				{
+					if (dataToPrint == null)
+					{
+						MessageBox.Show("No results found");
+					}
+					else if (dataToPrint.Count == 0)
+					{
+						MessageBox.Show("No results found");
+					}
+					else
+					{
+						Mouse.SetCursor(Cursors.Wait);
+						CreateExcelRef();
+						foreach(User user in users)
+                        {
+							FillSheet(user.UserName);
+						}
+						_sheet.Delete(); // get rid of the last sheet that we dont fill
 						OpenReport();
 						Mouse.SetCursor(Cursors.Arrow);
 					}
@@ -145,6 +213,8 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		private void WriteData(object[] header)
 		{
+			AddExcelRows("A1", 1, header.Length, header);
+			SetHeaderStyle();
 			object[,] objArray = new object[dataToPrint.Count, header.Length];
 			for (int i = 0; i < dataToPrint.Count; i++)
 			{
@@ -157,6 +227,40 @@ namespace FivesBronxTimesheetManagement.Classes
 			}
 			AddExcelRows("A2", dataToPrint.Count, header.Length, objArray);
 			AutoFitColumns("A1", dataToPrint.Count + 1, header.Length);
+		}
+
+		private void WriteData(object[] header, string separateBy)
+		{
+			List<T> filteredList = new List<T>();
+
+			foreach(T t in dataToPrint)
+            {
+				if((t as Entry).user_name == separateBy)
+                {
+					filteredList.Add(t);
+                }
+            }
+
+			if(filteredList.Count == 0)
+            {
+				_sheet.Delete();
+				return;
+            }
+
+			AddExcelRows("A1", 1, header.Length, header);
+			SetHeaderStyle();
+			object[,] objArray = new object[filteredList.Count, header.Length];
+			for (int i = 0; i < filteredList.Count; i++)
+			{
+				T item = filteredList[i];
+				for (int j = 0; j < header.Length; j++)
+				{
+					object obj = typeof(T).InvokeMember(header[j].ToString(), BindingFlags.GetProperty, null, item, null);
+					objArray[i, j] = obj == null ? "" : obj.ToString();
+				}
+			}
+			AddExcelRows("A2", filteredList.Count, header.Length, objArray);
+			AutoFitColumns("A1", filteredList.Count + 1, header.Length);
 		}
 	}
 }

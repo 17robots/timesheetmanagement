@@ -46,7 +46,15 @@ namespace FivesBronxTimesheetManagement.Forms
             {
                 dataToPrint = GetEntries(SelectedUsers(), SelectedTables())
             };
-            export.GenerateReport();
+
+            if((singleUserReport.IsChecked ?? false) && (MessageBox.Show("Running Individual Reports For More That 10 People Will Take A While. Proceed?", "Individual Report", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
+            {
+                export.GenerateReport(SelectedUsers());
+            }
+            else if((singleUserReport.IsChecked ?? false) == false)
+            {
+                export.GenerateReport();
+            }
         }
 
         private void task_type_ItemSelectionChanged(object sender, SelectionChangedEventArgs e) // used
@@ -210,7 +218,6 @@ namespace FivesBronxTimesheetManagement.Forms
                     table
                 };
                 foreach (Entry entry in queries.Entries(CreateListQString(strs, Users)))
-                // foreach(Entry entry in queries.Entries(table, queries.ReturnIntList(CreateListQString(strs, Users), queries.t_Timesheet_c_Entry_Id)))
                 {
                     entries.Add(entry);
                 }
@@ -395,6 +402,11 @@ namespace FivesBronxTimesheetManagement.Forms
                     }
                 }
             }
+        }
+
+        private void singleUserReport_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
