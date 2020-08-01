@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -21,6 +22,8 @@ namespace FivesBronxTimesheetManagement.Forms
         private List<string> availableTables;
 
         private List<string> selectedTables;
+
+        private List<string> colNames;
 
         private ExportToExcel<Entry, List<Entry>> export;
 
@@ -49,22 +52,24 @@ namespace FivesBronxTimesheetManagement.Forms
 
             if((singleUserReport.IsChecked ?? false) && (MessageBox.Show("Running Individual Reports For More That 10 People Will Take A While. Proceed?", "Individual Report", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
             {
-                export.GenerateReport(SelectedUsers());
+                if (columns.SelectedItems.Count != 0)
+                {
+                    List<string> filteredCols = new List<string>();
+                    foreach (string prop in columns.SelectedItems) filteredCols.Add(prop);
+                    export.GenerateReport(SelectedUsers(), filteredCols);
+                }
+                else export.GenerateReport(SelectedUsers());
             }
             else if((singleUserReport.IsChecked ?? false) == false)
             {
-                export.GenerateReport();
+                if (columns.SelectedItems.Count != 0)
+                {
+                    List<string> filteredCols = new List<string>();
+                    foreach (string prop in columns.SelectedItems) filteredCols.Add(prop);
+                    export.GenerateReport(filteredCols);
+                }
+                else export.GenerateReport();
             }
-        }
-
-        private void task_type_ItemSelectionChanged(object sender, SelectionChangedEventArgs e) // used
-        {
-            UpdateSections();
-        }
-
-        private void project_ItemSelectionChanged(object sender, SelectionChangedEventArgs e) // used
-        {
-            UpdateSections();
         }
 
         private List<string> CreateListQString(List<string> _tables, List<User> _users)
@@ -78,7 +83,6 @@ namespace FivesBronxTimesheetManagement.Forms
             string str = "";
             string str1 = "";
             string str2 = "";
-            string str3 = "";
             string str4 = "";
             string listString;
 
@@ -128,22 +132,6 @@ namespace FivesBronxTimesheetManagement.Forms
 
                 tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Project_Serial, " in (", listString, ")" };
                 str2 = string.Concat(tTimesheetCTimesheetCode);
-            }
-
-            if (section.SelectedItems.Count != 0)
-            {
-                listString = "";
-                foreach (var item in section.SelectedItems)
-                {
-                    listString += "'";
-                    listString += item;
-                    listString += "',";
-                }
-
-                listString = listString.Substring(0, listString.Length - 1);
-
-                tTimesheetCTimesheetCode = new string[] { " AND ", queries.t_Timesheet_c_Number_Section, " in (", listString, ")" };
-                str3 = string.Concat(tTimesheetCTimesheetCode);
             }
 
             if (from.SelectedDate.HasValue)
@@ -201,7 +189,7 @@ namespace FivesBronxTimesheetManagement.Forms
             {
                 foreach (string _table in _tables)
                 {
-                    object[] userID = new object[] { "SELECT * FROM ", _table, " WHERE user_id = '", _user.UserID, "'", str, str1, str2, str3, str4 };
+                    object[] userID = new object[] { "SELECT * FROM ", _table, " WHERE user_id = '", _user.UserID, "'", str, str1, str2, str4 };
                     strs.Add(string.Concat(userID));
                 }
             }
@@ -243,6 +231,14 @@ namespace FivesBronxTimesheetManagement.Forms
             timesheet_code.DisplayMemberPath = "Code_Description";
             timesheet_code.SelectedValuePath = "Code";
 
+            colNames = new List<string>();
+
+            foreach(PropertyInfo prop in typeof(Entry).GetProperties())
+            {
+                colNames.Add(prop.Name);
+            }
+
+            columns.ItemsSource = colNames;
         }
 
         private void LoadUsersRules()
@@ -328,7 +324,7 @@ namespace FivesBronxTimesheetManagement.Forms
             selectedUsers = SelectedUsers();
         }
 
-        private void UpdateSections()
+        /*private void UpdateSections()
         {
             section.Items.Clear();
             if(projectSelect.SelectedItems != null || section.SelectedItems != null)
@@ -402,11 +398,6 @@ namespace FivesBronxTimesheetManagement.Forms
                     }
                 }
             }
-        }
-
-        private void singleUserReport_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
+        }*/
     }
 }
