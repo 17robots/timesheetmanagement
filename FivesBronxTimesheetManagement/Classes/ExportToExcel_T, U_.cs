@@ -31,13 +31,6 @@ namespace FivesBronxTimesheetManagement.Classes
 		{
         }
 
-		public static IOrderedEnumerable<PropertyInfo> GetSortedProperties<T>()
-        {
-			return typeof(T)
-			.GetProperties()
-			.OrderBy(p => ((OrderAttribute)p.GetCustomAttributes(typeof(OrderAttribute), false)[0]).Order);
-        }
-
 		private void AddExcelRows(string startRange, int rowCount, int colCount, object values)
 		{
             string first = ((char)(Encoding.ASCII.GetBytes(startRange.Substring(0, 1))[0] + colCount - 1)).ToString();
@@ -82,8 +75,26 @@ namespace FivesBronxTimesheetManagement.Classes
 				objs.Add(properties[i].Name);
 			}
 			object[] array = objs.ToArray();
-			// AddExcelRows("A1", 1, array.Length, array);
-			//SetHeaderStyle();
+			return array;
+		}
+
+		private object[] CreateHeader(List<string> cols)
+		{
+			var properties = (
+				from property in typeof(T).GetProperties()
+				where Attribute.IsDefined(property, typeof(OrderAttribute)) && cols.Contains(property.Name)
+				orderby ((OrderAttribute)property.GetCustomAttributes(typeof(OrderAttribute), false).Single()).Order
+				select property
+			).ToArray();
+
+			List<object> objs = new List<object>();
+			List<string> output = new List<string>();
+
+			for (int i = 0; i < properties.Length; i++)
+			{
+				objs.Add(properties[i].Name);
+			}
+			object[] array = objs.ToArray();
 			return array;
 		}
 
@@ -92,9 +103,21 @@ namespace FivesBronxTimesheetManagement.Classes
 			WriteData(CreateHeader());
         }
 
+		private void FillSheet(List<string> cols)
+		{
+			WriteData(CreateHeader(cols));
+		}
+
 		private void FillSheet(string separateBy)
 		{
 			WriteData(CreateHeader(), separateBy);
+			_sheet = _sheets.Add();
+			_sheet.Select();
+		}
+
+		private void FillSheet(string separateBy, List<string> cols)
+		{
+			WriteData(CreateHeader(cols), separateBy);
 			_sheet = _sheets.Add();
 			_sheet.Select();
 		}
@@ -137,6 +160,44 @@ namespace FivesBronxTimesheetManagement.Classes
 			}
 		}
 
+		public void GenerateReport(List<string> cols)
+		{
+			try
+			{
+				try
+				{
+					if (dataToPrint == null)
+					{
+						MessageBox.Show("No results found");
+					}
+					else if (dataToPrint.Count == 0)
+					{
+						MessageBox.Show("No results found");
+					}
+					else
+					{
+						Mouse.SetCursor(Cursors.Wait);
+						CreateExcelRef();
+						FillSheet(cols);
+						OpenReport();
+						Mouse.SetCursor(Cursors.Arrow);
+					}
+				}
+				catch (Exception exception)
+				{
+					MessageBox.Show(string.Concat("Error while generating Excel report", exception.ToString()));
+				}
+			}
+			finally
+			{
+				ReleaseObject(_sheet);
+				ReleaseObject(_sheets);
+				ReleaseObject(_book);
+				ReleaseObject(_books);
+				ReleaseObject(_excelApp);
+			}
+		}
+
 		public void GenerateReport(List<User> users)
 		{
 			try
@@ -158,6 +219,48 @@ namespace FivesBronxTimesheetManagement.Classes
 						foreach(User user in users)
                         {
 							FillSheet(user.UserName);
+						}
+						_sheet.Delete(); // get rid of the last sheet that we dont fill
+						OpenReport();
+						Mouse.SetCursor(Cursors.Arrow);
+					}
+				}
+				catch (Exception exception)
+				{
+					MessageBox.Show(string.Concat("Error while generating Excel report", exception.ToString()));
+				}
+			}
+			finally
+			{
+				ReleaseObject(_sheet);
+				ReleaseObject(_sheets);
+				ReleaseObject(_book);
+				ReleaseObject(_books);
+				ReleaseObject(_excelApp);
+			}
+		}
+
+		public void GenerateReport(List<User> users, List<string> cols)
+		{
+			try
+			{
+				try
+				{
+					if (dataToPrint == null)
+					{
+						MessageBox.Show("No results found");
+					}
+					else if (dataToPrint.Count == 0)
+					{
+						MessageBox.Show("No results found");
+					}
+					else
+					{
+						Mouse.SetCursor(Cursors.Wait);
+						CreateExcelRef();
+						foreach (User user in users)
+						{
+							FillSheet(user.UserName, cols);
 						}
 						_sheet.Delete(); // get rid of the last sheet that we dont fill
 						OpenReport();

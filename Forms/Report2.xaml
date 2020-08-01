@@ -43,15 +43,15 @@
         </DockPanel>
         <DockPanel Grid.Column="7" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Task Type</Label>
-            <ListView SelectionMode="Multiple" SelectionChanged="task_type_ItemSelectionChanged" Name="task_type"></ListView>
+            <ListView SelectionMode="Multiple" Name="task_type"></ListView>
         </DockPanel>
         <DockPanel Grid.Column="9" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Project</Label>
-            <ListView SelectionMode="Multiple" SelectionChanged="project_ItemSelectionChanged" Name="projectSelect" HorizontalAlignment="Stretch"></ListView>
+            <ListView SelectionMode="Multiple" Name="projectSelect" HorizontalAlignment="Stretch"></ListView>
         </DockPanel>
         <DockPanel Grid.Column="11" Grid.Row="2">
-            <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Section</Label>
-            <ListView SelectionMode="Multiple" Name="section"></ListView>
+            <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Columns</Label>
+            <ListView SelectionMode="Multiple" Name="columns"></ListView>
         </DockPanel>
         <DockPanel Grid.Column="3" Grid.Row="3">
             <Label DockPanel.Dock="Top">To</Label>
@@ -62,7 +62,7 @@
             <DatePicker Name="from"></DatePicker>
         </DockPanel>
         <DockPanel Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2">
-            <CheckBox Name="singleUserReport" DockPanel.Dock="Bottom" Checked="singleUserReport_Checked">One Report Per User?</CheckBox>
+            <CheckBox Name="singleUserReport" DockPanel.Dock="Bottom">One Report Per User?</CheckBox>
         </DockPanel>
         <DockPanel Grid.Column="9" Grid.Row="3" LastChildFill="False">
             <Button Click="btn_generate_Click" Name="btn_generate" DockPanel.Dock="Bottom">Generate</Button>
