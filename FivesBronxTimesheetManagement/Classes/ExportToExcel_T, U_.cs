@@ -5,15 +5,13 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 using Cursors = System.Windows.Input.Cursors;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace FivesBronxTimesheetManagement.Classes
 {
-    public class ExportToExcel<T, U>
+	public class ExportToExcel<T, U>
 	where T : class
 	where U : List<T>
 	{
@@ -29,33 +27,33 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public ExportToExcel()
 		{
-        }
+		}
 
 		private void AddExcelRows(string startRange, int rowCount, int colCount, object values)
 		{
-            string first = ((char)(Encoding.ASCII.GetBytes(startRange.Substring(0, 1))[0] + colCount - 1)).ToString();
-            string last = (Int32.Parse(startRange.Substring(1, 1)) + rowCount - 1).ToString();
-            _range = _sheet.get_Range(startRange, string.Concat(first, last));
-            _range.HorizontalAlignment = XlHAlign.xlHAlignCenter;
-            _range.Value2 = values;
+			string first = ((char)(Encoding.ASCII.GetBytes(startRange.Substring(0, 1))[0] + colCount - 1)).ToString();
+			string last = (Int32.Parse(startRange.Substring(1, 1)) + rowCount - 1).ToString();
+			_range = _sheet.get_Range(startRange, string.Concat(first, last));
+			_range.HorizontalAlignment = XlHAlign.xlHAlignCenter;
+			_range.Value2 = values;
 		}
 
 		private void AutoFitColumns(string startRange, int rowCount, int colCount)
 		{
-            string first = ((char)(Encoding.ASCII.GetBytes(startRange.Substring(0, 1))[0] + colCount - 1)).ToString();
-            string last = (Int32.Parse(startRange.Substring(1, 1)) + rowCount - 1).ToString();
-            _range = _sheet.get_Range(startRange, string.Concat(first, last));
-            _range.HorizontalAlignment = XlHAlign.xlHAlignCenter;
-            _range.Columns.AutoFit();
+			string first = ((char)(Encoding.ASCII.GetBytes(startRange.Substring(0, 1))[0] + colCount - 1)).ToString();
+			string last = (Int32.Parse(startRange.Substring(1, 1)) + rowCount - 1).ToString();
+			_range = _sheet.get_Range(startRange, string.Concat(first, last));
+			_range.HorizontalAlignment = XlHAlign.xlHAlignCenter;
+			_range.Columns.AutoFit();
 		}
 
 		private void CreateExcelRef()
 		{
-            _excelApp = new Microsoft.Office.Interop.Excel.Application();
-            _books = _excelApp.Workbooks;
-            _book = _excelApp.Workbooks.Add();
-            _sheets = _book.Worksheets;
-            _sheet = (_Worksheet)_excelApp.ActiveSheet;
+			_excelApp = new Microsoft.Office.Interop.Excel.Application();
+			_books = _excelApp.Workbooks;
+			_book = _excelApp.Workbooks.Add();
+			_sheets = _book.Worksheets;
+			_sheet = (_Worksheet)_excelApp.ActiveSheet;
 		}
 
 		private object[] CreateHeader()
@@ -99,9 +97,9 @@ namespace FivesBronxTimesheetManagement.Classes
 		}
 
 		private void FillSheet()
-        {
+		{
 			WriteData(CreateHeader());
-        }
+		}
 
 		private void FillSheet(List<string> cols)
 		{
@@ -111,15 +109,21 @@ namespace FivesBronxTimesheetManagement.Classes
 		private void FillSheet(string separateBy)
 		{
 			WriteData(CreateHeader(), separateBy);
-			_sheet = _sheets.Add();
-			_sheet.Select();
+			if ((_excelApp.ActiveSheet as _Worksheet).Range["A1"].Value2 != null)
+			{
+				_sheet = _sheets.Add();
+				_sheet.Select();
+			}
 		}
 
 		private void FillSheet(string separateBy, List<string> cols)
 		{
 			WriteData(CreateHeader(cols), separateBy);
-			_sheet = _sheets.Add();
-			_sheet.Select();
+			if ((_excelApp.ActiveSheet as _Worksheet).Range["A1"].Value2 != null)
+			{
+				_sheet = _sheets.Add();
+				_sheet.Select();
+			}
 		}
 
 		public void GenerateReport()
@@ -216,8 +220,8 @@ namespace FivesBronxTimesheetManagement.Classes
 					{
 						Mouse.SetCursor(Cursors.Wait);
 						CreateExcelRef();
-						foreach(User user in users)
-                        {
+						foreach (User user in users)
+						{
 							FillSheet(user.UserName);
 						}
 						_sheet.Delete(); // get rid of the last sheet that we dont fill
@@ -293,7 +297,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			{
 				try
 				{
-					if(obj != null)
+					if (obj != null)
 						Marshal.ReleaseComObject(obj);
 					obj = null;
 				}
@@ -336,19 +340,22 @@ namespace FivesBronxTimesheetManagement.Classes
 		{
 			List<T> filteredList = new List<T>();
 
-			foreach(T t in dataToPrint)
-            {
-				if((t as Entry).user_name == separateBy)
-                {
+			foreach (T t in dataToPrint)
+			{
+				if ((t as Entry).user_name == separateBy)
+				{
 					filteredList.Add(t);
-                }
-            }
+				}
+			}
 
-			if(filteredList.Count == 0)
-            {
-				_sheet.Delete();
+			if (filteredList.Count == 0)
+			{
+				if (_sheets.Count > 1)
+				{
+					_sheet.Delete();
+				}
 				return;
-            }
+			}
 
 			AddExcelRows("A1", 1, header.Length, header);
 			SetHeaderStyle();
