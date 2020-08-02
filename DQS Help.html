@@ -1,0 +1,861 @@
+<html>
+<title>Database Quick Search Help....
+</title>
+<body bgcolor="#848587" text="222222" link="#860047" vlink="#860047" alink="#860047" style="margin:75">
+    <font face="Verdana,Times New Roman">
+        <fieldset>
+            <legend>
+                <h1><a name="Top">Table of contents:</a></h1>
+            </legend>
+            <ul>
+                <li>
+                    <a href="#Welcome">Welcome</a>
+                </li>
+                <li>
+                    <a href="#Started">Getting Started</a>
+                </li>
+                <li>
+                    <a href="#Features">Features & Usage</a>
+                </li>
+                <li>
+                    <a href="#Questions">Questions & Answers</a>
+                </li>
+                <li>
+                    <a href="#Contact">Contact</a>
+                </li>
+                <li>
+                    <a href="#Release">Release Notes</a>
+                </li>
+            </ul>
+        </fieldset><br /><br /><br />
+        <h2>
+            <a name="Welcome">Welcome</a>
+        </h2>
+        <p>
+            Welcome to Database Quick Search. DQS, created by Evan Elrod, is a tool used to rapidly find drawings, spreadsheets, PDF files, and anything else saved on the various network drives. A separate program builds a database of all files on a semi-daily basis. DQS, in turn, scans the database for file information (which is much faster than searching the actual drives) and takes you to the file's location.
+        </p>
+        <p>
+            The purpose of creating this program was so that we wouldn’t have to wait around for AutoCAD, Windows, etc. to find a file. As the amount of files on our server continues to balloon, it is my hope that this program will save you a great deal of time and allow you to be more efficient in your tasks.
+        </p>
+        <hr />
+        <a href="#Top">Top</a>
+        <h2>
+            <a name="Started">Getting Started</a>
+        </h2>
+        <p>
+            Although intended to be intuitive, there may be some features of the program which may be better utilized after understanding how they may benefit you.<br />
+            Let's start with basic usage:<br />
+            &nbsp;&nbsp;&nbsp;Step 0: (Optional) Check/un-check the checkboxes applicable to the file you're looking for. Upon first-use, you may want to save your settings if you wish to use these parameters on future searches. See the "Features & Usage" section for more information.<br />
+            &nbsp;&nbsp;&nbsp;Step 1: Begin typing the name or number of the file you're searching for.<br />
+            &nbsp;&nbsp;&nbsp;Step 2a: To open the file, click the "Open file" button (or you can press the [Enter]-key or use the [Alt]+[O] key-combination).<br />
+            &nbsp;&nbsp;&nbsp;Step 2b: To see the file in Windows Explorer, click the "Show In Explorer" button (or you can use the [Alt]+[S] key-combination).<br />
+            If your search yielded multiple results, you'll be presented with another window displaying the results. From here you can double-click the desired file. See "Features & Usage", item "8", for more information.<br /><br />
+            If you are unsure of a feature, briefly rest your mouse over it for a small tooltip which will provide a summarized explanation. For a full explanation into all aspects of the program, please look through the next section, "Features & Usage".
+        </p>
+        <hr />
+        <a href="#Top">Top</a>
+        <h2>
+            <a name="Features">Features & Usage</a>
+        </h2>
+        <img src="Help Pictures/Main Screen.bmp" align="left" /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <p><font size="5">
+                <ol>
+                    <li><a href="#1">
+                        Menu-Bar
+                    </a></li>
+                    <li><a href="#2">
+                        File Type and Network Path Selection
+                    </a></li>
+                    <li><a href="#3">
+                        "Search for" Parameters
+                    </a></li>
+                    <li><a href="#4">
+                        Miscellaneous
+                    </a></li>
+                    <li><a href="#5">
+                        Filename Must Start With....
+                    </a></li>
+                    <li><a href="#6">
+                        File to Search for
+                    </a></li>
+                    <li><a href="#7">
+                        Wildcard Usage
+                    </a></li>
+                    <li><a href="#8">
+                        User Action Buttons
+                </ol>
+            </font></p><br />
+        <hr />
+        <a href="#Features">
+            Top of Section
+        </a>
+        <h3><a name="1">
+                1. Menu Bar
+            </a></h3>
+        <img src="Help Pictures/Menu Bar.bmp" />
+        <p>
+            The menu-bar is divided into four sections: "File", "Presets", "History, and "Help".
+        </p>
+        <b><u>"File"</u></b> - Contains standard, common, or general commands.<br /><br />
+        <img src="Help Pictures/File Menu Local Database.bmp" /><br /><br />
+        <img src="Help Pictures/File Menu.bmp" />
+        <ul>
+            <li>
+                <b>"Local Database"</b> - Lists local drives and when they were built.
+                <ul>
+                    <li>
+                        <b>[Individual Local Drives]</b> - Each local drive is shown and when it was last updated. Clicking it will update the individual drive.
+                    </li>
+                    <li>
+                        <b>"Build All"</b> - Updates all local drives if more than one is listed. Not shown if only one local drive is available.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>"Settings"</b> - Contains the various customizable options below:
+                <ul>
+                    <li>
+                        <b>"Colors"</b> - Set the color-scheme base on your preferences. <a href="Help Pictures/Main Screen Colors.bmp">Click here to see all color schemes.</a>
+                    </li>
+                    <li>
+                        <b>"Default Button"</b> - From the options below, set the button that corresponds with the [Enter]-key.
+                        <ul>
+                            <li>
+                                <b>"Open File"</b> - Opens the file in its default program.
+                            </li>
+                            <li>
+                                <b>"Show In Explorer"</b> - Takes you to the file's location in file explorer.
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <b>"Default Search Parameters"</b> - Check-boxes checked/un-checked when you start the program. Options below:
+                        <ul>
+                            <li>
+                                <b>"Custom Saved"</b> - What you've personally saved using [Ctrl]+[S].
+                            </li>
+                            <li>
+                                <b>"Previous Use"</b> - Restores the settings of your very last use. This is set by default.
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <b><u>"Presets"</u></b> - Contains predefined 'packages' of checked/un-checked check boxes, suited to specific departments/needs.<br /><br />
+        <img src="Help Pictures/Preset Menu.bmp" />
+        <ul>
+            <li>
+                <b>"1.) Bronx Engineering"</b> - Specifically suited for finding files in the Engineering Department. <i>Hotkey: [Ctrl]+[1]</i>
+            </li>
+            <li>
+                <b>"2.) Abbey Engineering"</b> - Specifically suited for finding files related to archive Abbey engineering. <i>Hotkey: [Ctrl]+[2]</i>
+            </li>
+            <li>
+                <b>"3.) Bronx Aftermarket"</b> - Specifically suited for finding files in the Aftermarket Department. <i>Hotkey: [Ctrl]+[3]</i>
+            </li>
+            <li>
+                <b>"9.) Maximum Search"</b> - This will do a complete search for all files indexed on the databases that you have access to. <i>Hotkey: [Ctrl]+[9]</i>
+            </li>
+            <li>
+                <b>"0.) Custom"</b> - In case you've changed your check-boxes, this will revert to your saved settings. <i>Hotkey: [Ctrl]+[0]</i>
+            </li>
+            <li>
+                <b>"My Local Drive(s) Search"</b> - This will only search your local drives. <i>Hotkey: [Ctrl]+[M]</i>
+            </li>
+            <li>
+                <b>"Previous Search Parameters"</b> - This will use the same parameters as your most previous search. <i>Hotkey: [Ctrl]+[P]</i>
+            </li>
+            <li>
+                <b>"Save Custom Search Settings"</b> - This save the checkboxes and other settings. <i>Hotkey: [Ctrl]+[S]</i>
+            </li>
+        </ul>
+        <b><u>"History"</u></b> - Options to manage and view previous searches.<br /><br />
+        <img src="Help Pictures/History Menu.bmp" />
+        <ul>
+            <li>
+                <b>"Show History"</b> - This will bring up a list of previous searches with the following options:<br />
+                <img src="Help Pictures/Show History.bmp" /><br />
+                <ul>
+                    <li>
+                        <b>"Search File Again"</b> - This will re-search the filename you selected, also allowing you to search with different parameters.
+                    </li>
+                    <li>
+                        <b>"Open File"</b> - This will open the file you selected (without searching) in the applicable program, based on the file's type.
+                    </li>
+                    <li>
+                        <b>"Show In Explorer"</b> - This will take you to the selected file's location (without searching) in file explorer.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>"Clear History"</b> - As implied, this will remove all entries from your search history.
+            </li>
+        </ul>
+        <b><u>"Help"</u></b> - Go here if you encounter problems with or need information about the "Database Quick Search" program.<br /><br />
+        <img src="Help Pictures/Help Menu.bmp" />
+        <ul>
+            <li>
+                <b>"View Help"</b> - Open this help page that you are currently viewing.
+            </li>
+            <li>
+                <b>"What's New"</b> - Lists the detailed view of all changes and updates to the program.
+            </li>
+            <li>
+                <b>"User Statistics"</b> - Lists all users who have used the program within the last 30 days and details about their installations and searches.
+            </li>
+            <li>
+                <b>"About"</b> - Shows basic program version information and lists when the databases were last updated.
+            </li>
+        </ul>
+        <a href="#Features">
+            Top of Section
+        </a>
+        <h3><a name="2">
+            2. File Type and Network Path Selection
+        </a></h3>
+        <img src="Help Pictures/Checkbox Selection.bmp" /><br /><br />
+	Clicking the "Edit Search Criteria" button or either list box will open the "Edit Search Criteria" dialog box. In this box you can add filetypes and local/network paths. Once your selection is complete, press enter or click the "Update Search Criteria" button. The list boxes will update based on your selections.<br /><br />
+        Filetypes are determined by the extension of the filename and determine what programs will open them by default.<br />
+        The file-types to choose one or more of:
+        <ul>
+            <li>
+                <b>".dwg"</b> - The standard drawing extension, usually opened with AutoCAD, TrueView, etc.
+            </li>
+            <li>
+                <b>".dwf"</b> - An Autodesk Design Web Format file.  Usually opened with Autodesk Design Review.
+            </li>
+            <li>
+                <b>".pdf"</b> - Many documents can be saved in this format, usually opened with an Adobe product, such as Adobe Reader.
+            </li>
+            <li>
+                <b>".tif"</b> - A standard picture format.  Scanned drawings are usually saved with this extension.  Can be opened with many programs such as Microsoft Picture Viewer.
+            </li>
+            <li>
+                <b>".xls(x)"</b> - Common extensions for Microsoft Excel.  Almost always opens with Microsoft Excel.
+            </li>
+            <li>
+                <b>"Other"</b> - This covers all other extensions besides those shown above.  Use cautiously as this will make your search take a bit longer.
+            </li>
+            <li>
+                <b>"Select All/None"</b> - Use this to quickly check/un-check all check-boxes in this selection set.
+            </li>
+        </ul>
+        The drives and paths are located on the network server and are where we store the bulk of our files.<br />
+        The drives to choose one or more of:
+        <ul>
+            <li>
+                <b>"Aftermarket (R)"</b> - Aftermarket drawings and projects.
+            </li>
+            <li>
+                <b>"Company (N)"</b> - Company-related files.
+            </li>
+            <li>
+                <b>"Engineering (Q)"</b> - Engineering files.
+                <ul>
+                    <li>
+                        <b>"Abbey Drawings"</b> - Archived Abbey projects.
+                    </li>
+                    <li>
+                        <b>"Abbey Projects"</b> - Abbey projects.
+                    </li>
+                    <li>
+                        <b>"Bronx Drawings"</b> - Engineering files, drawings, and models.
+                    </li>
+                    <li>
+                        <b>"WIP"</b> - Engineering work-in-process files, largely unused.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>"NAS (Z)\Scanned Drawings"</b> - Scans of physical drawings.
+                <ul>
+                    <li>
+                        <b>"Abbey Scanned Drawings"</b> - Scans of Abbey physical files.
+                    </li>
+                    <li>
+                        <b>"Bronx Scanned Drawings"</b> - Scans of Bronx physical files.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>"Procurement (P)"</b> - POs, SAP-related files, etc.
+            </li>
+            <li>
+                <b>"Projects (T)"</b> - Manuals, project management, transmittals, etc.
+            </li>
+            <li>
+                <b>"Public (Y)"</b> - Catalogs, public documents and software, misc. folders, etc.
+            </li>
+            <li>
+                <b>"Sales (S)"</b> - Sales and presentation documents pertaining to past and current jobs.
+            </li>
+            <li>
+                <b>"Select All/None"</b> - Use this to quickly check/un-check all check-boxes in this selection set.
+            </li>
+        </ul>
+        Local drives are detected and shown as options to choose. Most will have one or two drives. If a local database hasn't been made or is older than seven days, you'll be prompted to update. The update process is brief.<br /><br />
+        <a href="#Features">
+            Top of Section
+        </a>
+        <h3><a name="3">
+            3. "Search for" Parameters
+        </a></h3>
+        <img src="Help Pictures/Search for.bmp" /><br /><br />
+        This feature is disabled as it has not been completed (nor will be, sadly). It would have allowed for the searching of individual file attributes or drawing block attributes. The proof-of-concept code has been created for AutoCAD drawing titleblock attributes if anyone should take up this project. As it is currently, it will only allow for searches of filenames.<br /><br />
+        <a href="#Features">
+            Top of Section
+        </a>
+        <h3><a name="4">
+            4. Miscellaneous
+        </a></h3>
+        <img src="Help Pictures/Miscellaneous.bmp" />
+        <p>
+            Various options to modify your search results and how it's opened.<br />
+            The miscellaneous options are:
+            <ul>
+                <li>
+                    <b>"Suppress results in *\old*, *commercial*, etc."</b> - If checked, results which have the following in their file-path will be filtered out: "\old", "\ref", "\received", "\recieved", "void", "deleted", "original", and "zbronx". If any additions or subtractions need to be made from this list, it can be easily modified and is located here: Y:\Utilities & Software\Database Quick Search\Statistics\Filter List.txt.
+                </li>
+                <li>
+                    <b>"Open file as 'READ-ONLY' (if applicable)"</b> - If checked and applicable, your result will be opened in read-only mode.
+                </li>
+                <li>
+                    <b>"Abbey Search" and button</b> - If checked, it inserts the wildcard asterisk (*) between each typed character. Enclose any portion that you know to be consecutive in single quotes ('). Alternatively, use the "Abbey Helper" button to format the text appropriately. Note that clicking the button auto-checks the "Abbey Search" checkbox, as it is necessary for the program to understand how to search.<br />
+                       Examples:<br />
+                       8k4-300 would find B-08K004-00300-00 and 018K14-00230-00 (+2,000 others)<br />
+                       8k4-'300' would find B-08K004-00300-00 and C-08K043-00300-00 (+20 others)<br />
+                       8k'4-''300' would find B-08K004-00300-00
+                </li>
+            </ul>
+        </p>
+        <a href="#Features">
+            Top of Section
+        </a>
+        <h3><a name="5">
+            5. File-Name Must Start With....
+        </a></h3>
+        <img src="Help Pictures/Must Start.bmp" />
+        <p>
+            Check this check-box if you know your desired file(s) begins with what you type in the text-box. Uncheck this checkbox if your desired file(s) might not begin with what you type in the textbox.<br /><br />
+            <i>Examples:</i><br />
+            Most Bronx drawing files start with a known 5 or 6-digit number, so you would check the "Must Start With...." checkbox to make your searches faster.<br />
+            If you're searching for all cylinder .pdf catalogs using the search-text "cyl", you would likely want to uncheck the "Must Start With...." checkbox, as it is likely that there are many files that you may want, but do not start with "cyl".<br />
+            If you're searching for an Abbey drawing using the search-text "8K4-123", you would want to uncheck the "Must Start With...." checkbox, as there may be files that begin "X-08K004", etc. Note that checking the "Abbey Search" checkbox nullifies the "Must Start With...." checkbox.
+        </p>
+        <p>
+            Note that having this checkbox unchecked may significantly increase the time it takes to find your file. It is recommended that this box remains checked unless you <i>strongly suspect</i> that your file doesn't begin with what you've typed in the search textbox.
+        </p>
+        <a href="#Features">
+            Top of Section
+        </a>
+        <h3><a name="6"><a name="7">
+            6, 7. File to Search for & Wildcard Usage
+        </a></a></h3>
+        <img src="Help Pictures/File to Search for.bmp" />
+        <p>
+            This is where you type what you're searching for.  Note that the text is highlighted when you open the program; this means that you can begin typing immediately, without having to delete or select the text that is already there. Click the "WILDCARD Usage...." link to pop-out an informative tooltip, shown below. The text of the link changes to allow you to close the tooltip.
+        </p>
+        <img src="Help Pictures/Tooltip.bmp" /><br /><br />
+        <a href="#Features">
+            Top of Section
+        </a>
+        <h3><a name="8">
+            8. User Action Buttons
+        </a></h3>
+        <img src="Help Pictures/Buttons.bmp" />
+        <p>
+            After typing for what to search, you can press the [Enter]-key, which is defaulted to the "Open File" button. This default can be changed by going to "File" » "Settings" » "Default Button". The [Alt]+[O] key-combination does this same task. The [Alt]+[S] key-combination is the same as clicking the "Show In Explorer" button.  
+            <ul>
+                <li>
+                    <b>"Open File"</b> - Clicking this button will open the file in your computer's default program to open such files.  <i>Hotkey: [Alt] + [O]</i>
+                </li>
+                <li>
+                    <b>"Show In Explorer"</b> - Clicking this button will take you to the file's location in Windows Explorer.  <i>Hotkey: [Alt] + [S]</i>
+                </li>
+            </ul>
+        </p>
+        If multiple files are found, a new window will pop-up, displaying a complete list of all matches.<br />
+        <img src="Help Pictures/Multiple Found.bmp" />
+        <p>
+            It is sorted by filename by default, but feel free to sort as needed to help you find what you're looking for.  
+            From that point, you can double-click (or select and press [Enter]) the file you want (also, see options below). Or, if you want to keep the results window open, you can right-click individual files to take you to the file's location in file explorer.<br />
+            If you had previously clicked the "Open File" button, you will be able to open multiple files (using [shift], [ctrl], or a crossing-window). Though, you may only select one file if you had previously clicked the "Show In Explorer" button. This is because it would open up a separate explorer window for each file, and that is probably undesirable.<br /><br />
+            Two additional features have been added to this window:
+            <ul>
+                <li>
+                    <b>"Export list to .csv" button</b> - The entire list will be exported to a CSV-file (can open with Excel) which you can save wherever you choose. Its formatting is similar to that of the "Multiple Files Found...." window.
+                </li>
+                <li>
+                    <b>Right-click an item » "Open in Explorer (without closing window)"</b> - As implied, you can open the file's location in file explorer while keeping the "Multiple Files Found...." window open. You can open as many as you'd like, but just one at a time. If multiple files are selected when you right-click, only the one that was right-clicked or had primary focus will be shown in file explorer.
+                </li>
+            </ul>
+        </p><hr />
+        <a href="#Top">
+            Top
+        </a>
+        <h2><a name="Questions">
+                Questions & Answers
+        </a></h2>
+        <p>
+            <b>Q:</b>
+            <i>Why are the checkboxes not staying how I had them?</i><br />
+            <b>A:</b>
+            After you've checked/unchecked whichever checkboxes suit your needs, save your settings by going to "Presets" in the menu-bar and selecting "Save Settings" (which can also be done with the key-combination: [ctrl]+[s]).<br />
+            Alternatively, you can set the default parameters to be as what you had last searched by going to "File" » "Settings" » "Default Search Parameters" and selecting "Previous Use".
+        </p>
+        <p>
+            <b>Q:</b>
+            <i>Why is [Windows-Key] + [F] not working anymore?</i><br />
+            <b>A:</b>
+            This is likely an issue with the operating system or group policy settings. Regardless, to restore functionality, in file explorer go to %appdata%\Microsoft\Windows\Start Menu\Programs\Startup and double-click "DQSWinF.exe".
+        </p>
+        <p>
+            <b>Q:</b>
+            <i>Why is the program not finding my file (I know it exists)?</i><br />
+            <b>A:</b>
+            Make sure the checkboxes you have checked make sense for the file you're looking for and try searching again.<br />
+            If the file was added to the server recently, after the database was last built, the file won't be in the database until the next update. You can check when the databases were last built by going to "Help" in the file menu and clicking "About".<br />
+            If the file has been renamed, moved, or deleted, you'll get a warning notifying you of that and will have the option of opening file explorer to the file's last known location.<br />
+            If it still cannot find the file, please let me know as it could be an error in the program.
+        </p>
+        <p>
+            <b>Q:</b>
+            <i>Why are my searches taking so long?</i><br />
+            <b>A:</b>
+            The most likely reason is that you have all, or too many, checkboxes checked for searching drives and filetypes. Try narrowing your search parameters by unchecking drives or filetypes that you're not searching for. Refer to "Features & Usage" for more information.<br />
+            Another possible reason is that you're not directly connected to the network (that is, if you're connected over the internet instead of the LAN). In order to load the database to memory it must be downloaded, so it is dependent on the transfer speed of both your and Fives Bronx's internet connection.<br />
+            An additional possibility is that your computer is lacking sufficient RAM or processing power.
+        </p>
+        <p>
+            <b>Q:</b>
+            <i>Why is the program finding files I didn't search for?</i><br />
+            <b>A:</b>
+            Much has been done to make searches easy and results expected. However, not everything works as intended, so please do let me know if you detect an aberrant result.
+        </p>
+        <p>
+            <b>Q:</b>
+            <i>When and how often are the databases updated?</i><br />
+            <b>A:</b>
+            The databases are updated five days per week, twice per day, Monday through Friday, at 6:15 a.m. and 12:15 p.m. Obviously, if the server is down for maintenance or other reasons, the databases will not be updated that day. You can find out how up-to-date the databases are by going to "Help" in the menubar, and selecting "About". If needed, the databases can be updated manually.
+        </p>
+        <hr />
+        <a href="#Top">
+            Top
+        </a>
+        <h2><a name="Contact">Contact</a></h2>
+        <p>
+            If you have any suggestions for improvements or additional functionality, please let me know! While I no longer work here, I might still be able to help update and maintain the program. The idea of making this program was to make life easier; if you have a good idea, let me know so I can implement it.<br /><br />
+            Click below to e-mail me:<br />
+            <a href="mailto:evanelrod2@gmail.com">
+                evanelrod2@gmail.com
+            </a><br /><br />
+            Or, to save a half-step, fill out the form below:
+        </p>
+        <form action="MAILTO:evanelrod2@gmail.com" method="post" enctype="text/plain">
+            Name:<br>
+            <input  type="text" name="Name" maxlength="50" size="30"><br />
+            Comment:<br>
+            <textarea name="Comments" rows="8" cols="60"></textarea><br><br>
+            <input type="submit" value="Send">
+            <input type="reset" value="Reset">
+        </form>
+        <hr />
+        <a href="#Top">
+            Top
+        </a>
+        <h2>
+            <a name="Release">
+                Release Notes
+            </a>
+        </h2>
+        <p>
+            Goals for Future Releases:
+        </p>
+        <ul>
+            <li>
+                <i>Distant Future:</i>
+                <ul>
+                    <li>
+                        Added support for searching other criteria (filepath, date range, etc.)
+                    </li>
+                    <li>
+                        Show last search results without having to re-search.
+                    </li>
+                    <li>
+                        Added full support for NAS drive (Z) sans personal folders.
+                    </li>
+                    <li>
+                        Use COM to create additional functionality, such as preview images for drawings.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <i>Near Future:</i>
+                <ul>
+                    <li>
+                        DQS is currently functioning as intended and no updates are planned for the near future.
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        Known Issues:
+        <ul>
+            <li>
+                A local drive that has already been mapped, but now has a different drive letter, will search with the old drive letter.
+            </li>
+            <li>
+                Pre-sets may or may not affect the local drive check boxes.
+            </li>
+            <li>
+                Max. search conditions may result in memory overload conditions.
+            </li>
+        </ul>
+        <p>
+            Version Final (10/16/2018)
+        </p>
+        <ul>
+            <li>
+                Updated program creator contact information and version.
+            </li>
+        </ul>
+        <p>
+            Version 2.04 (06/14/2018)
+        </p>
+        <ul>
+            <li>
+                User history now opens from local location (C:\Tools) to prevent SRP block.
+            </li>
+            <li>
+                Added local drive search functionality.
+            </li>
+            <li>
+                Increased #MaxMem to be the maximum managed by Windows (4095 MB).
+            </li>
+            <li>
+                Optimized code to reduce redundancy and increase readability.
+            </li>
+        </ul>
+        <p>
+            Version 2.03 (09/09/2016)
+        </p>
+        <ul>
+            <li>
+                Added "Abbey Helper" button and supporting GUI to ease searches for Abbey numbers.
+            </li>
+        </ul>
+        <p>
+            Version 2.02 (05/13/2016)
+        </p>
+        <ul>
+            <li>
+                Fixed an issue where if your search text had an apostrophe (') at the beginning and end, the next search would show the search text without the beginning and ending apostrophes.
+            </li>
+        </ul>
+        <p>
+            Version 2.01 (04/18/2016)
+        </p>
+        <ul>
+            <li>
+                Changed tooltip timers (start & end) and a color scheme.
+            </li>
+        </ul>
+        <p>
+            Version 2.00 (09/14/2015)
+        </p>
+        <ul>
+            <li>
+                Updated main and supporting programs to function on new server with different file paths.
+            </li>
+            <li>
+                Removed display and/or support of previously undeveloped features.
+            </li>
+            <li>
+                Ported version check to external program for startup speed, especially with VPN.
+            </li>
+            <li>
+                Removed reliance on named drives in main and supporting programs.
+            </li>
+            <li>
+                Adjusted method of choosing search file types and paths.
+            </li>
+            <li>
+                Change default color scheme to "High Contrast - Dark".
+            </li>
+            <li>
+                Added more detail to loading screen.
+            </li>
+            <li>
+                Made the filter list for skipping external so that it can be updated at any time without modifying the main program.
+            </li>
+            <li>
+                Removed "» CLOSE «" menu item and returned the normal "X" for closing.
+            </li>
+            <li>
+                Minor code fixes.
+            </li>
+        </ul>
+        <p>
+            Version 1.14 (07/20/2015)
+        </p>
+        <ul>
+            <li>
+                Fixed opening in file explorer from right-clicking displayed results.
+            </li>
+            <li>
+                Minor changes to results display.
+            </li>
+        </ul>
+        <p>
+            Version 1.13 (07/14/2015)
+        </p>
+        <ul>
+            <li>
+                Added support for "Purchase Orders" (U).
+            </li>
+            <li>
+                Added support for display of file's size in kB.
+            </li>
+            <li>
+                Fixed issue (caused by NetOps deleting DQSWinF.exe startup program) where "Loading" splashscreen hangs indefinitely.
+            </li>
+            <li>
+                Fixed incorrect path for help file.
+            </li>
+            <li>
+                Changed database delimiter character to a "|" instead of a "!" as it is used in some Abbey folder names.
+            </li>
+        </ul>
+        <p>
+            Version 1.12 (10/23/2014)
+        </p>
+        <ul>
+            <li>
+                Revised code to decrease start-up loading time.
+            </li>
+            <li>
+                Added "User Statistics" to the "Help" menu.
+            </li>
+            <li>
+                Added "What's New" to the "Help" menu.
+            </li>
+            <li>
+                Fixed an issue which disallowed multiple files from being opened.
+            </li>
+            <li>
+                Fixed an issue where a search-all would build the output-list twice.
+            </li>
+            <li>
+                Added list-build time to the total scan time.
+            </li>
+            <li>
+                Updated search-box tooltip to include information about search-all ("all::").
+            </li>
+        </ul>
+        <p>
+            Version 1.11 (10/21/2014)
+        </p>
+        <ul>
+            <li>
+                Added support for a search-all ability (pre-narrowed by check-boxes). To use, Search "all::". See the help-file for more information.
+            </li>
+            <li>
+                Fixed an issue where the program will appear to not open when really it had "remembered" its location on a, now, non-existent monitor. It will now appear in the center of the primary monitor if its "remembered" location is outside the visible range.
+            </li>
+            <li>
+                Fixed "Out of Memory" error by increasing the maximum memory usage per variable to 1.5GB from 512MB. This issue will rise again once the database is large enough to occupy this much RAM.
+            </li>
+            <li>
+                Fixed an issue where the "Sales & Proposals (S)" drive would check itself under certain conditions.
+            </li>
+            <li>
+                Adjusted the tooltips to disappear after three seconds, instead of persisting while the mouse it hovering over certain controls.
+            </li>
+            <li>
+                Adjusted the auto-close timer to be 30 minutes instead of 7½ minutes.
+            </li>
+            <li>
+                Added a "loading" splash-screen since the start-up time is noticeable.
+            </li>
+            <li>
+                Added a gray background to the progress bars for visibility under certain color-schemes.
+            </li>
+        </ul>
+        <p>
+            Version 1.10 (11/26/2013)
+        </p>
+        <ul>
+            <li>
+                Fixed an issue where the program will crash if a folder was moved or renamed after the database was created and the user chose to go to "last known location".
+            </li>
+            <li>
+                All tooltips should now disappear as soon as the "Loading Database" splash-image appears. (Not verified 100%.)
+            </li>
+            <li>
+                Local shortcuts (on the desktop or anywhere in documents / my documents) now only refer to the local program (after first use).
+            </li>
+            <li>
+                An external program now controls updated version delivery. Message boxes now indicate update process / completion.
+            </li>
+        </ul>
+        <p>
+            Version 1.09 (11/07/2013)
+        </p>
+        <ul>
+            <li>
+                Fixed a programming error which made the "Abbey Search" function backwards.  (Was: vASToggle := Start, now: vASToggle := "Start".)
+            </li>
+        </ul>
+        <p>
+            Version 1.08 (10/23/2013)
+        </p>
+        <ul>
+            <li>
+                Fixed "History" and "Multiple Files Found...." windows to close with the [Esc]-key.
+            </li>
+            <li>
+                Made a work-around for a scripting-language bug (specifically with "IniRead") where the single quotes (') would not be remembered for next use in the search area if it was at the beginning or end of the search.
+            </li>
+            <li>
+                Added an "Export list to .csv" button on the "Multiple Files Found...." window.
+            </li>
+            <li>
+                Added the ability to right-click » "open in Windows Explorer" files from the "Multiple Files Found...." window without it closing (will still time-out after 7½ minutes).
+            </li>
+        </ul>
+        <p>
+            Version 1.07 (10/16/2013)
+        </p>
+        <ul>
+            <li>
+                Fixed an issue where if the user cancelled/closed the "Loading . . ." and "Searching . . ." window, the program would remember the X, Y position of those windows and apply it to the main program when next used.
+            </li>
+            <li>
+                Fixed an issue where if a user already had Excel open but minimized, that upon opening an Excel from the program, it would remain minimized.
+            </li>
+            <li>
+                Added "» CLOSE «" to the menu bar and removed the regular close-button as it was not running an intended sub-routine. If a user were to close with the regular close-button (which most did), the program would remain as an active process, despite not being visible.
+            </li>
+            <li>
+                Added support for a progress bar when the program is searching the databases.
+            </li>
+            <li>
+                Made the "Loading . . ." and "Searching . . ." window colors match the selected color-scheme.
+            </li>
+            <li>
+                Added warning to all successful searches that are not a 100% match. (Ex. revised files.)
+            </li>
+            <li>
+                Modified code to refer to server folders (ex. "\\appsrv/Drawings") instead of mapped drives (ex. "Q:\") for reliability. (Database builder still needs updated.)
+            </li>
+            <li>
+                Added more color schemes; minor text changes.
+            </li>
+        </ul>
+        <p>
+            Version 1.06 (09/13/2013)
+        </p>
+        <ul>
+            <li>
+                Fixed the "About" window (and possibly others) to not create a taskbar entry and close when main program is closed.
+            </li>
+            <li>
+                Incorporated a new feature to AutoHotkey which resizes a GUI automatically based on DPI scaling. This replaces the fix from v1.02.
+            </li>
+            <li>
+                Added the "Abbey Search" checkbox and functionality.
+            </li>
+            <li>
+                Added tooltips for all controls (minus menu bar) and removed "WILDCARD Usage..." control and tooltip.
+            </li>
+            <li>
+                Enabled ability to use "?", "*", and "," (instead of ".", ".*", and "|") for universal comprehension and convenience.
+            </li>
+            <li>
+                Fixed presets to checkboxes to toggle correctly based on user's level of access.
+            </li>
+            <li>
+                Corrected typos and cleaned-up text in "About" window.
+            </li>
+        </ul>
+        <p>
+            Version 1.05 (05/31/2013)
+        </p>
+        <ul>
+            <li>
+                Added settings menu, color schemes, additional default options, and local database creation and search options.
+            </li>
+        </ul>
+        <p>
+            Version 1.04 (03/18/2013):
+        </p>
+        <ul>
+            <li>
+                Fixed bug where from previous version's addition (opening any file with same typed value).
+            </li>
+            <li>
+                Added support for user version tracking.
+            </li>
+        </ul>
+        <p>
+            Version 1.03 (03/15/2013):
+        </p>
+        <ul>
+            <li>
+                If found file has been moved, renamed, deleted, it will search the folder for, and open, the latest revision.
+            </li>
+            <li>
+                Added support for high-contrast color scheme (right-click blank area in program).
+            </li>
+        </ul>
+        <p>
+            Version 1.02 (02/14/2013):
+        </p>
+        <ul>
+            <li>
+                Set minimum search characters to 2 instead of 3.
+            </li>
+            <li>
+                Added support for non-default text sizes (DPI) for proper (or at least <i>closer</i> to proper) display.
+            </li>
+        </ul>
+        <p>
+            Version 1.01 (02/13/2013):
+        </p>
+        <ul>
+            <li>
+                Removed remaining "Scanning Database" splash screen after no file has been found.
+            </li>
+        </ul>
+        <p>
+            Version 1.00 (02/01/2013):
+        </p>
+        <ul>
+            <li>
+                Made Abbey searches intuitive.
+            </li>
+            <li>
+                Updated AutoCAD's/AutoCAD LT's/TrueView's last found registry to update to previous search.
+            </li>
+            <li>
+                Fixed selection issue after sorting when multiple files are found.
+            </li>
+            <li>
+                Added support for previous search parameters.
+            </li>
+            <li>
+                Added support for searching all file-types (DB-Builder program updated 01-10-13).
+            </li>
+            <li>
+                Minor code fixes and restructuring.
+            </li>
+        </ul>
+        <hr />
+    </font>
+    <font size="1">
+        <i>
+            Last updated: 8:46 AM - 10/17/2018
+        </i>
+    </font>
+</body>
+</html>

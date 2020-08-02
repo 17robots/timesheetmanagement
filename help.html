@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheet Management Help</title>
+</head>
+
+<style>
+    .grid-container {
+        display: grid;
+        gap: 1em;
+    }
+
+    .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+</style>
+
+<body>
+    <fieldset>
+        <legend>
+            <h1><a>Table Of Contents</a></h1>
+        </legend>
+        <ul>
+            <li><a href="#welcome">Welcome</a></li>
+            <li><a href="#started">Getting Started</a></li>
+            <li><a href="#features">Features and Usage</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#release">Release Notes</a></li>
+        </ul>
+    </fieldset>
+    <br /><br /><br />
+    <div id="welcome">
+        <h2>Welcome</h2>
+        <p>
+            This is the Timesheet Management Help Documentation. This is a program designed to help enter and keep track
+            of
+            time and hours for employees. You can enter in times, send them for approval, and look at reports of your
+            own
+            hours if you are a standard user. Admins can approve hours, put in their own, and generate reports for
+            people to
+            view their hours. Although robust as it was, several improvements have been made to different areas of the
+            program that will be highlighted in the <a href="#features">Features and Usage</a> section of the
+            Documentation.
+        </p>
+        <p>
+            The goal of these improvements is to provide a better user experience and increase the robustness of the
+            program. The goal here is to make an in-house program that can reliably keep track of hours and and provide
+            an
+            easy experience for each targeted user.
+        </p>
+    </div>
+    <div id="started">
+        <h2>Getting Started</h2>
+        <p>
+            There is quite a bit to go into regarding all of the pieces of the software, but this will give a quick
+            overview of the different pieces of the software so that either role can get started. The users can be
+            broken down into two separate groups: Managers and Employees. However, the first thing either user needs
+            to do when starting the program is to log in. You will have an employee id and a password. If you don't,
+            feel free to speak to someone and ask for it.
+        </p>
+
+        <h3>Employees</h3>
+        <p>
+            Employees have the primary task of entering in and submitting the hours that they work on a project or
+            section. That can be done in the Time Entry Screen. Follow the form, and then submit. The entry will be
+            recorded below and you can then submit the entry for approval by going to the Approval Header and pressing
+            submit for approval. Select the ones you want to submit and send them away. They will be reviewed by the
+            manager and either approved or rejected. More on all of this in the <a href="#features">Features and
+                Usage</a> section of the Documentation.
+        </p>
+
+        <h3>Managers</h3>
+        <p>
+            Managers might have all of the responsibilities of the employees mentioned above (submitting times for
+            approval), but they also have the responsibility of approving or rejecting hours (which can be done in the
+            approval screen), generating reports (which can be done in the Run Reports screen), and user/project
+            management (which can be done in Admin Tools). There's a lot that goes in to the last 2 responsibilities,
+            but for approving time entries, open the approval screen, select the entries you want to approve, and give
+            them a thumbs up (approve the entries). Use the same process for rejecting, but give them a thumbs down and
+            give them a collective reason why (this can be used one entry at a time for more specific messages). For
+            more information, please see the <a href="#features">Features and Usage</a> section of the Documentation.
+        </p>
+    </div>
+    <div id="features">
+        <h2>Features And Usage</h2>
+        <p>
+            This is where all of the nitty gritty gets laid out. This will be broken down to address each feature (not
+            user type). So, if you'd like a quick break down of the responsibilities of each type of user meant for this
+            application, see the <a href="#started">Getting Started</a> section of the Documentation.
+        </p>
+
+        <h3>Login Screen</h3>
+        <div class="grid-container grid-2">
+            <div>
+                <p>
+                    The login screen (as seen to the right) is a basic screen used to access the application. It
+                    features 2
+                    fields: <i>User ID</i> and <i>Password</i>. These are given to you as you cannot register yourself
+                    for
+                    the
+                    application. If you do not have credentials and are told you need to be using the software, get in
+                    touch
+                    with someone so they can get the account set up and get your user id and password to you.
+                </p>
+
+                <p>
+                    One other big portion of the login screen is the connectionstring. This is accessed with File >
+                    Change
+                    Connection String. The connection string is the name of the computer or server that the database is
+                    being
+                    stored on. For the most part, this will never need to change, and if it does, then communication
+                    should
+                    go
+                    out as far as what the new connection string should be.
+                </p>
+
+                <dl>
+                    <lh>
+                        <h4>Possible Unintuitive Errors</h4>
+                    </lh>
+                    <dt><u>To Connect To Any Of The Specified MySQL Hosts</u></dt>
+                    <dd>This error means that the service managing the database is not currently running. Odds are, if
+                        you
+                        are
+                        seeing this, other people are too. However, this could also be because the computer is unable to
+                        connect
+                        to the database/the connection string is incorrect. You might need to change the connection
+                        string.
+                    </dd>
+                </dl>
+            </div>
+            <img src="" alt="Login Screen Picture" />
+        </div>
+
+        <h3>Main Screen</h3>
+        <div class="grid-container grid-2">
+            <div>
+                <p>
+                    The main screen is where all of the submenus pop out from. Depending on your level of program
+                    access, certain menus will be unavailable to you. For example, the administrator tools is not
+                    available to each person.
+                </p>
+            </div>
+            <img src="" alt="Login Screen Picture" />
+        </div>
+    </div>
+    <div id="contact">
+        <h2>Questions?</h2>
+
+    </div>
+    <div id="release">
+        <h2>Release Notes</h2>
+
+    </div>
+</body>
+
+</html>
