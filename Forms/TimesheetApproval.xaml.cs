@@ -357,15 +357,23 @@ namespace FivesBronxTimesheetManagement.Forms
 				};
 				List<Label> normal = labels;
 				string str = "There are only 24 hours in a day!  Please Correct!";
+				string suspicion = "Employee had over 8.5 hours on this date. Please Review.";
 				for (int i = 0; i < nums1.Count; i++)
 				{
 					string str1 = (nums1[i] != 0 ? nums1[i].ToString() : "-");
-					if (nums1[i] <= 24)
+					if (nums1[i] <= 8.5)
 					{
 						normal[i].Content = str1;
 						normal[i].FontWeight = FontWeights.Normal;
 						normal[i].ToolTip = null;
 						normal[i].Background = null;
+					}
+					else if (nums1[i] >= 8.6 && nums1[i] < 24)
+					{
+						normal[i].Content = str1;
+						normal[i].FontWeight = FontWeights.ExtraBold;
+						normal[i].ToolTip = suspicion;
+						normal[i].Background = Brushes.Orange;
 					}
 					else
 					{
