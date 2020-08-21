@@ -20,7 +20,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <UpdateUrl>https://raw.githubusercontent.com/17robots/timesheetmanagement/master/publish/TimesheetManagement.application/</UpdateUrl>
+    <UpdateUrl>https://raw.githubusercontent.com/17robots/timesheetmanagement/master/publish/</UpdateUrl>
     <ProductName>Fives Bronx Timesheet Management</ProductName>
     <PublisherName>Matthew</PublisherName>
     <WebPage>publish.htm</WebPage>

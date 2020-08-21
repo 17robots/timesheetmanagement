@@ -5,8 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 using Cursors = System.Windows.Input.Cursors;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -111,15 +109,21 @@ namespace FivesBronxTimesheetManagement.Classes
 		private void FillSheet(string separateBy)
 		{
 			WriteData(CreateHeader(), separateBy);
-			_sheet = _sheets.Add();
-			_sheet.Select();
+			if ((_excelApp.ActiveSheet as _Worksheet).Range["A1"].Value2 != null)
+			{
+				_sheet = _sheets.Add();
+				_sheet.Select();
+			}
 		}
 
 		private void FillSheet(string separateBy, List<string> cols)
 		{
 			WriteData(CreateHeader(cols), separateBy);
-			_sheet = _sheets.Add();
-			_sheet.Select();
+			if ((_excelApp.ActiveSheet as _Worksheet).Range["A1"].Value2 != null)
+			{
+				_sheet = _sheets.Add();
+				_sheet.Select();
+			}
 		}
 
 		public void GenerateReport()
@@ -346,7 +350,10 @@ namespace FivesBronxTimesheetManagement.Classes
 
 			if(filteredList.Count == 0)
             {
-				_sheet.Delete();
+				if (_sheets.Count > 1)
+				{
+					_sheet.Delete();
+				}
 				return;
             }
 
