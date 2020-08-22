@@ -99,6 +99,22 @@ namespace FivesBronxTimesheetManagement.Classes
 			this.Number_WarrantyNetwork = 0;
 		}
 
+		public Project(string numberSerial, string numberSAP, string numberMAS90, string numberBFC, int numberNetwork, 
+			string customer, string machine, string country, int isOpen, int isWarrantyOpen, int numberWarrantyNetwork)
+        {
+			Country = country;
+			Customer = customer;
+			IsOpen = isOpen;
+			IsWarrantyOpen = isWarrantyOpen;
+			Machine = machine;
+			Number_BFC = numberBFC;
+			Number_MAS90 = numberMAS90;
+			Number_Network = numberNetwork;
+			Number_SAP = numberSAP;
+			Number_Serial = numberSerial;
+			Number_WarrantyNetwork = numberWarrantyNetwork;
+        }
+
 		public Project(string Serial)
 		{
 			this.Number_Serial = Serial;

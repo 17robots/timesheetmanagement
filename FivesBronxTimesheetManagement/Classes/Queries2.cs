@@ -1,6 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
@@ -1059,6 +1061,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			myConnection.Open();
 			MySqlDataReader reader = myCommand.ExecuteReader();
 			User returnedUser;
+			reader.Read();
 			if(reader.HasRows)
             {
 				returnedUser = new User(
@@ -1093,14 +1096,628 @@ namespace FivesBronxTimesheetManagement.Classes
 					int.Parse(reader.GetString(5))
 				));
             }
+			myConnection.Close();
 			return returnedUsers;
         }
 
-		public bool Period_Open()
+		public bool Period_Open(int month, int year)
+        {
+			object[] tPeriod = new object[] { " SELECT *  FROM ", t_Period, " WHERE ", t_Period_Period, "='", month, "'  AND ", t_Period_Year, "='", year, "'" };
+			myCommand = new MySqlCommand(string.Concat(tPeriod), myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			if(reader.HasRows)
+            {
+				reader.Read();
+				myConnection.Close();
+				return functions.IntToBool(int.Parse(reader.GetString(3)));
+			}
+			myConnection.Close();
+			return false;
+		}
 
 		public Project Project(string numberSerial)
         {
-			string[] tProject
-        }
+			string[] tProjects = new string[] { "SELECT * FROM ", t_Projects, " WHERE ", t_Projects_c_Number_Serial, " ='", numberSerial, "'" };
+			myCommand = new MySqlCommand(string.Concat(tProjects), myConnection.MySqlConnection);
+			myConnection.Open();
+			Project returnedProject = null;
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			if(reader.HasRows)
+            {
+				reader.Read();
+				returnedProject = new Project(
+					reader.GetString(0), // numberSerial
+					reader.GetString(1), // numberSAP
+					reader.GetString(2), // numberMAS90
+					reader.GetString(3), // numberBFC
+					int.Parse(reader.GetString(4)), // numberNetwork
+					reader.GetString(4), // customer
+					reader.GetString(5), // machine
+					reader.GetString(6), // country
+					int.Parse(reader.GetString(7)), // isOpen
+					int.Parse(reader.GetString(8)), // isWarrantyOpen
+					int.Parse(reader.GetString(9)) // numberWarrantyNetwork
+				);
+            }
+			myConnection.Close();
+			return returnedProject;
+		}
+
+		public List<Project> ProjectAll()
+        {
+			qString = string.Concat("SELECT * FROM ", t_Projects);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			List<Project> returnedProjects = new List<Project>();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			while(reader.Read())
+            {
+				returnedProjects.Add(new Project(
+					reader.GetString(0), // numberSerial
+					reader.GetString(1), // numberSAP
+					reader.GetString(2), // numberMAS90
+					reader.GetString(3), // numberBFC
+					int.Parse(reader.GetString(4)), // numberNetwork
+					reader.GetString(4), // customer
+					reader.GetString(5), // machine
+					reader.GetString(6), // country
+					int.Parse(reader.GetString(7)), // isOpen
+					int.Parse(reader.GetString(8)), // isWarrantyOpen
+					int.Parse(reader.GetString(9)) // numberWarrantyNetwork
+				));
+            }
+			myConnection.Close();
+			return returnedProjects;
+		}
+
+		public List<string> Projects()
+        {
+			qString = string.Concat("SELECT * FROM ", t_Projects);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			List<string> returnedStrings = new List<string>();
+			while(reader.Read())
+            {
+				returnedStrings.Add(reader.GetString(0));
+            }
+			myConnection.Close();
+			return returnedStrings;
+		}
+
+		public void SaveTimeEntry(int userId, string userName, int? sectionId, string projectSerial, string projectSAP, string numberSection, int? network, string activity, DateTime date, int period, int year, double hours, string description, string timesheetCode, string taskType, string submittedStatus, string approvalStatus)
+		{
+			string[] tTimesheetPrelim = new string[] { "INSERT INTO ", t_Timesheet_Prelim, " (", t_Timesheet_c_User_Id, ", ", t_Timesheet_c_User_Name, ", ", t_Timesheet_c_Section_Id, ", ", t_Timesheet_c_Project_Serial, ", ", t_Timesheet_c_Project_Sap, ", ", t_Timesheet_c_Number_Section, ", ", t_Timesheet_c_Number_Network, ", ", t_Timesheet_c_Number_Activity, ", ", t_Timesheet_c_Date, ", ", t_Timesheet_c_Period, ", ", t_Timesheet_c_Year, ", ", t_Timesheet_c_Hours, ", ", t_Timesheet_c_Description, ", ", t_Timesheet_c_Timesheet_Code, ", ", t_Timesheet_c_Task_Type, ", ", t_Timesheet_c_Submitted_Status, ", ", t_Timesheet_c_Approval_Status, ", ", t_Timesheet_c_Date_Created, ") VALUES(@userId, @userName, @sectionId, @projectSerial, @projectSAP, @numberSection, @network, @activity, @date, @period, @year, @hours, @description, @timesheetCode, @taskType, @submittedStatus, @approvalStatus, @dateCreated)" };
+			qString = string.Concat(tTimesheetPrelim);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			mySqlCommand.Parameters.AddWithValue("@userId", userId);
+			mySqlCommand.Parameters.AddWithValue("@userName", userName);
+			mySqlCommand.Parameters.AddWithValue("@sectionId", sectionId);
+			mySqlCommand.Parameters.AddWithValue("@projectSerial", projectSerial);
+			mySqlCommand.Parameters.AddWithValue("@projectSAP", projectSAP);
+			mySqlCommand.Parameters.AddWithValue("@numberSection", numberSection);
+			mySqlCommand.Parameters.AddWithValue("@network", network);
+			mySqlCommand.Parameters.AddWithValue("@activity", activity);
+			mySqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			mySqlCommand.Parameters.AddWithValue("@period", period);
+			mySqlCommand.Parameters.AddWithValue("@year", year);
+			mySqlCommand.Parameters.AddWithValue("@hours", hours);
+			mySqlCommand.Parameters.AddWithValue("@description", description);
+			mySqlCommand.Parameters.AddWithValue("@timesheetCode", timesheetCode);
+			mySqlCommand.Parameters.AddWithValue("@taskType", taskType);
+			mySqlCommand.Parameters.AddWithValue("@submittedStatus", submittedStatus);
+			mySqlCommand.Parameters.AddWithValue("@approvalStatus", approvalStatus);
+			MySqlParameterCollection parameters = mySqlCommand.Parameters;
+			DateTime now = DateTime.Now;
+			parameters.AddWithValue("@dateCreated", now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			Insert(mySqlCommand);
+		}
+
+		public void SaveTimeEntry(string tableName, int userId, string userName, int? sectionId, string projectSerial, string projectSAP, string numberSection, int? network, string activity, DateTime date, int period, int year, double hours, string description, string timesheetCode, string taskType, string submittedStatus, string approvalStatus)
+		{
+			string[] strArrays = new string[] { "INSERT INTO ", tableName, " (", t_Timesheet_c_User_Id, ", ", t_Timesheet_c_User_Name, ", ", t_Timesheet_c_Section_Id, ", ", t_Timesheet_c_Project_Serial, ", ", t_Timesheet_c_Project_Sap, ", ", t_Timesheet_c_Number_Section, ", ", t_Timesheet_c_Number_Network, ", ", t_Timesheet_c_Number_Activity, ", ", t_Timesheet_c_Date, ", ", t_Timesheet_c_Period, ", ", t_Timesheet_c_Year, ", ", t_Timesheet_c_Hours, ", ", t_Timesheet_c_Description, ", ", t_Timesheet_c_Timesheet_Code, ", ", t_Timesheet_c_Task_Type, ", ", t_Timesheet_c_Submitted_Status, ", ", t_Timesheet_c_Approval_Status, ", ", t_Timesheet_c_Date_Created, ") VALUES(@userId, @userName, @sectionId, @projectSerial, @projectSAP, @numberSection, @network, @activity, @date, @period, @year, @hours, @description, @timesheetCode, @taskType, @submittedStatus, @approvalStatus, @dateCreated)" };
+			qString = string.Concat(strArrays);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			mySqlCommand.Parameters.AddWithValue("@userId", userId);
+			mySqlCommand.Parameters.AddWithValue("@userName", userName);
+			mySqlCommand.Parameters.AddWithValue("@sectionId", sectionId);
+			mySqlCommand.Parameters.AddWithValue("@projectSerial", projectSerial);
+			mySqlCommand.Parameters.AddWithValue("@projectSAP", projectSAP);
+			mySqlCommand.Parameters.AddWithValue("@numberSection", numberSection);
+			mySqlCommand.Parameters.AddWithValue("@network", network);
+			mySqlCommand.Parameters.AddWithValue("@activity", activity);
+			mySqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			mySqlCommand.Parameters.AddWithValue("@period", period);
+			mySqlCommand.Parameters.AddWithValue("@year", year);
+			mySqlCommand.Parameters.AddWithValue("@hours", hours);
+			mySqlCommand.Parameters.AddWithValue("@description", description);
+			mySqlCommand.Parameters.AddWithValue("@timesheetCode", timesheetCode);
+			mySqlCommand.Parameters.AddWithValue("@taskType", taskType);
+			mySqlCommand.Parameters.AddWithValue("@submittedStatus", submittedStatus);
+			mySqlCommand.Parameters.AddWithValue("@approvalStatus", approvalStatus);
+			MySqlParameterCollection parameters = mySqlCommand.Parameters;
+			DateTime now = DateTime.Now;
+			parameters.AddWithValue("@dateCreated", now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			Insert(mySqlCommand);
+		}
+
+		public void SaveTimeEntry(string tableName, Entry entry, ApprovalStatus approvalStatus, ApprovalStatus submittedStatus)
+		{
+			string[] strArrays = new string[] { "INSERT INTO ", tableName, " (", t_Timesheet_c_User_Id, ", ", t_Timesheet_c_User_Name, ", ", t_Timesheet_c_Section_Id, ", ", t_Timesheet_c_Project_Serial, ", ", t_Timesheet_c_Project_Sap, ", ", t_Timesheet_c_Number_Section, ", ", t_Timesheet_c_Number_Network, ", ", t_Timesheet_c_Number_Activity, ", ", t_Timesheet_c_Date, ", ", t_Timesheet_c_Period, ", ", t_Timesheet_c_Year, ", ", t_Timesheet_c_Hours, ", ", t_Timesheet_c_Description, ", ", t_Timesheet_c_Timesheet_Code, ", ", t_Timesheet_c_Task_Type, ", ", t_Timesheet_c_Submitted_Status, ", ", t_Timesheet_c_Approval_Status, ", ", t_Timesheet_c_Date_Created, ", ", t_Timesheet_c_Date_Modified, ") VALUES(@userId, @userName, @sectionId, @projectSerial, @projectSAP, @numberSection, @network, @activity, @date, @period, @year, @hours, @description, @timesheetCode, @taskType, @submittedStatus, @approvalStatus, @dateCreated, @dateModified)" };
+			qString = string.Concat(strArrays);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			mySqlCommand.Parameters.AddWithValue("@userId", entry.user_id);
+			mySqlCommand.Parameters.AddWithValue("@userName", entry.user_name);
+			mySqlCommand.Parameters.AddWithValue("@sectionId", entry.section_id);
+			mySqlCommand.Parameters.AddWithValue("@projectSerial", entry.project_serial);
+			mySqlCommand.Parameters.AddWithValue("@projectSAP", entry.project_sap);
+			mySqlCommand.Parameters.AddWithValue("@numberSection", entry.number_section);
+			mySqlCommand.Parameters.AddWithValue("@network", entry.number_network);
+			mySqlCommand.Parameters.AddWithValue("@activity", entry.number_activity);
+			MySqlParameterCollection parameters = mySqlCommand.Parameters;
+			DateTime dateCreated = entry.date;
+			parameters.AddWithValue("@date", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			mySqlCommand.Parameters.AddWithValue("@period", entry.period);
+			mySqlCommand.Parameters.AddWithValue("@year", entry.year);
+			mySqlCommand.Parameters.AddWithValue("@hours", entry.hours);
+			mySqlCommand.Parameters.AddWithValue("@description", entry.description);
+			mySqlCommand.Parameters.AddWithValue("@timesheetCode", entry.timesheet_code);
+			mySqlCommand.Parameters.AddWithValue("@taskType", entry.task_type);
+			mySqlCommand.Parameters.AddWithValue("@submittedStatus", functions.approvalStatus(submittedStatus));
+			mySqlCommand.Parameters.AddWithValue("@approvalStatus", functions.approvalStatus(approvalStatus));
+			MySqlParameterCollection mySqlParameterCollection = mySqlCommand.Parameters;
+			dateCreated = entry.date_created;
+			mySqlParameterCollection.AddWithValue("@dateCreated", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			MySqlParameterCollection parameters1 = mySqlCommand.Parameters;
+			dateCreated = entry.date_modified;
+			parameters1.AddWithValue("@dateModified", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			Insert(mySqlCommand);
+		}
+
+		public void SaveTimeEntry(string tableName, List<Entry> entries, ApprovalStatus approvalStatus, ApprovalStatus submittedStatus)
+		{
+			string[] strArrays = new string[] { "INSERT INTO ", tableName, " (", t_Timesheet_c_User_Id, ", ", t_Timesheet_c_User_Name, ", ", t_Timesheet_c_Section_Id, ", ", t_Timesheet_c_Project_Serial, ", ", t_Timesheet_c_Project_Sap, ", ", t_Timesheet_c_Number_Section, ", ", t_Timesheet_c_Number_Network, ", ", t_Timesheet_c_Number_Activity, ", ", t_Timesheet_c_Date, ", ", t_Timesheet_c_Period, ", ", t_Timesheet_c_Year, ", ", t_Timesheet_c_Hours, ", ", t_Timesheet_c_Description, ", ", t_Timesheet_c_Timesheet_Code, ", ", t_Timesheet_c_Task_Type, ", ", t_Timesheet_c_Submitted_Status, ", ", t_Timesheet_c_Approval_Status, ", ", t_Timesheet_c_Date_Created, ", ", t_Timesheet_c_Date_Modified, ") VALUES(@userId, @userName, @sectionId, @projectSerial, @projectSAP, @numberSection, @network, @activity, @date, @period, @year, @hours, @description, @timesheetCode, @taskType, @submittedStatus, @approvalStatus, @dateCreated, @dateModified)" };
+			qString = string.Concat(strArrays);
+			List<MySqlCommand> mySqlCommands = new List<MySqlCommand>();
+			foreach (Entry entry in entries)
+			{
+				MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+				if (entry.date_created == DateTime.MinValue)
+				{
+					entry.date_created = DateTime.Now;
+				}
+				if (entry.date_modified == DateTime.MinValue)
+				{
+					entry.date_modified = DateTime.Now;
+				}
+				mySqlCommand.Parameters.AddWithValue("@userId", entry.user_id);
+				mySqlCommand.Parameters.AddWithValue("@userName", entry.user_name);
+				mySqlCommand.Parameters.AddWithValue("@sectionId", entry.section_id);
+				mySqlCommand.Parameters.AddWithValue("@projectSerial", entry.project_serial);
+				mySqlCommand.Parameters.AddWithValue("@projectSAP", entry.project_sap);
+				mySqlCommand.Parameters.AddWithValue("@numberSection", entry.number_section);
+				mySqlCommand.Parameters.AddWithValue("@network", entry.number_network);
+				mySqlCommand.Parameters.AddWithValue("@activity", entry.number_activity);
+				MySqlParameterCollection parameters = mySqlCommand.Parameters;
+				DateTime dateCreated = entry.date;
+				parameters.AddWithValue("@date", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+				mySqlCommand.Parameters.AddWithValue("@period", entry.period);
+				mySqlCommand.Parameters.AddWithValue("@year", entry.year);
+				mySqlCommand.Parameters.AddWithValue("@hours", entry.hours);
+				mySqlCommand.Parameters.AddWithValue("@description", entry.description);
+				mySqlCommand.Parameters.AddWithValue("@timesheetCode", entry.timesheet_code);
+				mySqlCommand.Parameters.AddWithValue("@taskType", entry.task_type);
+				mySqlCommand.Parameters.AddWithValue("@submittedStatus", functions.approvalStatus(submittedStatus));
+				mySqlCommand.Parameters.AddWithValue("@approvalStatus", functions.approvalStatus(approvalStatus));
+				MySqlParameterCollection mySqlParameterCollection = mySqlCommand.Parameters;
+				dateCreated = entry.date_created;
+				mySqlParameterCollection.AddWithValue("@dateCreated", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+				MySqlParameterCollection parameters1 = mySqlCommand.Parameters;
+				dateCreated = entry.date_modified;
+				parameters1.AddWithValue("@dateModified", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+				mySqlCommands.Add(mySqlCommand);
+			}
+			Insert(mySqlCommands);
+		}
+
+		public void SaveTimeEntry(string tableName, List<Entry> entries, ApprovalStatus approvalStatus, ApprovalStatus submittedStatus, User Approver)
+		{
+			string[] strArrays = new string[] { "INSERT INTO ", tableName, " (", t_Timesheet_c_User_Id, ", ", t_Timesheet_c_User_Name, ", ", t_Timesheet_c_Section_Id, ", ", t_Timesheet_c_Project_Serial, ", ", t_Timesheet_c_Project_Sap, ", ", t_Timesheet_c_Number_Section, ", ", t_Timesheet_c_Number_Network, ", ", t_Timesheet_c_Number_Activity, ", ", t_Timesheet_c_Date, ", ", t_Timesheet_c_Period, ", ", t_Timesheet_c_Year, ", ", t_Timesheet_c_Hours, ", ", t_Timesheet_c_Description, ", ", t_Timesheet_c_Timesheet_Code, ", ", t_Timesheet_c_Task_Type, ", ", t_Timesheet_c_Submitted_Status, ", ", t_Timesheet_c_Approval_Status, ", ", t_Timesheet_c_Date_Created, ", ", t_Timesheet_c_Date_Modified, ", ", t_Timesheet_c_Approved_By_User_Id, ", ", t_Timesheet_c_Approved_By_User_Name, ", ", t_Timesheet_c_Date_Approved, ") VALUES(@userId, @userName, @sectionId, @projectSerial, @projectSAP, @numberSection, @network, @activity, @date, @period, @year, @hours, @description, @timesheetCode, @taskType, @submittedStatus, @approvalStatus, @dateCreated, @dateModified, @approvedByUserId, @approvedByUserName, @dateApproved)" };
+			qString = string.Concat(strArrays);
+			List<MySqlCommand> mySqlCommands = new List<MySqlCommand>();
+			foreach (Entry entry in entries)
+			{
+				MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+				mySqlCommand.Parameters.AddWithValue("@userId", entry.user_id);
+				mySqlCommand.Parameters.AddWithValue("@userName", entry.user_name);
+				mySqlCommand.Parameters.AddWithValue("@sectionId", entry.section_id);
+				mySqlCommand.Parameters.AddWithValue("@projectSerial", entry.project_serial);
+				mySqlCommand.Parameters.AddWithValue("@projectSAP", entry.project_sap);
+				mySqlCommand.Parameters.AddWithValue("@numberSection", entry.number_section);
+				mySqlCommand.Parameters.AddWithValue("@network", entry.number_network);
+				mySqlCommand.Parameters.AddWithValue("@activity", entry.number_activity);
+				MySqlParameterCollection parameters = mySqlCommand.Parameters;
+				DateTime dateCreated = entry.date;
+				parameters.AddWithValue("@date", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+				mySqlCommand.Parameters.AddWithValue("@period", entry.period);
+				mySqlCommand.Parameters.AddWithValue("@year", entry.year);
+				mySqlCommand.Parameters.AddWithValue("@hours", entry.hours);
+				mySqlCommand.Parameters.AddWithValue("@description", entry.description);
+				mySqlCommand.Parameters.AddWithValue("@timesheetCode", entry.timesheet_code);
+				mySqlCommand.Parameters.AddWithValue("@taskType", entry.task_type);
+				mySqlCommand.Parameters.AddWithValue("@submittedStatus", functions.approvalStatus(submittedStatus));
+				mySqlCommand.Parameters.AddWithValue("@approvalStatus", functions.approvalStatus(approvalStatus));
+				MySqlParameterCollection mySqlParameterCollection = mySqlCommand.Parameters;
+				dateCreated = entry.date_created;
+				mySqlParameterCollection.AddWithValue("@dateCreated", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+				MySqlParameterCollection parameters1 = mySqlCommand.Parameters;
+				dateCreated = entry.date_modified;
+				parameters1.AddWithValue("@dateModified", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+				mySqlCommand.Parameters.AddWithValue("@approvedByUserId", Approver.UserID);
+				mySqlCommand.Parameters.AddWithValue("@approvedByUserName", Approver.UserName);
+				MySqlParameterCollection mySqlParameterCollection1 = mySqlCommand.Parameters;
+				dateCreated = DateTime.Now;
+				mySqlParameterCollection1.AddWithValue("@dateApproved", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+				mySqlCommands.Add(mySqlCommand);
+			}
+			Insert(mySqlCommands);
+		}
+
+		public void SaveTimeEntry(string tableName, List<Entry> entries, ApprovalStatus approvalStatus, ApprovalStatus submittedStatus, string rejectionReason)
+		{
+			string[] strArrays = new string[] { "INSERT INTO ", tableName, " (", t_Timesheet_c_User_Id, ", ", t_Timesheet_c_User_Name, ", ", t_Timesheet_c_Section_Id, ", ", t_Timesheet_c_Project_Serial, ", ", t_Timesheet_c_Project_Sap, ", ", t_Timesheet_c_Number_Section, ", ", t_Timesheet_c_Number_Network, ", ", t_Timesheet_c_Number_Activity, ", ", t_Timesheet_c_Date, ", ", t_Timesheet_c_Period, ", ", t_Timesheet_c_Year, ", ", t_Timesheet_c_Hours, ", ", t_Timesheet_c_Description, ", ", t_Timesheet_c_Timesheet_Code, ", ", t_Timesheet_c_Task_Type, ", ", t_Timesheet_c_Submitted_Status, ", ", t_Timesheet_c_Approval_Status, ", ", t_Timesheet_c_Rejection_Reason, ", ", t_Timesheet_c_Date_Created, ",", t_Timesheet_c_Date_Modified, ") VALUES(@userId, @userName, @sectionId, @projectSerial, @projectSAP, @numberSection, @network, @activity, @date, @period, @year, @hours, @description, @timesheetCode, @taskType, @submittedStatus, @approvalStatus, @rejectionReason, @dateCreated, @dateModified)" };
+			qString = string.Concat(strArrays);
+			List<MySqlCommand> mySqlCommands = new List<MySqlCommand>();
+			foreach (Entry entry in entries)
+			{
+				MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+				mySqlCommand.Parameters.AddWithValue("@userId", entry.user_id);
+				mySqlCommand.Parameters.AddWithValue("@userName", entry.user_name);
+				mySqlCommand.Parameters.AddWithValue("@sectionId", entry.section_id);
+				mySqlCommand.Parameters.AddWithValue("@projectSerial", entry.project_serial);
+				mySqlCommand.Parameters.AddWithValue("@projectSAP", entry.project_sap);
+				mySqlCommand.Parameters.AddWithValue("@numberSection", entry.number_section);
+				mySqlCommand.Parameters.AddWithValue("@network", entry.number_network);
+				mySqlCommand.Parameters.AddWithValue("@activity", entry.number_activity);
+				MySqlParameterCollection parameters = mySqlCommand.Parameters;
+				DateTime dateCreated = entry.date;
+				parameters.AddWithValue("@date", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+				mySqlCommand.Parameters.AddWithValue("@period", entry.period);
+				mySqlCommand.Parameters.AddWithValue("@year", entry.year);
+				mySqlCommand.Parameters.AddWithValue("@hours", entry.hours);
+				mySqlCommand.Parameters.AddWithValue("@description", entry.description);
+				mySqlCommand.Parameters.AddWithValue("@timesheetCode", entry.timesheet_code);
+				mySqlCommand.Parameters.AddWithValue("@taskType", entry.task_type);
+				mySqlCommand.Parameters.AddWithValue("@submittedStatus", functions.approvalStatus(submittedStatus));
+				mySqlCommand.Parameters.AddWithValue("@approvalStatus", functions.approvalStatus(approvalStatus));
+				mySqlCommand.Parameters.AddWithValue("@rejectionReason", rejectionReason);
+				MySqlParameterCollection mySqlParameterCollection = mySqlCommand.Parameters;
+				dateCreated = entry.date_created;
+				mySqlParameterCollection.AddWithValue("@dateCreated", dateCreated.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+				mySqlCommand.Parameters.AddWithValue("@dateModified", entry.date_modified);
+				mySqlCommands.Add(mySqlCommand);
+			}
+			Insert(mySqlCommands);
+		}
+
+		public Section Section(int section_id)
+		{
+			object[] tSections = new object[] { " SELECT *  FROM ", t_Sections, " WHERE ", t_Sections_c_Entry_Id, "='", section_id, "'" };
+			myCommand = new MySqlCommand(string.Concat(tSections), myConnection.MySqlConnection);
+			myConnection.Open();
+			Section returnedSection = null;
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			if(reader.Read())
+            {
+				returnedSection = new Section(
+					int.Parse(reader.GetString(0)),
+					reader.GetString(1),
+					reader.GetString(2),
+					reader.GetString(3),
+					reader.GetString(4),
+					reader.GetString(5),
+					reader.GetString(6)
+				);
+            }
+			myConnection.Close();
+			return returnedSection;
+		}
+
+		public List<Section> Sections(int project_number_network)
+        {
+			object[] tSections = new object[] { " SELECT *  FROM ", t_Sections, " WHERE ", t_Sections_c_Number_Project_Network, "='", project_number_network, "'" };
+			myCommand = new MySqlCommand(string.Concat(tSections), myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			List<Section> returnedSections = new List<Section>();
+			while(reader.Read())
+            {
+				returnedSections.Add(new Section(
+					int.Parse(reader.GetString(0)),
+					reader.GetString(1),
+					reader.GetString(2),
+					reader.GetString(3),
+					reader.GetString(4),
+					reader.GetString(5),
+					reader.GetString(6)
+				));
+            }
+			myConnection.Close();
+			return returnedSections;
+		}
+
+		public List<Section> Sections(int project_number_network, string task_type)
+		{
+			object[] tSections = new object[] { " SELECT *  FROM ", t_Sections, " WHERE ", t_Sections_c_Number_Project_Network, "='", project_number_network, "' AND ", t_Sections_c_Task_Type, "='", task_type, "'" };
+			qString = string.Concat(tSections);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			List<Section> returnedSections = new List<Section>();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			while (reader.Read())
+			{
+				returnedSections.Add(new Section(
+					int.Parse(reader.GetString(0)),
+					reader.GetString(1),
+					reader.GetString(2),
+					reader.GetString(3),
+					reader.GetString(4),
+					reader.GetString(5),
+					reader.GetString(6)
+				));
+			}
+			myConnection.Close();
+			return returnedSections;
+		}
+
+		public List<Section> Sections()
+		{
+			qString = string.Concat(" SELECT *  FROM ", t_Sections);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			List<Section> returnedSections = new List<Section>();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			while (reader.Read())
+			{
+				returnedSections.Add(new Section(
+					int.Parse(reader.GetString(0)),
+					reader.GetString(1),
+					reader.GetString(2),
+					reader.GetString(3),
+					reader.GetString(4),
+					reader.GetString(5),
+					reader.GetString(6)
+				));
+			}
+			myConnection.Close();
+			return returnedSections;
+		}
+
+		public string TaskTypeDescription(string taskType_Id)
+        {
+			string[] tTaskType = new string[] { "SELECT * FROM ", t_Task_type, " WHERE ", t_Task_Type_c_Task_Type, "='", taskType_Id, "'" };
+			qString = string.Concat(tTaskType);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			if (reader.Read())
+			{
+				return reader.GetString(1);
+			}
+			return "";
+		}
+
+		public List<string> TaskTypes()
+		{
+			qString = string.Concat("SELECT * FROM ", t_Task_type);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			List<string> returnedStrings = new List<string>();
+			while(reader.Read())
+            {
+				returnedStrings.Add(reader.GetString(0));
+            }
+			myConnection.Close();
+			return returnedStrings;
+		}
+
+		public List<TaskType> TaskTypes(Section section)
+		{
+			string[] tSections = new string[] { "SELECT * FROM ", t_Sections, " WHERE ", t_Sections_c_Number_Section, "='", section.Number_Section, "' AND ", t_Sections_c_Number_Project_Network, "='", section.Number_ProjectNetwork, "'" };
+			qString = string.Concat(tSections);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			List<TaskType> returnedTasks = new List<TaskType>();
+			while(reader.Read())
+            {
+				returnedTasks.Add(new TaskType()
+				{
+					Id = reader.GetString(0),
+					Description = reader.GetString(1)
+				});
+            }
+			reader.Close();
+			myConnection.Close();
+			return returnedTasks;
+		}
+
+		public List<TaskType> TaskTypesAll()
+		{
+			qString = string.Concat("SELECT * FROM ", t_Task_type);
+			
+		}
+
+		public string TimeCodes_Description(string time_code)
+		{
+			string[] tTimesheetCodes = new string[] { "SELECT * FROM ", t_Timesheet_codes, " WHERE ", t_Timesheet_Codes_c_Timesheet_Code, " ='", time_code, "'" };
+			qString = string.Concat(tTimesheetCodes);
+			return ReturnString(qString, t_Timesheet_Codes_c_Timesheet_Description);
+		}
+		
+		public TimesheetCode TimesheetCode(string time_code)
+		{
+			string[] tTimesheetCodes = new string[] { "SELECT * FROM ", t_Timesheet_codes, " WHERE ", t_Timesheet_Codes_c_Timesheet_Code, " ='", time_code, "'" };
+			qString = string.Concat(tTimesheetCodes);
+			return ReturnTimesheetCode(qString);
+		}
+
+		public List<TimesheetCode> TimesheetCodeAll()
+		{
+			qString = string.Concat("SELECT * FROM ", t_Timesheet_codes);
+			return ReturnTimesheetCodeList(qString);
+		}
+
+		public void UpdateProject(Project project)
+		{
+			string[] tProjects = new string[] { "Update ", t_Projects, " SET ", t_Projects_c_Country, "=@country, ", t_Projects_c_Customer, "=@customer, ", t_Projects_c_IsOpen, "=@isOpen, ", t_Projects_c_IsWarrantyOpen, "=@isWarrantyOpen, ", t_Projects_c_Machine, "=@machine, ", t_Projects_c_Number_BFC, "=@numberBFC, ", t_Projects_c_Number_MAS90, "=@numberMAS90, ", t_Projects_c_Number_Network, "=@numberNetwork, ", t_Projects_c_Number_SAP, "=@numberSAP, ", t_Projects_c_Number_WarrantyNetwork, "=@numberWarrantyNetwork WHERE ", t_Projects_c_Number_Serial, "=@numberSerial" };
+			qString = string.Concat(tProjects);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			mySqlCommand.Parameters.AddWithValue("@country", project.Country);
+			mySqlCommand.Parameters.AddWithValue("@customer", project.Customer);
+			mySqlCommand.Parameters.AddWithValue("@isOpen", project.IsOpen);
+			mySqlCommand.Parameters.AddWithValue("@isWarrantyOpen", project.IsWarrantyOpen);
+			mySqlCommand.Parameters.AddWithValue("@machine", project.Machine);
+			mySqlCommand.Parameters.AddWithValue("@numberBFC", project.Number_BFC);
+			mySqlCommand.Parameters.AddWithValue("@numberMAS90", project.Number_MAS90);
+			mySqlCommand.Parameters.AddWithValue("@numberNetwork", project.Number_Network);
+			mySqlCommand.Parameters.AddWithValue("@numberSAP", project.Number_SAP);
+			mySqlCommand.Parameters.AddWithValue("@numberWarrantyNetwork", project.Number_WarrantyNetwork);
+			mySqlCommand.Parameters.AddWithValue("@numberSerial", project.Number_Serial);
+			Update(mySqlCommand);
+		}
+
+		public void UpdateTimeEntry(int entryId, int? sectionId, string projectSerial, string projectSAP, string numberSection, int? network, string activity, DateTime date, int period, int year, double hours, string description, string timesheetCode, string taskType)
+		{
+			string[] tTimesheetPrelim = new string[] { "Update ", t_Timesheet_Prelim, " SET ", t_Timesheet_c_Section_Id, "=@sectionId, ", t_Timesheet_c_Project_Serial, "=@projectSerial, ", t_Timesheet_c_Project_Sap, "=@projectSAP, ", t_Timesheet_c_Number_Section, "=@numberSection, ", t_Timesheet_c_Number_Network, "=@network, ", t_Timesheet_c_Number_Activity, "=@activity, ", t_Timesheet_c_Date, "=@date, ", t_Timesheet_c_Period, "=@period, ", t_Timesheet_c_Year, "=@year, ", t_Timesheet_c_Hours, "=@hours, ", t_Timesheet_c_Description, "=@description, ", t_Timesheet_c_Timesheet_Code, "=@timesheetCode, ", t_Timesheet_c_Task_Type, "=@taskType, ", t_Timesheet_c_Date_Modified, "=@dateModified WHERE ", t_Timesheet_c_Entry_Id, "=@entryId" };
+			qString = string.Concat(tTimesheetPrelim);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			mySqlCommand.Parameters.AddWithValue("@sectionId", sectionId);
+			mySqlCommand.Parameters.AddWithValue("@projectSerial", projectSerial);
+			mySqlCommand.Parameters.AddWithValue("@projectSAP", projectSAP);
+			mySqlCommand.Parameters.AddWithValue("@numberSection", numberSection);
+			mySqlCommand.Parameters.AddWithValue("@network", network);
+			mySqlCommand.Parameters.AddWithValue("@activity", activity);
+			mySqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			mySqlCommand.Parameters.AddWithValue("@period", period);
+			mySqlCommand.Parameters.AddWithValue("@year", year);
+			mySqlCommand.Parameters.AddWithValue("@hours", hours);
+			mySqlCommand.Parameters.AddWithValue("@description", description);
+			mySqlCommand.Parameters.AddWithValue("@timesheetCode", timesheetCode);
+			mySqlCommand.Parameters.AddWithValue("@taskType", taskType);
+			MySqlParameterCollection parameters = mySqlCommand.Parameters;
+			DateTime now = DateTime.Now;
+			parameters.AddWithValue("@dateModified", now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			mySqlCommand.Parameters.AddWithValue("@entryId", entryId);
+			Update(mySqlCommand);
+		}
+
+		public void UpdateTimeEntry(Entry entry)
+		{
+			string[] tTimesheetPrelim = new string[] { "Update ", t_Timesheet_Prelim, " SET ", t_Timesheet_c_Section_Id, "=@sectionId, ", t_Timesheet_c_Project_Serial, "=@projectSerial, ", t_Timesheet_c_Project_Sap, "=@projectSAP, ", t_Timesheet_c_Number_Section, "=@numberSection, ", t_Timesheet_c_Number_Network, "=@network, ", t_Timesheet_c_Number_Activity, "=@activity, ", t_Timesheet_c_Date, "=@date, ", t_Timesheet_c_Period, "=@period, ", t_Timesheet_c_Year, "=@year, ", t_Timesheet_c_Hours, "=@hours, ", t_Timesheet_c_Description, "=@description, ", t_Timesheet_c_Timesheet_Code, "=@timesheetCode, ", t_Timesheet_c_Task_Type, "=@taskType, ", t_Timesheet_c_Date_Modified, "=@dateModified WHERE ", t_Timesheet_c_Entry_Id, "=@entryId" };
+			qString = string.Concat(tTimesheetPrelim);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			mySqlCommand.Parameters.AddWithValue("@sectionId", entry.section_id);
+			mySqlCommand.Parameters.AddWithValue("@projectSerial", entry.project_serial);
+			mySqlCommand.Parameters.AddWithValue("@projectSAP", entry.project_sap);
+			mySqlCommand.Parameters.AddWithValue("@numberSection", entry.number_section);
+			mySqlCommand.Parameters.AddWithValue("@network", entry.number_network);
+			mySqlCommand.Parameters.AddWithValue("@activity", entry.number_activity);
+			MySqlParameterCollection parameters = mySqlCommand.Parameters;
+			DateTime now = entry.date;
+			parameters.AddWithValue("@date", now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			mySqlCommand.Parameters.AddWithValue("@period", entry.period);
+			mySqlCommand.Parameters.AddWithValue("@year", entry.year);
+			mySqlCommand.Parameters.AddWithValue("@hours", entry.hours);
+			mySqlCommand.Parameters.AddWithValue("@description", entry.description);
+			mySqlCommand.Parameters.AddWithValue("@timesheetCode", entry.timesheet_code);
+			mySqlCommand.Parameters.AddWithValue("@taskType", entry.task_type);
+			MySqlParameterCollection mySqlParameterCollection = mySqlCommand.Parameters;
+			now = DateTime.Now;
+			mySqlParameterCollection.AddWithValue("@dateModified", now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
+			mySqlCommand.Parameters.AddWithValue("@entryId", entry.entry_id);
+			Update(mySqlCommand);
+		}
+
+		public void UpdateUserDefaults(User_Defaults UserDefault)
+		{
+			string[] tUsersDefaults = new string[] { "Update ", t_UsersDefaults, " SET ", t_UsersDefaults_c_TimesheetCode, "=@timesheetCode, ", t_UsersDefaults_c_TaskType, "=@taskType, ", t_UsersDefaults_c_Project, "=@project, ", t_UsersDefaults_c_Default4, "=@default4, ", t_UsersDefaults_c_Default5, "=@default5, ", t_UsersDefaults_c_Default6, "=@default6, ", t_UsersDefaults_c_Default7, "=@default7, ", t_UsersDefaults_c_Default8, "=@default8, ", t_UsersDefaults_c_Default9, "=@default9, ", t_UsersDefaults_c_Default10, "=@default10, ", t_UsersDefaults_c_Default11, "=@default11, ", t_UsersDefaults_c_Default12, "=@default12, ", t_UsersDefaults_c_Default13, "=@default13, ", t_UsersDefaults_c_Default14, "=@default14, ", t_UsersDefaults_c_Default15, "=@default15, ", t_UsersDefaults_c_Default16, "=@default16, ", t_UsersDefaults_c_Default17, "=@default17, ", t_UsersDefaults_c_Default18, "=@default18, ", t_UsersDefaults_c_Default19, "=@default19, ", t_UsersDefaults_c_Default20, "=@default20  WHERE ", t_UsersDefaults_c_User_Id, "=@userId" };
+			qString = string.Concat(tUsersDefaults);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			mySqlCommand.Parameters.AddWithValue("@timesheetCode", (UserDefault.TimesheetCode != null ? UserDefault.TimesheetCode.Code : ""));
+			mySqlCommand.Parameters.AddWithValue("@taskType", UserDefault.TaskType);
+			mySqlCommand.Parameters.AddWithValue("@project", (UserDefault.Project != null ? UserDefault.Project.Number_Serial : ""));
+			mySqlCommand.Parameters.AddWithValue("@default4", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default5", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default6", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default7", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default8", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default9", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default10", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default11", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default12", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default13", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default14", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default15", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default16", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default17", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default18", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default19", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@default20", UserDefault.userDefault4);
+			mySqlCommand.Parameters.AddWithValue("@userId", UserDefault.UserId);
+			Update(mySqlCommand);
+		}
+
+		public void UpdateUserPassword(User user, string password)
+		{
+			string[] tLogin = new string[] { "Update ", t_Login, " SET ", t_Login_c_password, "=@password  WHERE ", t_Login_c_User_Id, "=@userId" };
+			qString = string.Concat(tLogin);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			mySqlCommand.Parameters.AddWithValue("@password", password);
+			mySqlCommand.Parameters.AddWithValue("@userId", user.UserID);
+			Update(mySqlCommand);
+		}
+
+		public void User_AddApprovee(User approver, User approvee)
+		{
+			string[] tApprovalHierarchy = new string[] { "INSERT INTO ", t_ApprovalHierarchy, " (", t_ApprovalHierarchy_c_Approvee_Id, ", ", t_ApprovalHierarchy_c_Approvee_Name, ", ", t_ApprovalHierarchy_c_Approver_Id, ", ", t_ApprovalHierarchy_c_Approver_Name, ") VALUES(@approveeId, @approveeName, @approverId, @approverName)" };
+			qString = string.Concat(tApprovalHierarchy);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			mySqlCommand.Parameters.AddWithValue("@approveeId", approvee.UserID);
+			mySqlCommand.Parameters.AddWithValue("@approveeName", approvee.UserName);
+			mySqlCommand.Parameters.AddWithValue("@approverId", approver.UserID);
+			mySqlCommand.Parameters.AddWithValue("@approverName", approver.UserName);
+			Insert(mySqlCommand);
+		}
+
+		public List<string> User_Defaults(int user_id)
+		{
+			List<string> strs = new List<string>();
+			object[] tUsersDefaults = new object[] { "SELECT * FROM ", t_UsersDefaults, " WHERE ", t_UsersDefaults_c_User_Id, "= '", user_id, "'" };
+			string str = string.Concat(tUsersDefaults);
+			strs.Add(ReturnString(str, t_UsersDefaults_c_TimesheetCode));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_TaskType));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Project));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default4));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default5));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default6));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default7));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default8));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default9));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default10));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default11));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default12));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default13));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default14));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default15));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default16));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default17));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default18));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default19));
+			strs.Add(ReturnString(str, t_UsersDefaults_c_Default20));
+			return strs;
+		}
 	}
 }

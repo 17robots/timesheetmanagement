@@ -67,5 +67,17 @@ namespace FivesBronxTimesheetManagement.Classes
 			this.TaskType = "";
 			this.Description_Activity = "";
 		}
+
+		public Section(int id, string numberProjectNetwork, string numberSection, string descriptionSection, string numberActivity, 
+			string taskType, string descriptionActivity)
+        {
+			Id = id;
+			Number_ProjectNetwork = numberProjectNetwork;
+			Number_Section = numberSection;
+			Description_Section = descriptionSection;
+			Number_Activity = numberActivity;
+			TaskType = taskType;
+			Description_Activity = descriptionActivity;
+        }
 	}
 }
