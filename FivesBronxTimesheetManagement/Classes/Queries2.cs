@@ -1882,13 +1882,96 @@ namespace FivesBronxTimesheetManagement.Classes
 			myConnection.Open();
 			MySqlDataReader reader = myCommand.ExecuteReader();
 			List<User> returnedUsers = new List<User>();
-			while(reader.Read())
+			while (reader.Read())
 			{
 				returnedUsers.Add(GetUser(int.Parse(reader.GetString(3))));
 			}
 			reader.Close();
 			myConnection.Close();
 			return returnedUsers;
+		}
+
+		public string ProjectNumber_Network(string numberSerial)
+		{
+			string[] tProjects = new string[] { "SELECT * FROM ", t_Projects, " WHERE ", t_Projects_c_Number_Serial, " ='", numberSerial, "'" };
+			qString = string.Concat(tProjects);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			if(reader.Read())
+            {
+				reader.Close();
+				myConnection.Close();
+				return reader.IsDBNull(4) ? "" : reader.GetString(4);
+            }
+			reader.Close();
+			myConnection.Close();
+			return "";
+		}
+
+		public List<int> User_AllEntries(int user_id, string table)
+		{
+			List<int> nums = new List<int>();
+			object[] objArray = new object[] { "SELECT * FROM ", table, " WHERE ", t_Timesheet_c_User_Id, "= '", user_id, "'" };
+			qString = string.Concat(objArray);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			while(reader.Read())
+            {
+				nums.Add(int.Parse(reader.GetString(0)));
+            }
+			reader.Close();
+			myConnection.Close();
+			return nums;
+		}
+
+		public void User_RemoveApprovee(User approver, User approvee)
+		{
+			object[] tApprovalHierarchy = new object[] { "DELETE FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, "='", approver.UserID, "'  AND ", t_ApprovalHierarchy_c_Approvee_Id, "='", approvee.UserID, "'" };
+			qString = string.Concat(tApprovalHierarchy);
+			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			try
+			{
+				myConnection.Open();
+				MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+				MessageBox.Show("Entry Deleted");
+				while (mySqlDataReader.Read())
+				{
+				}
+				mySqlDataReader.Close();
+				myConnection.Close();
+			}
+			catch (Exception exception1)
+			{
+				Exception exception = exception1;
+				try
+				{
+					myConnection.Close();
+					MessageBox.Show(exception.Message);
+				}
+				catch
+				{
+					MessageBox.Show(exception.Message);
+				}
+			}
+		}
+
+		public List<User> User_GetApprovers(FivesBronxTimesheetManagement.Classes.User User)
+		{
+			List<User> users = new List<FivesBronxTimesheetManagement.Classes.User>();
+			object[] tApprovalHierarchy = new object[] { "SELECT * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approvee_Id, "= '", User.UserID, "'" };
+			qString = string.Concat(tApprovalHierarchy);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			while(reader.Read())
+            {
+				users.Add(GetUser(int.Parse(reader.GetString(t_ApprovalHierarchy_c_Approver_Id))));
+            }
+			reader.Close();
+			myConnection.Close();
+			return users;
 		}
 	}
 }
