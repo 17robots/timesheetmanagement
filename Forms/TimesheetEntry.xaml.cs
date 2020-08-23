@@ -925,15 +925,12 @@ namespace FivesBronxTimesheetManagement.Forms
 			Console.WriteLine(((sender as TabControl).SelectedItem as TabItem).Header.ToString());
 			if (((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Approved" ? false : !approvedQueryHasRun)
 			{
-				if (System.Windows.MessageBox.Show("Display All Approved Time Entries?  This may take a while.", "Display Approved?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-				{
-					itemsSourceEntriesApproved = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
-					dgHoursApproved.ItemsSource = 
-						from E in itemsSourceEntriesApproved
-						orderby E.date
-						select E;
-					approvedQueryHasRun = true;
-				}
+				itemsSourceEntriesApproved = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
+				dgHoursApproved.ItemsSource =
+					from E in itemsSourceEntriesApproved
+					orderby E.date
+					select E;
+				approvedQueryHasRun = true;
 			}
 			else if (((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Last Week" ? false : !preWeekQueryHasRun)
 			{

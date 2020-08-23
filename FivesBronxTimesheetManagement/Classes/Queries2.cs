@@ -939,54 +939,6 @@ namespace FivesBronxTimesheetManagement.Classes
 			return strs;
 		}
 
-		/*public List<Entry> Entries(string table, List<int> entry_ids)
-		{
-			entry_ids.Sort();
-			MessageBox.Show(entry_ids.Count.ToString());
-			if(entry_ids.Count > 0)
-			{
-				string[] qString = new string[] { "Select * from ", table, " where ", t_Sections_c_Entry_Id, ">= ", entry_ids[0].ToString(), " and ", t_Sections_c_Entry_Id, " <= ", entry_ids[entry_ids.Count - 1].ToString() };
-			}
-			string[] qString = new string[] { "Select * from ", table, " where ", t_Sections_c_Entry_Id, ">= ", entry_ids[0].ToString(), " and ", t_Sections_c_Entry_Id, " <= ", entry_ids[entry_ids.Count - 1].ToString() };
-			List<Entry> entries = new List<Entry>();
-			myCommand = new MySqlCommand(string.Concat(qString), myConnection.MySqlConnection);
-			myConnection.Open();
-			MySqlDataReader reader = myCommand.ExecuteReader();
-			while(reader.Read())
-			{
-				entries.Add(new Entry(
-					int.Parse(reader.GetString(0)), // entry_id
-					int.Parse(reader.GetString(1)), // user_id
-					reader.GetString(2), // user_name
-					reader.IsDBNull(reader.GetOrdinal("section_id")) ? null : new int?(int.Parse(reader.GetString(3))), // section_id
-					reader.IsDBNull(reader.GetOrdinal("project_serial")) ? "" : reader.GetString(4), // project_serial
-					reader.IsDBNull(reader.GetOrdinal("project_sap")) ? "" : reader.GetString(5), // project_sap
-					reader.IsDBNull(reader.GetOrdinal("number_section")) ? "" : reader.GetString(6), // number_section
-					reader.IsDBNull(reader.GetOrdinal("number_network")) ? null : new int?(int.Parse(reader.GetString(7))), // number_network
-					reader.IsDBNull(reader.GetOrdinal("number_activity")) ? "" : reader.GetString(8), // number_activity
-					DateTime.Parse(reader.GetString(9)), // date
-					int.Parse(reader.GetString(10)), // period
-					int.Parse(reader.GetString(11)), // year
-					double.Parse(reader.GetString(12)), // hours
-					reader.IsDBNull(reader.GetOrdinal("description")) ? "" : reader.GetString(13), // description
-					reader.IsDBNull(reader.GetOrdinal("timesheet_code")) ? "" : reader.GetString(14), // timesheet_code
-					reader.IsDBNull(reader.GetOrdinal("task_type")) ? "" : reader.GetString(15), // task_type
-					reader.IsDBNull(reader.GetOrdinal("submitted_status")) ? "" : reader.GetString(16), // submitted_status
-					reader.IsDBNull(reader.GetOrdinal("approval_status")) ? functions.approvalStatus(null) : functions.approvalStatus(reader.GetString(17)), // approval_status
-					reader.IsDBNull(reader.GetOrdinal("rejection_reason")) ? "" : reader.GetString(18), // rejection_reason - check
-					reader.IsDBNull(reader.GetOrdinal("approved_by_user_id")) ? null : new int?(int.Parse(reader.GetString(19))), // approved_by_user_id
-					reader.IsDBNull(reader.GetOrdinal("approved_by_user_name")) ? "" : reader.GetString(20), // approved_by_user_name
-					DateTime.Parse(reader.GetString(21)), // date_created
-					DateTime.Parse(reader.GetString(22)), // date_modified
-					reader.IsDBNull(reader.GetOrdinal("date_approved")) ? null : new DateTime?(DateTime.Parse(reader.GetString(22))) // date_approved
-				));
-			}
-			reader.Close();
-			myConnection.Close();
-			return entries;
-		}*/
-
-
 		public List<Entry> Entries(List<string> qStrings)
 		{
 			List<Entry> entries = new List<Entry>();
@@ -1024,7 +976,7 @@ namespace FivesBronxTimesheetManagement.Classes
 						reader.IsDBNull(reader.GetOrdinal("date_approved")) ? null : new DateTime?(DateTime.Parse(reader.GetString(22))) // date_approved
 					));
 				}
-				reader.Close();
+				;
 				myConnection.Close();
 			}
 
@@ -1135,8 +1087,8 @@ namespace FivesBronxTimesheetManagement.Classes
 			myCommand = new MySqlCommand(string.Concat(objArray), myConnection.MySqlConnection);
 			myConnection.Open();
 			MySqlDataReader reader = myCommand.ExecuteReader();
-			Entry returnedEntry;
-			if(reader.HasRows)
+			Entry returnedEntry = new Entry();
+			if(reader.Read())
             {
 				returnedEntry = new Entry(
 					int.Parse(reader.GetString(0)), // entry_id
@@ -1165,9 +1117,8 @@ namespace FivesBronxTimesheetManagement.Classes
 					reader.IsDBNull(reader.GetOrdinal("date_approved")) ? null : new DateTime?(DateTime.Parse(reader.GetString(22))) // date_approved
 				);
 				myConnection.Close();
-				return returnedEntry;
 			}
-			return null;
+			return returnedEntry;
 		}
 
 		public User GetUser(int user_id)
@@ -1176,9 +1127,8 @@ namespace FivesBronxTimesheetManagement.Classes
 			myCommand = new MySqlCommand(string.Concat(objArray), myConnection.MySqlConnection);
 			myConnection.Open();
 			MySqlDataReader reader = myCommand.ExecuteReader();
-			User returnedUser;
-			reader.Read();
-			if(reader.HasRows)
+			User returnedUser = null;
+			if(reader.Read())
             {
 				returnedUser = new User(
 					int.Parse(reader.GetString(0)), // user id
@@ -1189,9 +1139,8 @@ namespace FivesBronxTimesheetManagement.Classes
 					int.Parse(reader.GetString(5))
 				);
 				myConnection.Close();
-				return returnedUser;
             }
-			return null;
+			return returnedUser;
 		}
 
 		public List<User> GetUser_All()
@@ -1222,14 +1171,13 @@ namespace FivesBronxTimesheetManagement.Classes
 			myCommand = new MySqlCommand(string.Concat(tPeriod), myConnection.MySqlConnection);
 			myConnection.Open();
 			MySqlDataReader reader = myCommand.ExecuteReader();
-			if(reader.HasRows)
+			bool isOpen = false;
+			if(reader.Read())
             {
-				reader.Read();
-				myConnection.Close();
-				return functions.IntToBool(int.Parse(reader.GetString(3)));
+				isOpen = functions.IntToBool(int.Parse(reader.GetString(3)));
 			}
 			myConnection.Close();
-			return false;
+			return isOpen;
 		}
 
 		public Project Project(string numberSerial)
@@ -1237,23 +1185,22 @@ namespace FivesBronxTimesheetManagement.Classes
 			string[] tProjects = new string[] { "SELECT * FROM ", t_Projects, " WHERE ", t_Projects_c_Number_Serial, " ='", numberSerial, "'" };
 			myCommand = new MySqlCommand(string.Concat(tProjects), myConnection.MySqlConnection);
 			myConnection.Open();
-			Project returnedProject = null;
+			Project returnedProject = new Project();
 			MySqlDataReader reader = myCommand.ExecuteReader();
-			if(reader.HasRows)
+			if(reader.Read())
             {
-				reader.Read();
 				returnedProject = new Project(
 					reader.GetString(0), // numberSerial
 					reader.GetString(1), // numberSAP
 					reader.GetString(2), // numberMAS90
 					reader.GetString(3), // numberBFC
 					int.Parse(reader.GetString(4)), // numberNetwork
-					reader.GetString(4), // customer
-					reader.GetString(5), // machine
-					reader.GetString(6), // country
-					int.Parse(reader.GetString(7)), // isOpen
-					int.Parse(reader.GetString(8)), // isWarrantyOpen
-					int.Parse(reader.GetString(9)) // numberWarrantyNetwork
+					reader.GetString(5), // customer
+					reader.GetString(6), // machine
+					reader.GetString(7), // country
+					int.Parse(reader.GetString(8)), // isOpen
+					int.Parse(reader.GetString(9)), // isWarrantyOpen
+					int.Parse(reader.GetString(10)) // numberWarrantyNetwork
 				);
             }
 			myConnection.Close();
@@ -1656,7 +1603,6 @@ namespace FivesBronxTimesheetManagement.Classes
 					Description = loadDescription(reader.GetString(t_Sections_c_Task_Type))
 				});
             }
-			reader.Close();
 			myConnection.Close();
 			return returnedTasks;
 		}
@@ -1672,7 +1618,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			{
 				returnedString = reader.GetString(1);
 			}
-			reader.Close();
+			;
 			myConnection.Close();
 			return returnedString;
 		}
@@ -1692,7 +1638,7 @@ namespace FivesBronxTimesheetManagement.Classes
 					Description = reader.GetString(1)
 				});
 			}
-			reader.Close();
+			;
 			myConnection.Close();
 			return returnedTaskTypes;
 		}
@@ -1709,7 +1655,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			{
 				returnedString = reader.GetString(1);
 			}
-			reader.Close();
+			;
 			myConnection.Close();
 			return returnedString;
 		}
@@ -1729,7 +1675,7 @@ namespace FivesBronxTimesheetManagement.Classes
 					reader.GetString(1)
 				);
 			}
-			reader.Close();
+			;
 			myConnection.Close();
 			return returnedTimesheetCode;
 		}
@@ -1748,7 +1694,7 @@ namespace FivesBronxTimesheetManagement.Classes
 					reader.GetString(1)
 				));
 			}
-			reader.Close();
+			;
 			myConnection.Close();
 			return returnedTimesheetCodes;
 		}
@@ -1914,7 +1860,7 @@ namespace FivesBronxTimesheetManagement.Classes
 				}
 
 			}
-			reader.Close();
+			;
 			myConnection.Close();
 			return strs;
 		}
@@ -1926,12 +1872,33 @@ namespace FivesBronxTimesheetManagement.Classes
 			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
 			myConnection.Open();
 			MySqlDataReader reader = myCommand.ExecuteReader();
+			List<int> idList = new List<int>();
 			List<User> returnedUsers = new List<User>();
 			while (reader.Read())
 			{
-				returnedUsers.Add(GetUser(int.Parse(reader.GetString(3))));
+				idList.Add(int.Parse(reader.GetString(3)));
 			}
 			myConnection.Close();
+
+			idList.Sort();
+			if (idList.Count <= 0) return returnedUsers;
+			object[] objArray = { "SELECT * FROM ", t_Users, " WHERE ", t_Users_c_User_Id, " between ", idList.First().ToString(), " and ", idList.Last().ToString() };
+			myCommand = new MySqlCommand(string.Concat(objArray), myConnection.MySqlConnection);
+			myConnection.Open();
+			reader = myCommand.ExecuteReader();
+			while(reader.Read())
+            {
+				returnedUsers.Add(new User(
+					int.Parse(reader.GetString(0)), // user id
+					reader.GetString(1),
+					int.Parse(reader.GetString(2)),
+					int.Parse(reader.GetString(3)),
+					int.Parse(reader.GetString(4)),
+					int.Parse(reader.GetString(5))
+				));
+			}
+			myConnection.Close();
+			reader.Close();
 			return returnedUsers;
 		}
 
@@ -1942,15 +1909,14 @@ namespace FivesBronxTimesheetManagement.Classes
 			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
 			myConnection.Open();
 			MySqlDataReader reader = myCommand.ExecuteReader();
+			string returnedString = "";
 			if(reader.Read())
             {
-				reader.Close();
-				myConnection.Close();
 				return reader.IsDBNull(4) ? "" : reader.GetString(4);
             }
-			reader.Close();
+			;
 			myConnection.Close();
-			return "";
+			return returnedString;
 		}
 
 		public string User_AllEntries(int user_id, string table)
@@ -1992,19 +1958,39 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public List<User> User_GetApprovers(FivesBronxTimesheetManagement.Classes.User User)
 		{
-			List<User> users = new List<FivesBronxTimesheetManagement.Classes.User>();
-			object[] tApprovalHierarchy = new object[] { "SELECT * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approvee_Id, "= '", User.UserID, "'" };
+			object[] tApprovalHierarchy = new object[] { "SELECT * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, "= '", User.UserID, "'" };
 			qString = string.Concat(tApprovalHierarchy);
 			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
 			myConnection.Open();
 			MySqlDataReader reader = myCommand.ExecuteReader();
-			while(reader.Read())
-            {
-				users.Add(GetUser(int.Parse(reader.GetString(t_ApprovalHierarchy_c_Approver_Id))));
-            }
-			reader.Close();
+			List<int> idList = new List<int>();
+			List<User> returnedUsers = new List<User>();
+			while (reader.Read())
+			{
+				idList.Add(int.Parse(reader.GetString(1)));
+			}
 			myConnection.Close();
-			return users;
+
+			idList.Sort();
+			if (idList.Count <= 0) return returnedUsers;
+			object[] objArray = { "SELECT * FROM ", t_Users, " WHERE ", t_Users_c_User_Id, " between ", idList.First().ToString(), " and ", idList.Last().ToString() };
+			myCommand = new MySqlCommand(string.Concat(objArray), myConnection.MySqlConnection);
+			myConnection.Open();
+			reader = myCommand.ExecuteReader();
+			while (reader.Read())
+			{
+				returnedUsers.Add(new User(
+					int.Parse(reader.GetString(0)), // user id
+					reader.GetString(1),
+					int.Parse(reader.GetString(2)),
+					int.Parse(reader.GetString(3)),
+					int.Parse(reader.GetString(4)),
+					int.Parse(reader.GetString(5))
+				));
+			}
+			myConnection.Close();
+			reader.Close();
+			return returnedUsers;
 		}
 	}
 }
