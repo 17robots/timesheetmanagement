@@ -28,7 +28,8 @@
             <RowDefinition Height=".05*" />
         </Grid.RowDefinitions>
         <CheckBox Name="activeUsers" Grid.Column="1" Grid.Row="1" Unchecked="activeUsers_CheckedChanged" Checked="activeUsers_CheckedChanged" Margin="0.333,0,0,0">Show Hidden Users?</CheckBox>
-        <Label Grid.Column="7" Grid.Row="1" Grid.ColumnSpan="5">Leave Column Blank To Choose All Items In The List</Label>
+        <CheckBox Name="generalReport" Grid.Column="11" Grid.Row="1" Unchecked="generalReport_CheckedChanged" Checked="generalReport_CheckedChanged" Margin="0.333,0,0,0">General Columns?</CheckBox>
+        <Label Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="5">Leave Column Blank To Choose All Items In The List</Label>
         <DockPanel Grid.Column="1" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">User Name</Label>
             <ListView SelectionMode="Multiple" SelectionChanged="user_name_ItemSelectionChanged" Name="user_name"/>

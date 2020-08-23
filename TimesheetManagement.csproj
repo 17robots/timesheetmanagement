@@ -311,10 +311,6 @@
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="FivesBronxTimesheetManagement\Classes\Queries.cs">
-      <AutoGen>false</AutoGen>
-      <DesignTimeSharedInput>false</DesignTimeSharedInput>
-    </Compile>
     <EmbeddedResource Include="FivesBronxTimesheetManagement\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

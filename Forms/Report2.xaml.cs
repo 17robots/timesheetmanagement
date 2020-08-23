@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,7 +12,6 @@ namespace FivesBronxTimesheetManagement.Forms
 {
     public partial class Report2 : Window
     {
-        //private Queries queries = new Queries();
         private Queries2 queries = new Queries2();
 
         private Functions functions;
@@ -300,6 +300,27 @@ namespace FivesBronxTimesheetManagement.Forms
             LoadUsersRules();
         }
 
+        private void generalReport_CheckedChanged(object sender, EventArgs e)
+        {
+            if(generalReport.IsChecked ?? false)
+            {
+                MessageBox.Show(columns.Items.IndexOf("user_id").ToString());
+                columns.Focus();
+                columns.SelectedItems.Add(columns.Items.IndexOf("user_id"));
+                columns.SelectedItems.Add(columns.Items.IndexOf("user_name"));
+                columns.SelectedItems.Add(columns.Items.IndexOf("project_sap"));
+                columns.SelectedItems.Add(columns.Items.IndexOf("number_network"));
+                columns.SelectedItems.Add(columns.Items.IndexOf("number_activity"));
+                columns.SelectedItems.Add(columns.Items.IndexOf("date"));
+                columns.SelectedItems.Add(columns.Items.IndexOf("hours"));
+                columns.SelectedItems.Add(columns.Items.IndexOf("description"));
+            }
+            else
+            {
+                columns.SelectedItems.Clear();
+            }
+        }
+
         private List<User> SelectedUsers()
         {
             selectedUsers = new List<User>();
@@ -325,80 +346,6 @@ namespace FivesBronxTimesheetManagement.Forms
             selectedUsers = SelectedUsers();
         }
 
-        /*private void UpdateSections()
-        {
-            section.Items.Clear();
-            if(projectSelect.SelectedItems != null || section.SelectedItems != null)
-            {
-                if(projectSelect.SelectedItems != null)
-                {
-
-                    List<string> openProjects = new List<string>();
-                    foreach(string x in projectSelect.SelectedItems)
-                    {
-                        if (queries.ProjectIsOpen(x)) openProjects.Add(x);
-                    }
-
-                    if(task_type.SelectedItems != null)
-                    {
-                        foreach (string x in openProjects)
-                        {
-                            foreach(string y in task_type.SelectedItems)
-                            {
-                                foreach(string z in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x), y))
-                                {
-                                    section.Items.Add(z);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (string x in openProjects)
-                        {
-                            foreach (string y in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x)))
-                            {
-                                section.Items.Add(y);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    List<string> openProjects = new List<string>();
-                    foreach (string x in projectSelect.Items)
-                    {
-                        if (queries.ProjectIsOpen(x)) openProjects.Add(x);
-                    }
-                    
-                    foreach(string x in openProjects)
-                    {
-                        foreach(string y in task_type.SelectedItems)
-                        {
-                            foreach(string z in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x), y))
-                            {
-                                section.Items.Add(z);
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                List<string> openProjects = new List<string>();
-                foreach (string x in projectSelect.Items)
-                {
-                    if (queries.ProjectIsOpen(x)) openProjects.Add(x);
-                }
-
-                foreach(string x in openProjects)
-                {
-                    foreach(string y in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x)))
-                    {
-                        section.Items.Add(y);
-                    }
-                }
-            }
-        }*/
+        
     }
 }
