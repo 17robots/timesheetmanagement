@@ -14,7 +14,8 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private Connection myConnections = new Connection();
 
-		private Queries queries = new Queries();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private User user;
 

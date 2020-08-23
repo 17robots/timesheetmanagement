@@ -13,7 +13,8 @@ namespace FivesBronxTimesheetManagement.Forms
 {
 	public partial class UserDefaults : Window
 	{
-		private Queries queries = new Queries();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private User user;
 

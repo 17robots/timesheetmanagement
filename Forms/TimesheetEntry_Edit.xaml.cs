@@ -18,7 +18,8 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private Connection myConnection;
 
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private Functions functions;
 
@@ -43,7 +44,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			this.originalEntry = entry;
 			this.tsEntry = tsEntry;
 			this.InitializeComponent();
-			this.queries = new Queries();
+			this.queries = new Queries2();
 			this.myConnection = new Connection();
 			this.functions = new Functions();
 			this.LoadConstantsFromDb();
@@ -270,11 +271,12 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void LoadSelectedEntry()
 		{
-			this.cbxTimeCode.SelectedValue = (new TimesheetCode(this.entry.timesheet_code)).Code_Description;
+			this.cbxTimeCode.SelectedValue = new TimesheetCode(this.entry.timesheet_code).Code_Description;
 			this.cbxTaskType.SelectedValue = (new TaskType(this.entry.task_type)).Id;
 			if (!string.IsNullOrEmpty(this.entry.project_serial))
 			{
-				this.cbxJob.SelectedValue = (new Project(this.entry.project_serial)).Serial_Customer_Machine;
+				this.cbxJob.SelectedValue = queries.Project(this.entry.project_serial).Serial_Customer_Machine;
+				//this.cbxJob.SelectedValue = (new Project(this.entry.project_serial)).Serial_Customer_Machine;
 			}
 			this.cbxSection.SelectedValue = this.entry.number_section;
 			this.dtpDate.SelectedDate = new DateTime?(this.entry.date);

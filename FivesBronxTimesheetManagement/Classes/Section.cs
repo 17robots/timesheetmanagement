@@ -5,7 +5,8 @@ namespace FivesBronxTimesheetManagement.Classes
 {
 	public class Section
 	{
-		private Queries queries = new Queries();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		public string Description_Activity
 		{

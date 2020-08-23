@@ -16,7 +16,8 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private Project project;
 
-		private Queries queries = new Queries();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private Functions functions = new Functions();
 

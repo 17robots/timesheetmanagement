@@ -737,6 +737,35 @@ namespace FivesBronxTimesheetManagement.Classes
 			}
 		}
 
+		public void Approval_Approve(List<Entry> Entries, FivesBronxTimesheetManagement.Classes.User User)
+		{
+			try
+			{
+				DeleteTimeEntry(DeleteTimeEntryQStrings(t_Timesheet_Limbo, Entries));
+				SaveTimeEntry(t_Timesheet_Final, Entries, ApprovalStatus.Approved, ApprovalStatus.Submitted, User);
+				MessageBox.Show("Successfully Approved");
+			}
+			catch (Exception exception)
+			{
+				MessageBox.Show(exception.ToString());
+			}
+		}
+
+		public void Approval_Reject(List<Entry> entries, string rejectionReason)
+		{
+			List<int> nums = new List<int>();
+			try
+			{
+				DeleteTimeEntry(DeleteTimeEntryQStrings(t_Timesheet_Limbo, entries));
+				SaveTimeEntry(t_Timesheet_Prelim, entries, ApprovalStatus.Rejected, ApprovalStatus.NotSubmitted, rejectionReason);
+				MessageBox.Show("Successfully Rejected");
+			}
+			catch (Exception exception)
+			{
+				MessageBox.Show(exception.ToString());
+			}
+		}
+
 		public void CreateProject(Project project)
 		{
 			string[] tProjects = new string[] { "INSERT INTO ", t_Projects, " (", t_Projects_c_Country, ", ", t_Projects_c_IsOpen, ", ", t_Projects_c_IsWarrantyOpen, ", ", t_Projects_c_Machine, ", ", t_Projects_c_Number_BFC, ", ", t_Projects_c_Number_MAS90, ", ", t_Projects_c_Number_Network, ", ", t_Projects_c_Number_SAP, ", ", t_Projects_c_Number_Serial, ", ", t_Projects_c_Number_WarrantyNetwork, ", ", t_Projects_c_Customer, ") VALUES(@country, @isOpen, @isWarrantyOpen, @machine, @numberBFC, @numberMAS90, @numberNetwork, @numberSAP, @numberSerial, @numberWarrantyNetwork, @Customer)" };
@@ -1535,8 +1564,9 @@ namespace FivesBronxTimesheetManagement.Classes
             {
 				returnedTasks.Add(new TaskType()
 				{
-					Id = reader.GetString(0),
-					Description = reader.GetString(1)
+					ActivityNumber = reader.GetString(t_Sections_c_Number_Activity),
+					Id = reader.GetString(t_Sections_c_Task_Type),
+					Description = loadDescription(reader.GetString(t_Sections_c_Task_Type))
 				});
             }
 			reader.Close();
@@ -1544,30 +1574,120 @@ namespace FivesBronxTimesheetManagement.Classes
 			return returnedTasks;
 		}
 
+		public string loadDescription(string taskType)
+		{
+			string[] descriptions = new string[] { "SELECT * FROM ", t_Task_type, " WHERE ", t_Task_Type_c_Task_Type, " = '", taskType, "'" };
+			myCommand = new MySqlCommand(string.Concat(descriptions), myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			string returnedString = "";
+			if(reader.Read())
+			{
+				returnedString = reader.GetString(1);
+			}
+			reader.Close();
+			myConnection.Close();
+			return returnedString;
+		}
+
 		public List<TaskType> TaskTypesAll()
 		{
 			qString = string.Concat("SELECT * FROM ", t_Task_type);
-			
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			List<TaskType> returnedTaskTypes = new List<TaskType>();
+			while(reader.Read())
+			{
+				returnedTaskTypes.Add(new TaskType()
+				{
+					Id = reader.GetString(0),
+					Description = reader.GetString(1)
+				});
+			}
+			reader.Close();
+			myConnection.Close();
+			return returnedTaskTypes;
 		}
 
 		public string TimeCodes_Description(string time_code)
 		{
 			string[] tTimesheetCodes = new string[] { "SELECT * FROM ", t_Timesheet_codes, " WHERE ", t_Timesheet_Codes_c_Timesheet_Code, " ='", time_code, "'" };
 			qString = string.Concat(tTimesheetCodes);
-			return ReturnString(qString, t_Timesheet_Codes_c_Timesheet_Description);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			string returnedString = "";
+			if(reader.Read())
+			{
+				returnedString = reader.GetString(1);
+			}
+			reader.Close();
+			myConnection.Close();
+			return returnedString;
 		}
 		
 		public TimesheetCode TimesheetCode(string time_code)
 		{
 			string[] tTimesheetCodes = new string[] { "SELECT * FROM ", t_Timesheet_codes, " WHERE ", t_Timesheet_Codes_c_Timesheet_Code, " ='", time_code, "'" };
 			qString = string.Concat(tTimesheetCodes);
-			return ReturnTimesheetCode(qString);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			TimesheetCode returnedTimesheetCode = new TimesheetCode();
+			if(reader.Read())
+			{
+				returnedTimesheetCode = new TimesheetCode(
+					reader.GetString(0),
+					reader.GetString(1)
+				);
+			}
+			reader.Close();
+			myConnection.Close();
+			return returnedTimesheetCode;
 		}
 
 		public List<TimesheetCode> TimesheetCodeAll()
 		{
 			qString = string.Concat("SELECT * FROM ", t_Timesheet_codes);
-			return ReturnTimesheetCodeList(qString);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			List<TimesheetCode> returnedTimesheetCodes = new List<TimesheetCode>();
+			while(reader.Read())
+			{
+				returnedTimesheetCodes.Add(new TimesheetCode(
+					reader.GetString(0),
+					reader.GetString(1)
+				));
+			}
+			reader.Close();
+			myConnection.Close();
+			return returnedTimesheetCodes;
+		}
+
+		private void Update(MySqlCommand cmd)
+		{
+			try
+			{
+				myConnection.Open();
+				cmd.ExecuteNonQuery();
+				MessageBox.Show("Update made");
+				myConnection.Close();
+			}
+			catch (Exception exception1)
+			{
+				Exception exception = exception1;
+				try
+				{
+					myConnection.Close();
+					MessageBox.Show(exception.Message);
+				}
+				catch
+				{
+					MessageBox.Show(exception.Message);
+				}
+			}
 		}
 
 		public void UpdateProject(Project project)
@@ -1697,27 +1817,36 @@ namespace FivesBronxTimesheetManagement.Classes
 			List<string> strs = new List<string>();
 			object[] tUsersDefaults = new object[] { "SELECT * FROM ", t_UsersDefaults, " WHERE ", t_UsersDefaults_c_User_Id, "= '", user_id, "'" };
 			string str = string.Concat(tUsersDefaults);
-			strs.Add(ReturnString(str, t_UsersDefaults_c_TimesheetCode));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_TaskType));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Project));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default4));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default5));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default6));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default7));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default8));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default9));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default10));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default11));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default12));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default13));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default14));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default15));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default16));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default17));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default18));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default19));
-			strs.Add(ReturnString(str, t_UsersDefaults_c_Default20));
+			myCommand = new MySqlCommand(str, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			if (reader.Read()) {
+				for(int i = 1; i < reader.FieldCount; ++i)
+				{
+					strs.Add(reader.IsDBNull(i) ? "" : reader.GetString(i));
+				}
+
+			}
+			reader.Close();
+			myConnection.Close();
 			return strs;
+		}
+
+		public List<User> User_GetApprovees(User User)
+		{
+			object[] tApprovalHierarchy = new object[] { "SELECT * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, "= '", User.UserID, "'" };
+			qString = string.Concat(tApprovalHierarchy);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			List<User> returnedUsers = new List<User>();
+			while(reader.Read())
+			{
+				returnedUsers.Add(GetUser(int.Parse(reader.GetString(3))));
+			}
+			reader.Close();
+			myConnection.Close();
+			return returnedUsers;
 		}
 	}
 }

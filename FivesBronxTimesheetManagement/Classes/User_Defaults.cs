@@ -6,7 +6,8 @@ namespace FivesBronxTimesheetManagement.Classes
 {
 	public class User_Defaults
 	{
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		public FivesBronxTimesheetManagement.Classes.Project Project
 		{
@@ -136,7 +137,7 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public User_Defaults(FivesBronxTimesheetManagement.Classes.User User)
 		{
-			this.queries = new Queries();
+			this.queries = new Queries2();
 			this.UserId = User.UserID;
 			List<string> strs = this.queries.User_Defaults(this.UserId);
 			this.TimesheetCode = this.queries.TimesheetCode(strs[0]);

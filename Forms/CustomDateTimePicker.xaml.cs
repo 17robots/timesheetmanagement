@@ -19,7 +19,8 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private Functions functions;
 
-		private Queries queries = new Queries();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		public DateTime date = DateTime.Now;
 

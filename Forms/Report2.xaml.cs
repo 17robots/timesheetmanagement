@@ -11,7 +11,8 @@ namespace FivesBronxTimesheetManagement.Forms
 {
     public partial class Report2 : Window
     {
-        private Queries queries;
+        //private Queries queries = new Queries();
+        private Queries2 queries = new Queries2();
 
         private Functions functions;
 
@@ -33,7 +34,7 @@ namespace FivesBronxTimesheetManagement.Forms
         {
             InitializeComponent();
             user = User;
-            queries = new Queries();
+            queries = new Queries2();
             functions = new Functions();
             LoadConstantsFromDB();
         }

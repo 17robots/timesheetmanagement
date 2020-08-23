@@ -19,7 +19,8 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private Connection myConnection;
 
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private User user;
 
@@ -62,7 +63,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			InitializeComponent();
 			user = User;
 			myConnection = new Connection();
-			queries = new Queries();
+			queries = new Queries2();
 			functions = new Functions();
 			user_Defaults = new User_Defaults(user);
 			itemsSourceEntriesApproved = new List<Entry>();
@@ -335,7 +336,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			{
 				try
 				{
-					Queries query = queries;
+					Queries2 query = queries;
 					string tTimesheetPrelim = queries.t_Timesheet_Prelim;
 					int? entryId = ((Entry)dgHours.SelectedItems[0]).entry_id;
 					query.DeleteTimeEntry(tTimesheetPrelim, entryId.Value);

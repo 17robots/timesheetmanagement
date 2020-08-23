@@ -5,7 +5,8 @@ namespace FivesBronxTimesheetManagement.Classes
 {
 	public class Project
 	{
-		private Queries queries = new Queries();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private Functions functions = new Functions();
 
@@ -115,7 +116,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			Number_WarrantyNetwork = numberWarrantyNetwork;
         }
 
-		public Project(string Serial)
+		/*public Project(string Serial)
 		{
 			this.Number_Serial = Serial;
 			this.Number_SAP = this.queries.ProjectNumber_SAP(Serial);
@@ -128,6 +129,6 @@ namespace FivesBronxTimesheetManagement.Classes
 			this.IsOpen = this.functions.BoolToInt(this.queries.ProjectIsOpen(Serial));
 			this.IsWarrantyOpen = this.functions.BoolToInt(this.queries.ProjectIsWarrantyOpen(Serial));
 			this.Number_WarrantyNetwork = int.Parse(this.queries.ProjectNumber_WarrantyNetwork(Serial));
-		}
+		}*/
 	}
 }
