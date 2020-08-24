@@ -12,7 +12,7 @@ namespace FivesBronxTimesheetManagement.Classes
 {
 	public class Queries
 	{
-		public Connection myConnection = new Connection();
+		/*public Connection myConnection = new Connection();
 
 		private MySqlCommand myCommand;
 
@@ -1421,7 +1421,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			return flag;
 		}
 
-		/*private List<bool> ReturnBoolList(List<string> qStrings, string tableColumn)
+		private List<bool> ReturnBoolList(List<string> qStrings, string tableColumn)
 		{
 			List<bool> flags = new List<bool>();
 			myConnection.Open();
@@ -1445,7 +1445,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			}
 			myConnection.Close();
 			return flags;
-		}*/
+		}
 
 		private List<DateTime> ReturnDateList(List<string> qStrings, string tableColumn)
 		{
@@ -2488,6 +2488,6 @@ namespace FivesBronxTimesheetManagement.Classes
 					MessageBox.Show(exception.Message);
 				}
 			}
-		}
+		}*/
 	}
 }

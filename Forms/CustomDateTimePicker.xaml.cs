@@ -79,7 +79,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			bool flag;
 			try
 			{
-				Queries query = this.queries;
+				Queries2 query = this.queries;
 				DateTime value = dtpDate.SelectedDate.Value;
 				int month = value.Month;
 				value = dtpDate.SelectedDate.Value;

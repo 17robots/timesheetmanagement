@@ -41,8 +41,6 @@
                 <MenuItem Name="menuViewProjectInformation" Header="Project Information" Click="menuViewProjectInformation_Click" />
                 <MenuItem Name="menuViewUserRights" Header="User Rights" Click="menuViewUserRights_Click" />
                 <Separator />
-                <MenuItem Name="menuViewReports" Header="Reports" Click="menuViewReports_Click" />
-                <Separator />
                 <MenuItem Name="menuViewAbout" Header="About" Click="menuViewAbout_Click" />
             </MenuItem>
             <MenuItem Header="Options">

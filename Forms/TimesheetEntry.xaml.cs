@@ -738,10 +738,10 @@ namespace FivesBronxTimesheetManagement.Forms
 			(new ProjectInfoScreen()).Show();
 		}
 
-		private void menuViewReports_Click(object sender, RoutedEventArgs e)
+		/*private void menuViewReports_Click(object sender, RoutedEventArgs e)
 		{
 			RunReports();
-		}
+		}*/
 
 		private void menuViewUserRights_Click(object sender, RoutedEventArgs e)
 		{
@@ -905,10 +905,10 @@ namespace FivesBronxTimesheetManagement.Forms
 			lblWeek_Total.Content = num7.ToString();
 		}
 
-		private void RunReports()
+		/*private void RunReports()
 		{
 			(new Report(user)).Show();
-		}
+		}*/
 
 		private void SubmitForApproval()
 		{

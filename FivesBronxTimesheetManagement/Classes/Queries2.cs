@@ -939,6 +939,48 @@ namespace FivesBronxTimesheetManagement.Classes
 			return strs;
 		}
 
+		public List<Entry> Entries(string table, List<int> entry_ids)
+		{
+			entry_ids.Sort();
+			string[] qString = new string[] { "Select * from ", table, " where ", t_Sections_c_Entry_Id, ">= ", entry_ids[0].ToString(), " and ", t_Sections_c_Entry_Id, " <= ", entry_ids[entry_ids.Count - 1].ToString() };
+			List<Entry> entries = new List<Entry>();
+			myCommand = new MySqlCommand(string.Concat(qString), myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			while(reader.Read())
+			{
+				entries.Add(new Entry(
+					int.Parse(reader.GetString(0)), // entry_id
+					int.Parse(reader.GetString(1)), // user_id
+					reader.GetString(2), // user_name
+					reader.IsDBNull(reader.GetOrdinal("section_id")) ? null : new int?(int.Parse(reader.GetString(3))), // section_id
+					reader.IsDBNull(reader.GetOrdinal("project_serial")) ? "" : reader.GetString(4), // project_serial
+					reader.IsDBNull(reader.GetOrdinal("project_sap")) ? "" : reader.GetString(5), // project_sap
+					reader.IsDBNull(reader.GetOrdinal("number_section")) ? "" : reader.GetString(6), // number_section
+					reader.IsDBNull(reader.GetOrdinal("number_network")) ? null : new int?(int.Parse(reader.GetString(7))), // number_network
+					reader.IsDBNull(reader.GetOrdinal("number_activity")) ? "" : reader.GetString(8), // number_activity
+					DateTime.Parse(reader.GetString(9)), // date
+					int.Parse(reader.GetString(10)), // period
+					int.Parse(reader.GetString(11)), // year
+					double.Parse(reader.GetString(12)), // hours
+					reader.IsDBNull(reader.GetOrdinal("description")) ? "" : reader.GetString(13), // description
+					reader.IsDBNull(reader.GetOrdinal("timesheet_code")) ? "" : reader.GetString(14), // timesheet_code
+					reader.IsDBNull(reader.GetOrdinal("task_type")) ? "" : reader.GetString(15), // task_type
+					reader.IsDBNull(reader.GetOrdinal("submitted_status")) ? "" : reader.GetString(16), // submitted_status
+					reader.IsDBNull(reader.GetOrdinal("approval_status")) ? functions.approvalStatus(null) : functions.approvalStatus(reader.GetString(17)), // approval_status
+					reader.IsDBNull(reader.GetOrdinal("rejection_reason")) ? "" : reader.GetString(18), // rejection_reason - check
+					reader.IsDBNull(reader.GetOrdinal("approved_by_user_id")) ? null : new int?(int.Parse(reader.GetString(19))), // approved_by_user_id
+					reader.IsDBNull(reader.GetOrdinal("approved_by_user_name")) ? "" : reader.GetString(20), // approved_by_user_name
+					DateTime.Parse(reader.GetString(21)), // date_created
+					DateTime.Parse(reader.GetString(22)), // date_modified
+					reader.IsDBNull(reader.GetOrdinal("date_approved")) ? null : new DateTime?(DateTime.Parse(reader.GetString(22))) // date_approved
+				));
+			}
+			reader.Close();
+			myConnection.Close();
+			return entries;
+		}
+
 		public List<Entry> Entries(List<string> qStrings)
 		{
 			List<Entry> entries = new List<Entry>();
