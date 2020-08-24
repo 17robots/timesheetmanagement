@@ -288,7 +288,7 @@ namespace FivesBronxTimesheetManagement.Forms
 				this.dgHours.ItemsSource = null;
 				try
 				{
-					this.itemsSourceEntries = this.queries.Entries(tTimesheetLimbo, this.queries.User_AllEntries(userID, tTimesheetLimbo));
+					this.itemsSourceEntries = this.queries.Entries(this.queries.User_AllEntries(userID, tTimesheetLimbo));
 					this.dgHours.ItemsSource = 
 						from E in this.itemsSourceEntries
 						orderby E.date

@@ -702,7 +702,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		{
 			ExportToExcel<Entry, List<Entry>> exportToExcel = new ExportToExcel<Entry, List<Entry>>()
 			{
-				dataToPrint = queries.Entries(queries.t_Timesheet_Prelim, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim))
+				dataToPrint = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim))
 			};
 			exportToExcel.GenerateReport();
 		}
@@ -797,12 +797,12 @@ namespace FivesBronxTimesheetManagement.Forms
 				dgHours.ItemsSource = null;
 				try
 				{
-					itemsSourceEntries = queries.Entries(queries.t_Timesheet_Prelim, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim));
+					itemsSourceEntries = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim));
 					dgHours.ItemsSource = 
 						from E in itemsSourceEntries
 						orderby E.date
 						select E;
-					itemsSourceEntriesUnapproved = queries.Entries(queries.t_Timesheet_Limbo, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Limbo));
+					itemsSourceEntriesUnapproved = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Limbo));
 					dgHoursUnapproved.ItemsSource = 
 						from E in itemsSourceEntriesUnapproved
 						orderby E.date
@@ -927,7 +927,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			{
 				if (System.Windows.MessageBox.Show("Display All Approved Time Entries?  This may take a while.", "Display Approved?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
 				{
-					itemsSourceEntriesApproved = queries.Entries(queries.t_Timesheet_Final, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
+					itemsSourceEntriesApproved = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
 					dgHoursApproved.ItemsSource = 
 						from E in itemsSourceEntriesApproved
 						orderby E.date
@@ -937,7 +937,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			}
 			else if (((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Last Week" ? false : !preWeekQueryHasRun)
 			{
-				itemSourceEntriesPrevWeek = queries.Entries(queries.t_Timesheet_Final, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
+				itemSourceEntriesPrevWeek = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
 				List<Entry> filteredList = new List<Entry>();
 
 				filteredList.AddRange(

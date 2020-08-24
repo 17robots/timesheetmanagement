@@ -248,7 +248,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			this.dgHours.ItemsSource = null;
 			try
 			{
-				this.itemsSourceEntries = this.queries.Entries(this.queries.t_Timesheet_Prelim, this.queries.User_AllEntries(this.user.UserID, this.queries.t_Timesheet_Prelim));
+				this.itemsSourceEntries = this.queries.Entries(this.queries.User_AllEntries(this.user.UserID, this.queries.t_Timesheet_Prelim));
 				this.items = (
 					from E in this.itemsSourceEntries
 					where E.date <= this.beforeDate
