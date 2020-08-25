@@ -1931,7 +1931,6 @@ namespace FivesBronxTimesheetManagement.Classes
 			{
 				returnedUsers.Add(GetUser(int.Parse(reader.GetString(3))));
 			}
-			reader.Close();
 			myConnection.Close();
 			return returnedUsers;
 		}
