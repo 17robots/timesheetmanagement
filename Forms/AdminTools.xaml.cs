@@ -7,14 +7,15 @@ namespace FivesBronxTimesheetManagement.Forms
 {
     public partial class AdminTools : Window
 	{
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries;
 
 		private User user;
 
 		public AdminTools()
 		{
-			this.InitializeComponent();
-			this.queries = new Queries();
+			InitializeComponent();
+			queries = new Queries2();
 		}
 
 		private void btnApprovalHierarchy_Click(object sender, RoutedEventArgs e)
@@ -41,10 +42,10 @@ namespace FivesBronxTimesheetManagement.Forms
 		{
 			try
 			{
-				this.user = new User(int.Parse(Interaction.InputBox("Enter user id to reset", "", "", -1, -1)));
-				this.queries.ResetUserLogin(this.user);
+				user = queries.GetUser(int.Parse(Interaction.InputBox("Enter user id to reset", "", "", -1, -1)));
+				queries.ResetUserLogin(user);
 				MessageBox.Show("Password has been reset");
-				base.Close();
+				Close();
 			}
 			catch (Exception exception)
 			{

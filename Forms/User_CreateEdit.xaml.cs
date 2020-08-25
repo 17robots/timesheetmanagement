@@ -12,14 +12,15 @@ namespace FivesBronxTimesheetManagement.Forms
 {
 	public partial class User_CreateEdit : Window
 	{
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private Functions functions;
 
 		public User_CreateEdit()
 		{
 			this.InitializeComponent();
-			this.queries = new Queries();
+			this.queries = new Queries2();
 			this.functions = new Functions();
 		}
 

@@ -19,7 +19,8 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private Functions functions;
 
-		private Queries queries = new Queries();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		public DateTime date = DateTime.Now;
 
@@ -78,7 +79,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			bool flag;
 			try
 			{
-				Queries query = this.queries;
+				Queries2 query = this.queries;
 				DateTime value = dtpDate.SelectedDate.Value;
 				int month = value.Month;
 				value = dtpDate.SelectedDate.Value;

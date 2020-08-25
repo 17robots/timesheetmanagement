@@ -1,3 +1,4 @@
+using Google.Protobuf;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -5,7 +6,8 @@ namespace FivesBronxTimesheetManagement.Classes
 {
 	public class TimesheetCode
 	{
-		private Queries queries = new Queries();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		public string Code
 		{
@@ -35,6 +37,12 @@ namespace FivesBronxTimesheetManagement.Classes
 		{
 			this.Code = "";
 			this.Description = "";
+		}
+
+		public TimesheetCode(string code, string description)
+		{
+			Code = code;
+			Description = description;
 		}
 
 		public TimesheetCode(string Code)

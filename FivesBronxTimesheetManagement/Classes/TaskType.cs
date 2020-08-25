@@ -5,8 +5,8 @@ namespace FivesBronxTimesheetManagement.Classes
 {
 	public class TaskType
 	{
-		private Queries queries = new Queries();
-		private Queries2 queries2 = new Queries2();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		public string ActivityNumber
 		{
@@ -50,7 +50,7 @@ namespace FivesBronxTimesheetManagement.Classes
 		public TaskType(string Id)
 		{
 			this.Id = Id;
-			Description = queries2.TaskTypeDescription(Id);
+			Description = queries.TaskTypeDescription(Id);
 		}
 	}
 }

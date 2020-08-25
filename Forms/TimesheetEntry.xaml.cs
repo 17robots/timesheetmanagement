@@ -19,7 +19,8 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private Connection myConnection;
 
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private User user;
 
@@ -62,7 +63,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			InitializeComponent();
 			user = User;
 			myConnection = new Connection();
-			queries = new Queries();
+			queries = new Queries2();
 			functions = new Functions();
 			user_Defaults = new User_Defaults(user);
 			itemsSourceEntriesApproved = new List<Entry>();
@@ -335,7 +336,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			{
 				try
 				{
-					Queries query = queries;
+					Queries2 query = queries;
 					string tTimesheetPrelim = queries.t_Timesheet_Prelim;
 					int? entryId = ((Entry)dgHours.SelectedItems[0]).entry_id;
 					query.DeleteTimeEntry(tTimesheetPrelim, entryId.Value);
@@ -701,7 +702,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		{
 			ExportToExcel<Entry, List<Entry>> exportToExcel = new ExportToExcel<Entry, List<Entry>>()
 			{
-				dataToPrint = queries.Entries(queries.t_Timesheet_Prelim, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim))
+				dataToPrint = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim))
 			};
 			exportToExcel.GenerateReport();
 		}
@@ -737,10 +738,10 @@ namespace FivesBronxTimesheetManagement.Forms
 			(new ProjectInfoScreen()).Show();
 		}
 
-		private void menuViewReports_Click(object sender, RoutedEventArgs e)
+		/*private void menuViewReports_Click(object sender, RoutedEventArgs e)
 		{
 			RunReports();
-		}
+		}*/
 
 		private void menuViewUserRights_Click(object sender, RoutedEventArgs e)
 		{
@@ -796,12 +797,12 @@ namespace FivesBronxTimesheetManagement.Forms
 				dgHours.ItemsSource = null;
 				try
 				{
-					itemsSourceEntries = queries.Entries(queries.t_Timesheet_Prelim, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim));
+					itemsSourceEntries = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Prelim));
 					dgHours.ItemsSource = 
 						from E in itemsSourceEntries
 						orderby E.date
 						select E;
-					itemsSourceEntriesUnapproved = queries.Entries(queries.t_Timesheet_Limbo, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Limbo));
+					itemsSourceEntriesUnapproved = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Limbo));
 					dgHoursUnapproved.ItemsSource = 
 						from E in itemsSourceEntriesUnapproved
 						orderby E.date
@@ -904,10 +905,10 @@ namespace FivesBronxTimesheetManagement.Forms
 			lblWeek_Total.Content = num7.ToString();
 		}
 
-		private void RunReports()
+		/*private void RunReports()
 		{
 			(new Report(user)).Show();
-		}
+		}*/
 
 		private void SubmitForApproval()
 		{
@@ -924,19 +925,16 @@ namespace FivesBronxTimesheetManagement.Forms
 			Console.WriteLine(((sender as TabControl).SelectedItem as TabItem).Header.ToString());
 			if (((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Approved" ? false : !approvedQueryHasRun)
 			{
-				if (System.Windows.MessageBox.Show("Display All Approved Time Entries?  This may take a while.", "Display Approved?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-				{
-					itemsSourceEntriesApproved = queries.Entries(queries.t_Timesheet_Final, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
-					dgHoursApproved.ItemsSource = 
-						from E in itemsSourceEntriesApproved
-						orderby E.date
-						select E;
-					approvedQueryHasRun = true;
-				}
+				itemsSourceEntriesApproved = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
+				dgHoursApproved.ItemsSource =
+					from E in itemsSourceEntriesApproved
+					orderby E.date
+					select E;
+				approvedQueryHasRun = true;
 			}
 			else if (((sender as TabControl).SelectedItem as TabItem).Header.ToString() != "Last Week" ? false : !preWeekQueryHasRun)
 			{
-				itemSourceEntriesPrevWeek = queries.Entries(queries.t_Timesheet_Final, queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
+				itemSourceEntriesPrevWeek = queries.Entries(queries.User_AllEntries(user.UserID, queries.t_Timesheet_Final));
 				List<Entry> filteredList = new List<Entry>();
 
 				filteredList.AddRange(

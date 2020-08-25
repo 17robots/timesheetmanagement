@@ -14,12 +14,13 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private User user;
 
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		public UserChangePassword(FivesBronxTimesheetManagement.Classes.User User)
 		{
 			this.user = User;
-			this.queries = new Queries();
+			this.queries = new Queries2();
 			this.InitializeComponent();
 			this.lblUserId.Content = User.UserID;
 			this.lblUserName.Content = User.UserName;

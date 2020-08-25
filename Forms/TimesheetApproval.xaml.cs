@@ -22,7 +22,8 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private User user;
 
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private Connection myConnection;
 
@@ -42,7 +43,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		{
 			this.user = User;
 			this.InitializeComponent();
-			this.queries = new Queries();
+			this.queries = new Queries2();
 			this.myConnection = new Connection();
 			this.myFunctions = new Functions();
 			this.LoadConstantsFromDb();
@@ -287,7 +288,7 @@ namespace FivesBronxTimesheetManagement.Forms
 				this.dgHours.ItemsSource = null;
 				try
 				{
-					this.itemsSourceEntries = this.queries.Entries(tTimesheetLimbo, this.queries.User_AllEntries(userID, tTimesheetLimbo));
+					this.itemsSourceEntries = this.queries.Entries(this.queries.User_AllEntries(userID, tTimesheetLimbo));
 					this.dgHours.ItemsSource = 
 						from E in this.itemsSourceEntries
 						orderby E.date

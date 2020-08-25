@@ -21,7 +21,8 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private User user;
 
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private Connection myConnection;
 
@@ -42,7 +43,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		public TimesheetApproval_Submission(FivesBronxTimesheetManagement.Classes.User User, TimesheetEntry tsEntryScreen)
 		{
 			this.InitializeComponent();
-			this.queries = new Queries();
+			this.queries = new Queries2();
 			this.myConnection = new Connection();
 			this.functions = new Functions();
 			this.user = User;
@@ -247,7 +248,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			this.dgHours.ItemsSource = null;
 			try
 			{
-				this.itemsSourceEntries = this.queries.Entries(this.queries.t_Timesheet_Prelim, this.queries.User_AllEntries(this.user.UserID, this.queries.t_Timesheet_Prelim));
+				this.itemsSourceEntries = this.queries.Entries(this.queries.User_AllEntries(this.user.UserID, this.queries.t_Timesheet_Prelim));
 				this.items = (
 					from E in this.itemsSourceEntries
 					where E.date <= this.beforeDate

@@ -25,7 +25,7 @@
     <PublisherName>Matthew</PublisherName>
     <WebPage>publish.htm</WebPage>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -305,12 +305,6 @@
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Forms\Report.xaml.cs">
-      <AutoGen>false</AutoGen>
-      <DependentUpon>Report.xaml</DependentUpon>
-      <DesignTimeSharedInput>false</DesignTimeSharedInput>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Forms\User_ApprovalHierarchy.xaml.cs">
       <AutoGen>false</AutoGen>
       <DependentUpon>User_ApprovalHierarchy.xaml</DependentUpon>
@@ -406,10 +400,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\ProjectInfoScreen.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\Report.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

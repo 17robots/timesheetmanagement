@@ -15,7 +15,8 @@ namespace FivesBronxTimesheetManagement.Forms
 {
 	public partial class AdminTools_EditProject : Window
 	{
-		private Queries queries = new Queries();
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private Functions functions = new Functions();
 

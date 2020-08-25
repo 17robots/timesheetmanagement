@@ -5,7 +5,8 @@ namespace FivesBronxTimesheetManagement.Classes
 {
 	public class User
 	{
-		private Queries queries;
+		//private Queries queries = new Queries();
+		private Queries2 queries = new Queries2();
 
 		private Functions functions;
 
@@ -47,7 +48,7 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public User(int User_ID, string User_Name, int IsValidator, int IsAdmin, int IsActive, int IsHourly)
 		{
-			this.queries = new Queries();
+			this.queries = new Queries2();
 			this.functions = new Functions();
 			this.UserID = User_ID;
 			this.UserName = User_Name;
@@ -57,7 +58,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			this.IsHourly = IsHourly;
 		}
 
-		public User(int User_Id)
+		/*public User(int User_Id)
 		{
 			this.queries = new Queries();
 			this.functions = new Functions();
@@ -67,6 +68,6 @@ namespace FivesBronxTimesheetManagement.Classes
 			this.IsAdmin = this.functions.BoolToInt(this.queries.User_IsAdmin(User_Id));
 			this.IsActive = this.functions.BoolToInt(this.queries.User_IsActive(User_Id));
 			this.IsHourly = this.functions.BoolToInt(this.queries.User_IsHourly(User_Id));
-		}
+		}*/
 	}
 }
