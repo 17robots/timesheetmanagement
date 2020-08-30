@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -51,7 +52,7 @@ namespace FivesBronxTimesheetManagement.Forms
                 dataToPrint = GetEntries(SelectedUsers(), SelectedTables())
             };
 
-            if((singleUserReport.IsChecked ?? false) && (MessageBox.Show("Running Individual Reports For More That 10 People Will Take A While. Proceed?", "Individual Report", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
+            if(singleUserReport.IsChecked ?? false)
             {
                 if (columns.SelectedItems.Count != 0)
                 {
@@ -304,16 +305,14 @@ namespace FivesBronxTimesheetManagement.Forms
         {
             if(generalReport.IsChecked ?? false)
             {
-                MessageBox.Show(columns.Items.IndexOf("user_id").ToString());
-                columns.Focus();
-                columns.SelectedItems.Add(columns.Items.IndexOf("user_id"));
-                columns.SelectedItems.Add(columns.Items.IndexOf("user_name"));
-                columns.SelectedItems.Add(columns.Items.IndexOf("project_sap"));
-                columns.SelectedItems.Add(columns.Items.IndexOf("number_network"));
-                columns.SelectedItems.Add(columns.Items.IndexOf("number_activity"));
-                columns.SelectedItems.Add(columns.Items.IndexOf("date"));
-                columns.SelectedItems.Add(columns.Items.IndexOf("hours"));
-                columns.SelectedItems.Add(columns.Items.IndexOf("description"));
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("user_id")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("user_name")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("project_sap")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("number_network")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("number_activity")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("date")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("hours")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("description")].ToString());
             }
             else
             {
