@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
     public partial class Report2 : Window
     {
-        //private Queries queries = new Queries();
         private Queries2 queries = new Queries2();
 
         private Functions functions;
@@ -51,7 +52,7 @@ namespace FivesBronxTimesheetManagement.Forms
                 dataToPrint = GetEntries(SelectedUsers(), SelectedTables())
             };
 
-            if((singleUserReport.IsChecked ?? false) && (MessageBox.Show("Running Individual Reports For More That 10 People Will Take A While. Proceed?", "Individual Report", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
+            if(singleUserReport.IsChecked ?? false)
             {
                 if (columns.SelectedItems.Count != 0)
                 {
@@ -300,6 +301,25 @@ namespace FivesBronxTimesheetManagement.Forms
             LoadUsersRules();
         }
 
+        private void generalReport_CheckedChanged(object sender, EventArgs e)
+        {
+            if(generalReport.IsChecked ?? false)
+            {
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("user_id")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("user_name")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("project_sap")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("number_network")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("number_activity")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("date")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("hours")].ToString());
+                columns.SelectedItems.Add(columns.Items[columns.Items.IndexOf("description")].ToString());
+            }
+            else
+            {
+                columns.SelectedItems.Clear();
+            }
+        }
+
         private List<User> SelectedUsers()
         {
             selectedUsers = new List<User>();
@@ -325,80 +345,6 @@ namespace FivesBronxTimesheetManagement.Forms
             selectedUsers = SelectedUsers();
         }
 
-        /*private void UpdateSections()
-        {
-            section.Items.Clear();
-            if(projectSelect.SelectedItems != null || section.SelectedItems != null)
-            {
-                if(projectSelect.SelectedItems != null)
-                {
-
-                    List<string> openProjects = new List<string>();
-                    foreach(string x in projectSelect.SelectedItems)
-                    {
-                        if (queries.ProjectIsOpen(x)) openProjects.Add(x);
-                    }
-
-                    if(task_type.SelectedItems != null)
-                    {
-                        foreach (string x in openProjects)
-                        {
-                            foreach(string y in task_type.SelectedItems)
-                            {
-                                foreach(string z in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x), y))
-                                {
-                                    section.Items.Add(z);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (string x in openProjects)
-                        {
-                            foreach (string y in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x)))
-                            {
-                                section.Items.Add(y);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    List<string> openProjects = new List<string>();
-                    foreach (string x in projectSelect.Items)
-                    {
-                        if (queries.ProjectIsOpen(x)) openProjects.Add(x);
-                    }
-                    
-                    foreach(string x in openProjects)
-                    {
-                        foreach(string y in task_type.SelectedItems)
-                        {
-                            foreach(string z in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x), y))
-                            {
-                                section.Items.Add(z);
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                List<string> openProjects = new List<string>();
-                foreach (string x in projectSelect.Items)
-                {
-                    if (queries.ProjectIsOpen(x)) openProjects.Add(x);
-                }
-
-                foreach(string x in openProjects)
-                {
-                    foreach(string y in queries.SectionNumbers(queries.ProjectNumber_WarrantyNetwork(x)))
-                    {
-                        section.Items.Add(y);
-                    }
-                }
-            }
-        }*/
+        
     }
 }
