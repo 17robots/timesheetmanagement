@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="TimesheetManagement.exe" version="1.2.0.5" publicKeyToken="f40122c5ae62a7a0" language="neutral" processorArchitecture="x86" type="win32" />
+  <description asmv2:iconFile="fivesglobe.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="TimesheetManagement" version="1.2.1.19344" publicKeyToken="F40122C5AE62A7A0" language="neutral" processorArchitecture="x86" />
+    <commandLine file="TimesheetManagement.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BouncyCastle.Crypto.dll" size="2453504">
+      <assemblyIdentity name="BouncyCastle.Crypto" version="1.8.3.0" publicKeyToken="0E99375E54769942" language="neutral" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>SikSNsUBe/37MPrUw9tNBhTDYsS1NAnGELEtSD17JuY=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Google.Protobuf.dll" size="298496">
+      <assemblyIdentity name="Google.Protobuf" version="3.6.1.0" publicKeyToken="A7D26565BAC4D604" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>tmCHIa/sZfxfbRML4V98ONw3aJn73tQolsd5EaiejRM=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySql.Data.dll" size="758784">
+      <assemblyIdentity name="MySql.Data" version="8.0.16.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>enIKvGfVmmAebqrmEOH6AOmtHcgqCjCVa8Wzgp3ocew=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TimesheetManagement.exe" size="1270344">
+      <assemblyIdentity name="TimesheetManagement" version="1.2.1.19344" publicKeyToken="F40122C5AE62A7A0" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>nsUl0IDSPN75kZCpHloSocLoPC9e22yvAT+GoYrwaoI=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="fivesglobe.ico" size="370070">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WbT2eK9L+50tYKMS3UG0c3JODh9HlcIGU0ghS7LZ6sE=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="TimesheetManagement.exe.config" size="175">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>x+LBz18R3q6oGLrc7GN5E/9Di2zqPZIJyG/EK7SWINE=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN={96C98137-01CA-49ED-9E65-8CC5ECD9F802}" issuerKeyHash="8b34f70591784e90267114eb567b2f37a6e127e3" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>vQ5QzVgdWRTue2ku0XuxzVNRsaaEw5Cn32NRjJ2xdkY=</DigestValue></Reference></SignedInfo><SignatureValue>o+0R+Np0XN/Tvbknb9xNK/Ate/4tPBL+WRjfeNXl0RCzDp8aYv0/OTVgV1gpZkzsHEe7FdVyqgWXLw+wWNmhKuhTLxE47B1Zvlkm228xkp0/R+uy0kNCmTkj+i+io/KxsBewEiqoUi/eCjWJdP8Zty84ce3H9rBNFXY4exbYY4s=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>w3ivtPLKqJs20QhUjMz8Y3rDHBedaXSuwo+rE/LV68x+H1nrBZWUDh7WjjLeve4peycN/l400vya2kX0VooWAM6NmXWrJLNnpHJ28YAGttDrl1GCPBQDN0RHbkAKe9NPJKdCU3dl4mVGu2USAzkXBtoGiYS6KzglnLTAyYnVBcE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="4676b19d8c5163dfa790c384a6b15153cdb17bd12e697bee14591d58cd500ebd" Description="" Url=""><as:assemblyIdentity name="TimesheetManagement.exe" version="1.2.0.5" publicKeyToken="f40122c5ae62a7a0" language="neutral" processorArchitecture="x86" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN={96C98137-01CA-49ED-9E65-8CC5ECD9F802}</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>4K8fk7rJrDxKqtRgAny7UJ5a3xJJHe7K/nx/84ok2iw=</DigestValue></Reference></SignedInfo><SignatureValue>V8zoLNG5SC33jN2my71mJ6xdXRqaG3+VYcBskzstWrI5Y+Zmuso3PhBJ6DwRVf4gNYs1gRV9jUaXBHjVWVAplqig6tlLbyer/8yraMwcJh09dXuOSj8M5otCc62wDYCC5vFL+G2GaKTtUhXgAsw3CcpiqhdDy3//a+Uinlb9oT0=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>w3ivtPLKqJs20QhUjMz8Y3rDHBedaXSuwo+rE/LV68x+H1nrBZWUDh7WjjLeve4peycN/l400vya2kX0VooWAM6NmXWrJLNnpHJ28YAGttDrl1GCPBQDN0RHbkAKe9NPJKdCU3dl4mVGu2USAzkXBtoGiYS6KzglnLTAyYnVBcE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIICMTCCAZqgAwIBAgIQMLBGctmPQI9HFVMh1sabFDANBgkqhkiG9w0BAQsFADBXMVUwUwYDVQQDHkwAewA5ADYAQwA5ADgAMQAzADcALQAwADEAQwBBAC0ANAA5AEUARAAtADkARQA2ADUALQA4AEMAQwA1AEUAQwBEADkARgA4ADAAMgB9MB4XDTE5MTEyMTIwMTgwOFoXDTIwMTEyMTAyMTgwOFowVzFVMFMGA1UEAx5MAHsAOQA2AEMAOQA4ADEAMwA3AC0AMAAxAEMAQQAtADQAOQBFAEQALQA5AEUANgA1AC0AOABDAEMANQBFAEMARAA5AEYAOAAwADIAfTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAw3ivtPLKqJs20QhUjMz8Y3rDHBedaXSuwo+rE/LV68x+H1nrBZWUDh7WjjLeve4peycN/l400vya2kX0VooWAM6NmXWrJLNnpHJ28YAGttDrl1GCPBQDN0RHbkAKe9NPJKdCU3dl4mVGu2USAzkXBtoGiYS6KzglnLTAyYnVBcECAwEAATANBgkqhkiG9w0BAQsFAAOBgQB3pNUJ+mInZ02FqsB/gXySNi7uzuOqmZG5l6N7GcJ/hIK1WEePscawb/FqXC+coFPZfvLA7y3UzSZWAa8RUaMa3uEau9n9CSdid5HjXt9XUuVN0INQp1G+TPiJYBqOfBCuimX0sMQCTVPH3/O7uwOGhhMSIaVcAdU+7XgHzqyZag==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
