@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -217,6 +218,16 @@ namespace FivesBronxTimesheetManagement.Forms
 
         private void LoadConstantsFromDB()
         {
+            List<string> userDisplayOptions = new List<string>()
+            {
+                "Show Approvees",
+                "Show Active Users",
+                "Show All Users"
+            };
+
+            userSelect.ItemsSource = userDisplayOptions;
+            userSelect.SelectedIndex = 0;
+
             LoadUsersRules();
             availableTables = new List<string>()
             {
@@ -248,23 +259,40 @@ namespace FivesBronxTimesheetManagement.Forms
             users = new List<User>();
             if (functions.IntToBool(user.IsValidator) ? true : functions.IntToBool(user.IsAdmin))
             {
-                user_name.ItemsSource = !(activeUsers.IsChecked ?? false) ? 
-                    (
-                        from X in queries.GetUser_All()
-                        where functions.IntToBool(X.IsActive)
-                        orderby X.UserName
-                        select X
-                    ).ToList() :
-                    (
-                        from X in queries.GetUser_All()
-                        orderby X.UserName
-                        select X
-                    ).ToList();
+                switch(userSelect.SelectedItem.ToString())
+                {
+                    case "Show Approvees":
+                        user_name.ItemsSource = 
+                        (
+                            from X in queries.User_GetApprovees(user)
+                            where functions.IntToBool(X.IsActive)
+                            orderby X.UserName
+                            select X
+                        ).ToList();
+                        break;
+                    case "Show Active Users":
+                        user_name.ItemsSource =
+                        (
+                            from X in queries.GetUser_All()
+                            where functions.IntToBool(X.IsActive)
+                            orderby X.UserName
+                            select X
+                        ).ToList();
+                        break;
+                    case "Show All Users":
+                        user_name.ItemsSource =
+                        (
+                            from X in queries.GetUser_All()
+                            orderby X.UserName
+                            select X
+                        ).ToList();
+                        break;
+                }
             }
             else
             {
                 users.Add(user);
-                activeUsers.Visibility = System.Windows.Visibility.Hidden;
+                userSelect.Visibility = Visibility.Hidden;
                 user_name.SelectedItem = user;
                 user_name.ItemsSource = users;
             }
@@ -291,12 +319,12 @@ namespace FivesBronxTimesheetManagement.Forms
             return selectedTables;
         }
 
-        private void table_ItemSelectionChanged(object sender, SelectionChangedEventArgs e) // used
+        private void table_ItemSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             selectedTables = SelectedTables();
         }
 
-        private void activeUsers_CheckedChanged(object sender, EventArgs e) //used 
+        private void userSelect_SelectionChanged(object sender, EventArgs e) //used 
         {
             LoadUsersRules();
         }
@@ -345,6 +373,9 @@ namespace FivesBronxTimesheetManagement.Forms
             selectedUsers = SelectedUsers();
         }
 
-        
+        private void userSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadUsersRules();
+        }
     }
 }

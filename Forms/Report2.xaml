@@ -4,6 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Width="850" Height="auto">
+    <Window.Resources>
+        <Style TargetType="ListViewItem">
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width=".05*"/>
@@ -27,32 +31,43 @@
             <RowDefinition Height=".3*" />
             <RowDefinition Height=".05*" />
         </Grid.RowDefinitions>
-        <CheckBox Name="activeUsers" Grid.Column="1" Grid.Row="1" Unchecked="activeUsers_CheckedChanged" Checked="activeUsers_CheckedChanged" Margin="0.333,0,0,0">Show Hidden Users?</CheckBox>
+        <DockPanel Grid.Row="1" Grid.Column="1">
+            <ComboBox SelectionChanged="userSelect_SelectionChanged" Margin="0,0,0,8" Height="22" DockPanel.Dock="Top" Name="userSelect" BorderBrush="White" Background="White"/>
+        </DockPanel>
         <CheckBox Name="generalReport" Grid.Column="11" Grid.Row="1" Unchecked="generalReport_CheckedChanged" Checked="generalReport_CheckedChanged" Margin="0.333,0,0,0">General Columns?</CheckBox>
         <Label Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="5">Leave Column Blank To Choose All Items In The List</Label>
         <DockPanel Grid.Column="1" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">User Name</Label>
-            <ListView SelectionMode="Multiple" SelectionChanged="user_name_ItemSelectionChanged" Name="user_name"/>
+            <ListView SelectionMode="Multiple" SelectionChanged="user_name_ItemSelectionChanged" Name="user_name" Focusable="False">
+                <ListView.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
+                </ListView.Resources>
+            </ListView>
         </DockPanel>
         <DockPanel Grid.Column="3" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Status</Label>
-            <ListView SelectionMode="Multiple" SelectionChanged="table_ItemSelectionChanged" Name="table"></ListView>
+            <ListView SelectionMode="Multiple" SelectionChanged="table_ItemSelectionChanged" Name="table" Focusable="False">
+            </ListView>
         </DockPanel>
         <DockPanel Grid.Column="5" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Timesheet Code</Label>
-            <ListView SelectionMode="Multiple" Name="timesheet_code"></ListView>
+            <ListView SelectionMode="Multiple" Name="timesheet_code" Focusable="False">
+            </ListView>
         </DockPanel>
         <DockPanel Grid.Column="7" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Task Type</Label>
-            <ListView SelectionMode="Multiple" Name="task_type"></ListView>
+            <ListView SelectionMode="Multiple" Name="task_type" Focusable="False">
+            </ListView>
         </DockPanel>
         <DockPanel Grid.Column="9" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Project</Label>
-            <ListView SelectionMode="Multiple" Name="projectSelect" HorizontalAlignment="Stretch"></ListView>
+            <ListView SelectionMode="Multiple" Name="projectSelect" HorizontalAlignment="Stretch" Focusable="False">
+            </ListView>
         </DockPanel>
         <DockPanel Grid.Column="11" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Columns</Label>
-            <ListView SelectionMode="Multiple" Name="columns"></ListView>
+            <ListView SelectionMode="Multiple" Name="columns" Focusable="False">
+            </ListView>
         </DockPanel>
         <DockPanel Grid.Column="3" Grid.Row="3">
             <Label DockPanel.Dock="Top">To</Label>
