@@ -1,19 +1,11 @@
 using FivesBronxTimesheetManagement.Classes;
 using Microsoft.VisualBasic;
 using System;
-using System.CodeDom.Compiler;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace FivesBronxTimesheetManagement.Forms
