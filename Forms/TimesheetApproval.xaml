@@ -91,32 +91,6 @@
       <Label Content="Hours Selected for Approval" Margin="0,5,0,0" Height="26" />
       <Label Name="lblHoursSelectedForApproval" Margin="0,5,0,0" Height="26" HorizontalContentAlignment="Center" />
       <StackPanel Orientation="Horizontal">
-        <Button Name="btnReject" HorizontalAlignment="Right" Margin="0,5,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnReject_Click">
-          <StackPanel Orientation="Horizontal">
-            <Image Source="/Pics/thumbdown-black.png" RenderTransformOrigin="0.5, 0.5">
-              <Image.RenderTransform>
-                <RotateTransform />
-              </Image.RenderTransform>
-              <Image.Triggers>
-                <EventTrigger RoutedEvent="Button.MouseEnter">
-                  <BeginStoryboard>
-                    <Storyboard>
-                      <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" From="-20" To="20" AutoReverse="True" Duration="0:0:.5" RepeatBehavior="Forever" />
-                    </Storyboard>
-                  </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseLeave">
-                  <BeginStoryboard>
-                    <Storyboard>
-                      <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0" RepeatBehavior="0" />
-                    </Storyboard>
-                  </BeginStoryboard>
-                </EventTrigger>
-              </Image.Triggers>
-            </Image>
-            <TextBlock Text="  Reject" />
-          </StackPanel>
-        </Button>
         <Button Name="btnApprove" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="25" Width="75" Click="btnApprove_Click">
           <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
             <Image Source="/Pics/Thumbup-black.png" RenderTransformOrigin="0.5, 0.5">
@@ -141,6 +115,32 @@
               </Image.Triggers>
             </Image>
             <TextBlock Text="  Approve" />
+          </StackPanel>
+        </Button>
+      <Button Name="btnReject" HorizontalAlignment="Right" Margin="0,5,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnReject_Click">
+          <StackPanel Orientation="Horizontal">
+            <Image Source="/Pics/thumbdown-black.png" RenderTransformOrigin="0.5, 0.5">
+              <Image.RenderTransform>
+                <RotateTransform />
+              </Image.RenderTransform>
+              <Image.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" From="-20" To="20" AutoReverse="True" Duration="0:0:.5" RepeatBehavior="Forever" />
+                    </Storyboard>
+                  </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                  <BeginStoryboard>
+                    <Storyboard>
+                      <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0" RepeatBehavior="0" />
+                    </Storyboard>
+                  </BeginStoryboard>
+                </EventTrigger>
+              </Image.Triggers>
+            </Image>
+            <TextBlock Text="  Reject" />
           </StackPanel>
         </Button>
       </StackPanel>
