@@ -65,6 +65,10 @@
             <ListView SelectionMode="Multiple" Name="columns" Focusable="False">
             </ListView>
         </DockPanel>
+        <DockPanel Grid.Row="3" Grid.Column="1">
+            <Label DockPanel.Dock="Top">Preset Date Range</Label>
+            <ComboBox SelectionChanged="datePreset_ItemSelectionChanged" Margin="0,0,0,8" Height="22" Name="datePreset" BorderBrush="White" Background="White"/>
+        </DockPanel>
         <DockPanel Grid.Column="3" Grid.Row="3">
             <Label DockPanel.Dock="Top">To</Label>
             <DatePicker Name="to"></DatePicker>

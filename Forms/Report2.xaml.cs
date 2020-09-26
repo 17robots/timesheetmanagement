@@ -225,6 +225,18 @@ namespace FivesBronxTimesheetManagement.Forms
                 "Show All Users"
             };
 
+            List<string> datePresetDisplayOptions = new List<string>()
+            {
+                "Use Custom Range",
+                "Today",
+                "Week To Date",
+                "Month To Date",
+                "Year To Date"
+            };
+
+            datePreset.ItemsSource = datePresetDisplayOptions;
+            datePreset.SelectedIndex = 0;
+
             userSelect.ItemsSource = userDisplayOptions;
             userSelect.SelectedIndex = 0;
 
@@ -327,6 +339,43 @@ namespace FivesBronxTimesheetManagement.Forms
         private void userSelect_SelectionChanged(object sender, EventArgs e) //used 
         {
             LoadUsersRules();
+        }
+
+        private void datePreset_ItemSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch(datePreset.SelectedItem.ToString())
+            {
+                case "Today":
+                    to.SelectedDate = DateTime.Today;
+                    from.SelectedDate = DateTime.Today;
+                    to.IsEnabled = false;
+                    from.IsEnabled = false;
+                    break;
+                case "Week To Date":
+                    to.SelectedDate = DateTime.Today.AddDays(-7);
+                    from.SelectedDate = DateTime.Today;
+                    to.IsEnabled = false;
+                    from.IsEnabled = false;
+                    break;
+                case "Month To Date":
+                    to.SelectedDate = DateTime.Today.AddMonths(-1);
+                    from.SelectedDate = DateTime.Today;
+                    to.IsEnabled = false;
+                    from.IsEnabled = false;
+                    break;
+                case "Year To Date":
+                    to.SelectedDate = DateTime.Today.AddYears(-1);
+                    from.SelectedDate = DateTime.Today;
+                    to.IsEnabled = false;
+                    from.IsEnabled = false;
+                    break;
+                default:
+                    to.SelectedDate = null ;
+                    from.SelectedDate = null;
+                    to.IsEnabled = true;
+                    from.IsEnabled = true;
+                    break;
+            }
         }
 
         private void generalReport_CheckedChanged(object sender, EventArgs e)
