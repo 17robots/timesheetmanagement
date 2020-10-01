@@ -364,7 +364,7 @@ namespace FivesBronxTimesheetManagement.Forms
                     from.IsEnabled = false;
                     break;
                 case "Year To Date":
-                    to.SelectedDate = DateTime.Today.AddYears(-1);
+                    to.SelectedDate = DateTime.Parse("01/01");
                     from.SelectedDate = DateTime.Today;
                     to.IsEnabled = false;
                     from.IsEnabled = false;
