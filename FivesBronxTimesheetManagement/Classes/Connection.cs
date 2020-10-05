@@ -36,7 +36,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			string str2 = "FivesEmployee";
 			try
 			{
-				this.path = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "\\connectionString.txt");
+				path = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "\\connectionString.txt");
 				if (!File.Exists(this.path))
 				{
 					TextWriter textWriter = File.CreateText(string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "\\connectionString.txt"));
