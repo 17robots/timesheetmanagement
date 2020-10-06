@@ -114,6 +114,7 @@
     <None Include="App.config" />
     <Compile Include="FivesBronxTimesheetManagement\Classes\OrderAttribute.cs" />
     <Compile Include="FivesBronxTimesheetManagement\Classes\Queries2.cs" />
+    <Compile Include="FivesBronxTimesheetManagement\Classes\Session.cs" />
     <Compile Include="Forms\Report2.xaml.cs">
       <DependentUpon>Report2.xaml</DependentUpon>
     </Compile>
@@ -316,6 +317,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Shortcut.ahk" />
     <None Include="TimesheetManagement.pfx" />
     <None Include="TimesheetManagement_1_TemporaryKey.pfx" />
     <None Include="TimesheetManagement_TemporaryKey.pfx" />
