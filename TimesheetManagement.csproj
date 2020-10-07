@@ -209,12 +209,6 @@
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Forms\CustomDateTimePicker.xaml.cs">
-      <AutoGen>false</AutoGen>
-      <DependentUpon>CustomDateTimePicker.xaml</DependentUpon>
-      <DesignTimeSharedInput>false</DesignTimeSharedInput>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Forms\TimesheetEntry_Edit.xaml.cs">
       <AutoGen>false</AutoGen>
       <DependentUpon>TimesheetEntry_Edit.xaml</DependentUpon>
@@ -337,10 +331,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\AdminTools.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Forms\CustomDateTimePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

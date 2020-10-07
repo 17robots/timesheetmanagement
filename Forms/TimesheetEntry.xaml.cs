@@ -353,9 +353,6 @@ namespace FivesBronxTimesheetManagement.Forms
 			{
 				DateTime now = DateTime.Now;
 				TimesheetEntry_Duplicate customDateTimePicker;
-				
-				// now = customDateTimePicker.date;
-				// hours = customDateTimePicker.hours;
 				List<Entry> entries = new List<Entry>();
 				foreach (Entry selectedItem in dgHours.SelectedItems)
 				{
@@ -380,11 +377,56 @@ namespace FivesBronxTimesheetManagement.Forms
 			{
 				DateTime now = DateTime.Now;
 				TimesheetEntry_Duplicate customDateTimePicker;
-
-				// now = customDateTimePicker.date;
-				// hours = customDateTimePicker.hours;
 				List<Entry> entries = new List<Entry>();
 				foreach (Entry selectedItem in dgHoursPrevWeek.SelectedItems)
+				{
+					customDateTimePicker = new TimesheetEntry_Duplicate(selectedItem, this);
+					bool? nullable = customDateTimePicker.ShowDialog();
+					if ((!nullable.GetValueOrDefault() ? 0 : Convert.ToInt32(nullable.HasValue)) != 0)
+						entries.Add(new Entry(customDateTimePicker.entry));
+				}
+				queries.SaveTimeEntry(queries.t_Timesheet_Prelim, entries, ApprovalStatus.NotSubmitted, ApprovalStatus.NotSubmitted);
+				RefreshDGHoursFromClassList();
+				RefreshSummaryByDate(functions.WeekEnding(now));
+				if (isDayfiltered)
+				{
+					Filter_Filter(filteredDate);
+				}
+			}
+		}
+
+		private void dgContextMenu_Copy_Click_Subm(object sender, RoutedEventArgs e)
+		{
+			if (dgHoursUnapproved.SelectedItems == null ? false : true)
+			{
+				DateTime now = DateTime.Now;
+				TimesheetEntry_Duplicate customDateTimePicker;
+				List<Entry> entries = new List<Entry>();
+				foreach (Entry selectedItem in dgHoursUnapproved.SelectedItems)
+				{
+					customDateTimePicker = new TimesheetEntry_Duplicate(selectedItem, this);
+					bool? nullable = customDateTimePicker.ShowDialog();
+					if ((!nullable.GetValueOrDefault() ? 0 : Convert.ToInt32(nullable.HasValue)) != 0)
+						entries.Add(new Entry(customDateTimePicker.entry));
+				}
+				queries.SaveTimeEntry(queries.t_Timesheet_Prelim, entries, ApprovalStatus.NotSubmitted, ApprovalStatus.NotSubmitted);
+				RefreshDGHoursFromClassList();
+				RefreshSummaryByDate(functions.WeekEnding(now));
+				if (isDayfiltered)
+				{
+					Filter_Filter(filteredDate);
+				}
+			}
+		}
+
+		private void dgContextMenu_Copy_Click_Appr(object sender, RoutedEventArgs e)
+		{
+			if (dgHoursApproved.SelectedItems == null ? false : true)
+			{
+				DateTime now = DateTime.Now;
+				TimesheetEntry_Duplicate customDateTimePicker;
+				List<Entry> entries = new List<Entry>();
+				foreach (Entry selectedItem in dgHoursApproved.SelectedItems)
 				{
 					customDateTimePicker = new TimesheetEntry_Duplicate(selectedItem, this);
 					bool? nullable = customDateTimePicker.ShowDialog();
