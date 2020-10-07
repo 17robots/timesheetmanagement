@@ -154,10 +154,22 @@
                 </DataGrid>
             </TabItem>
             <TabItem Header="Submitted Not Approved">
-                <DataGrid Name="dgHoursUnapproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
+                <DataGrid Name="dgHoursUnapproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Name="dgContextMenu_Copy_Subm" Header="Duplicate Selected" Click="dgContextMenu_Copy_Click_Subm" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
             </TabItem>
             <TabItem Header="Approved">
-                <DataGrid Name="dgHoursApproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False" />
+                <DataGrid Name="dgHoursApproved" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Name="dgContextMenu_Copy_Appr" Header="Duplicate Selected" Click="dgContextMenu_Copy_Click_Appr" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
             </TabItem>
             <TabItem Header="Last Week">
                 <DataGrid Name="dgHoursPrevWeek" AlternatingRowBackground="#FFD3D3D3" AutoGenerateColumns="False" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" CanUserAddRows="False">
