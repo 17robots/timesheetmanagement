@@ -14,7 +14,7 @@ using TextBox = System.Windows.Controls.TextBox;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
-	public partial class TimesheetEntry_Edit : Window
+	public partial class TimesheetEntry_Duplicate : Window
 	{
 		private Connection myConnection;
 
@@ -36,7 +36,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private double hoursIncrement = 0.5;
 
-		public TimesheetEntry_Edit(Entry entry, TimesheetEntry tsEntry)
+		public TimesheetEntry_Duplicate(Entry entry, TimesheetEntry tsEntry)
 		{
 			this.entryId = entry.entry_id.Value;
 			this.entry = entry;
