@@ -1,5 +1,6 @@
 using FivesBronxTimesheetManagement.Classes;
 using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.Logging;
 using MySql.Data.MySqlClient;
 using System;
 using System.CodeDom.Compiler;
@@ -16,17 +17,21 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private Connection myConnection = new Connection();
 
-		//private Queries queries = new Queries();
 		private Queries2 queries = new Queries2();
 
 		public UserLogin()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
+			string user = "", pass = "";
+			if(Session.ReadSession(ref user, ref pass))
+			{
+				Login(user, pass);
+			}
 		}
 
 		private void btnLogin_Click(object sender, RoutedEventArgs e)
 		{
-			this.Login();
+			Login();
 		}
 
 		private void Button_Click(object sender, RoutedEventArgs e)
@@ -50,6 +55,7 @@ namespace FivesBronxTimesheetManagement.Forms
 				if (num == 1)
 				{
 					this.myConnection.Close();
+					Session.CreateSession(txtEmployeeId.Text, txtPassword.Password);
 					MainWindow mainWindow = new MainWindow(this.queries.GetUser(int.Parse(this.txtEmployeeId.Text)));
 					mainWindow.Show();
 					base.Close();
@@ -62,6 +68,43 @@ namespace FivesBronxTimesheetManagement.Forms
 				else
 				{
 					MessageBox.Show("Duplicate Username and password.... Access Denied");
+					this.myConnection.Close();
+				}
+			}
+			catch (Exception exception)
+			{
+				MessageBox.Show(exception.Message);
+			}
+		}
+
+		private void Login(string user, string pass)
+		{
+			try
+			{
+				string[] text = new string[] { "SELECT * FROM login WHERE user_id='", user, "' AND password='", pass, "'" };
+				MySqlCommand mySqlCommand = new MySqlCommand(string.Concat(text), myConnection.MySqlConnection);
+				myConnection.Open();
+				MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
+				int num = 0;
+				while (mySqlDataReader.Read())
+				{
+					num++;
+				}
+				if (num == 1)
+				{
+					myConnection.Close();
+					MainWindow mainWindow = new MainWindow(queries.GetUser(int.Parse(user)));
+					mainWindow.Show();
+					Close();
+				}
+				else if (num <= 1)
+				{
+					MessageBox.Show("Incorrect Username and/or Password");
+					this.myConnection.Close();
+				}
+				else
+				{
+					MessageBox.Show("Duplicate Username and password.... Access Denied. Please Speak To Administrator Of Database.");
 					this.myConnection.Close();
 				}
 			}
