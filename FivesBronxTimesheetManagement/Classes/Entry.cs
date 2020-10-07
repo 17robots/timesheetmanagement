@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 
 namespace FivesBronxTimesheetManagement.Classes
 {
@@ -205,60 +204,88 @@ namespace FivesBronxTimesheetManagement.Classes
 		{
 		}
 
-		public Entry(FivesBronxTimesheetManagement.Classes.Entry Entry, DateTime Date)
+		public Entry(Entry Entry, DateTime Date)
 		{
 			Functions function = new Functions();
-			this.user_id = Entry.user_id;
-			this.user_name = Entry.user_name;
-			this.section_id = Entry.section_id;
-			this.project_serial = Entry.project_serial;
-			this.project_sap = Entry.project_sap;
-			this.number_section = Entry.number_section;
-			this.number_network = Entry.number_network;
-			this.number_activity = Entry.number_activity;
-			this.date = Date;
-			this.period = Date.Month;
-			this.year = Date.Year;
-			this.hours = Entry.hours;
-			this.description = Entry.description;
-			this.timesheet_code = Entry.timesheet_code;
-			this.task_type = Entry.task_type;
-			this.submitted_status = function.approvalStatus(ApprovalStatus.NotSubmitted);
-			this.approval_status = ApprovalStatus.Submitted;
-			this.rejection_reason = this.rejection_reason;
-			this.approved_by_user_id = this.approved_by_user_id;
-			this.approved_by_user_name = this.approved_by_user_name;
-			this.date_created = this.date_created;
-			this.date_modified = this.date_modified;
-			this.date_approved = this.date_approved;
+			user_id = Entry.user_id;
+			user_name = Entry.user_name;
+			section_id = Entry.section_id;
+			project_serial = Entry.project_serial;
+			project_sap = Entry.project_sap;
+			number_section = Entry.number_section;
+			number_network = Entry.number_network;
+			number_activity = Entry.number_activity;
+			date = Date;
+			period = Date.Month;
+			year = Date.Year;
+			hours = Entry.hours;
+			description = Entry.description;
+			timesheet_code = Entry.timesheet_code;
+			task_type = Entry.task_type;
+			submitted_status = function.approvalStatus(ApprovalStatus.NotSubmitted);
+			approval_status = ApprovalStatus.Submitted;
+			rejection_reason = rejection_reason;
+			approved_by_user_id = approved_by_user_id;
+			approved_by_user_name = approved_by_user_name;
+			date_created = date_created;
+			date_modified = date_modified;
+			date_approved = date_approved;
 		}
 
-		public Entry(FivesBronxTimesheetManagement.Classes.Entry Entry, DateTime Date, double Hours)
+		public Entry(Entry Entry, DateTime Date, double Hours)
 		{
 			Functions function = new Functions();
-			this.user_id = Entry.user_id;
-			this.user_name = Entry.user_name;
-			this.section_id = Entry.section_id;
-			this.project_serial = Entry.project_serial;
-			this.project_sap = Entry.project_sap;
-			this.number_section = Entry.number_section;
-			this.number_network = Entry.number_network;
-			this.number_activity = Entry.number_activity;
-			this.date = Date;
-			this.period = Date.Month;
-			this.year = Date.Year;
-			this.hours = Hours;
-			this.description = Entry.description;
-			this.timesheet_code = Entry.timesheet_code;
-			this.task_type = Entry.task_type;
-			this.submitted_status = function.approvalStatus(ApprovalStatus.NotSubmitted);
-			this.approval_status = ApprovalStatus.Submitted;
-			this.rejection_reason = this.rejection_reason;
-			this.approved_by_user_id = this.approved_by_user_id;
-			this.approved_by_user_name = this.approved_by_user_name;
-			this.date_created = this.date_created;
-			this.date_modified = this.date_modified;
-			this.date_approved = this.date_approved;
+			user_id = Entry.user_id;
+			user_name = Entry.user_name;
+			section_id = Entry.section_id;
+			project_serial = Entry.project_serial;
+			project_sap = Entry.project_sap;
+			number_section = Entry.number_section;
+			number_network = Entry.number_network;
+			number_activity = Entry.number_activity;
+			date = Date;
+			period = Date.Month;
+			year = Date.Year;
+			hours = Hours;
+			description = Entry.description;
+			timesheet_code = Entry.timesheet_code;
+			task_type = Entry.task_type;
+			submitted_status = function.approvalStatus(ApprovalStatus.NotSubmitted);
+			approval_status = ApprovalStatus.Submitted;
+			rejection_reason = rejection_reason;
+			approved_by_user_id = approved_by_user_id;
+			approved_by_user_name = approved_by_user_name;
+			date_created = date_created;
+			date_modified = date_modified;
+			date_approved = date_approved;
+		}
+
+		public Entry(Entry Entry)
+		{
+			Functions function = new Functions();
+			user_id = Entry.user_id;
+			user_name = Entry.user_name;
+			section_id = Entry.section_id;
+			project_serial = Entry.project_serial;
+			project_sap = Entry.project_sap;
+			number_section = Entry.number_section;
+			number_network = Entry.number_network;
+			number_activity = Entry.number_activity;
+			date = Entry.date;
+			period = Entry.date.Month;
+			year = Entry.date.Year;
+			hours = Entry.hours;
+			description = Entry.description;
+			timesheet_code = Entry.timesheet_code;
+			task_type = Entry.task_type;
+			submitted_status = function.approvalStatus(ApprovalStatus.NotSubmitted);
+			approval_status = ApprovalStatus.Submitted;
+			rejection_reason = rejection_reason;
+			approved_by_user_id = approved_by_user_id;
+			approved_by_user_name = approved_by_user_name;
+			date_created = date_created;
+			date_modified = date_modified;
+			date_approved = date_approved;
 		}
 	}
 }
