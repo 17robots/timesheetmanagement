@@ -118,6 +118,9 @@
     <Compile Include="Forms\Report2.xaml.cs">
       <DependentUpon>Report2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TimesheetEntry_Duplicate.xaml.cs">
+      <DependentUpon>TimesheetEntry_Duplicate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <AutoGen>false</AutoGen>
       <DesignTimeSharedInput>false</DesignTimeSharedInput>
@@ -344,6 +347,10 @@
     <Page Include="Forms\Report2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\TimesheetEntry_Duplicate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Forms\TimesheetEntry_Edit.xaml">
       <Generator>MSBuild:Compile</Generator>
