@@ -50,6 +50,17 @@ namespace FivesBronxTimesheetManagement.Forms
 			(new TimesheetEntry(this.user)).Show();
 		}
 
+		private void btnLogout_Click(object sender, RoutedEventArgs e)
+		{
+			Session.Logout();
+			for(int i = 1; i < App.Current.Windows.Count; ++i)
+			{
+				App.Current.Windows[i].Close();
+			}
+			new UserLogin().Show(); // open a new login window
+			Close(); // close this one
+		}
+
 		private void LimitButtonVisibility(FivesBronxTimesheetManagement.Classes.User User)
 		{
 			if (this.functions.IntToBool(User.IsAdmin))
