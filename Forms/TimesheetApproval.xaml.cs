@@ -146,19 +146,6 @@ namespace FivesBronxTimesheetManagement.Forms
 			this.RefreshDGHoursFromClassList();
 		}
 
-		private void btnRefresh_Click(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				this.RefreshDGHoursFromClassList();
-				this.RefreshSummaryByDate(this.currentWeekEnding);
-				this.ckbxSelectAll.IsChecked = new bool?(false);
-			}
-			catch
-			{
-			}
-		}
-
 		private void btnReject_Click(object sender, RoutedEventArgs e)
 		{
 			string str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", "", -1, -1);
@@ -377,6 +364,19 @@ namespace FivesBronxTimesheetManagement.Forms
 					}
 				}
 				this.lblWeek_Total.Content = num7.ToString();
+			}
+			catch
+			{
+			}
+		}
+
+		private void cbxEmployee_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			try
+			{
+				this.RefreshDGHoursFromClassList();
+				this.RefreshSummaryByDate(this.currentWeekEnding);
+				this.ckbxSelectAll.IsChecked = new bool?(false);
 			}
 			catch
 			{

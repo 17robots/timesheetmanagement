@@ -1,149 +1,124 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Window x:Class="FivesBronxTimesheetManagement.Forms.TimesheetApproval" Title="Timesheet Approval Schedule" MinHeight="500" MinWidth="860" SizeToContent="WidthAndHeight" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Grid>
-    <UserControl>
-      <UserControl.Resources>
-        <Storyboard x:Key="ImageRotate">
-          <DoubleAnimation Storyboard.TargetName="imgRefresh" Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="360" Duration="0:0:1.5" RepeatBehavior="Forever" />
-        </Storyboard>
-      </UserControl.Resources>
-    </UserControl>
-    <Label Content="Approver" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="126" />
-    <Label Content="Employee" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="126" />
-    <Label Content="End Date" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="126" />
-    <Label Name="lblApproverName" Content="Approver Name" HorizontalAlignment="Left" Margin="141,10,0,0" VerticalAlignment="Top" Width="126" />
-    <ComboBox Name="cbxEmployee" HorizontalAlignment="Left" Margin="141,36,0,0" VerticalAlignment="Top" Width="120" />
-    <DatePicker Name="dtpEndDate" HorizontalAlignment="Left" Margin="141,63,0,0" VerticalAlignment="Top" Width="120" SelectedDateChanged="dtpEndDate_SelectedDateChanged" />
-    <CheckBox Name="ckbxSelectAll" Content="Select All" HorizontalAlignment="Left" Margin="266,67,0,0" VerticalAlignment="Top" Checked="ckbxSelectAll_Clicked" Unchecked="ckbxSelectAll_Clicked" />
-    <Button Name="btnRefresh" HorizontalAlignment="Left" Margin="370,62,0,0" VerticalAlignment="Top" Width="25" Height="25" ToolTip="Refresh Grid" Click="btnRefresh_Click">
-      <Image Name="imgRefresh" Source="/Pics/refresh2.png" Stretch="Fill" RenderTransformOrigin=" 0.5, 0.5">
-        <Image.RenderTransform>
-          <RotateTransform />
-        </Image.RenderTransform>
-        <Image.Triggers>
-          <EventTrigger RoutedEvent="MouseEnter">
-            <BeginStoryboard>
-              <Storyboard>
-                <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="360" Duration="0:0:1.5" RepeatBehavior="Forever" />
-              </Storyboard>
-            </BeginStoryboard>
-          </EventTrigger>
-          <EventTrigger RoutedEvent="MouseLeave">
-            <BeginStoryboard>
-              <Storyboard>
-                <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0" RepeatBehavior="0" />
-              </Storyboard>
-            </BeginStoryboard>
-          </EventTrigger>
-        </Image.Triggers>
-      </Image>
-    </Button>
-    <Expander Header="Summary By Date" Margin="13,93,10,0" IsExpanded="True" FontWeight="Bold" Height="Auto" VerticalAlignment="Top">
-      <Grid Background="#00FFFFFF">
-        <StackPanel Orientation="Vertical">
-          <StackPanel Orientation="Horizontal">
-            <Label Name="lblWeek_Day1" Content="lblWeek_Day1" Width="100" Margin="0,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
-            <Label Name="lblWeek_Day2" Content="Monday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
-            <Label Name="lblWeek_Day3" Content="Tuesday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
-            <Label Name="lblWeek_Day4" Content="Wednesday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
-            <Label Name="lblWeek_Day5" Content="Thursday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
-            <Label Name="lblWeek_Day6" Content="Friday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
-            <Label Name="lblWeek_Day7" Content="12/31/XX" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
-            <Button Name="btnWeekDecrement" Width="26" Height="26" Margin="19,0,2,0" ToolTip="Previous Week Totals" Click="btnWeekDecrement_Click">
-              <Image Source="/Pics/LeftTriangle.png" Stretch="Fill" />
-            </Button>
-            <Button Name="btnWeekIncrement" Width="26" Height="26" Margin="0,0,0,0" ToolTip="Previous Week Totals" Click="btnWeekIncrement_Click">
-              <Image Source="/Pics/RightTriangle.png" Stretch="Fill" />
-            </Button>
-          </StackPanel>
-          <StackPanel Orientation="Horizontal">
-            <Label Content="Sunday" Width="100" Margin="0,0,0,0" HorizontalContentAlignment="Center" />
-            <Label Content="Monday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
-            <Label Content="Tuesday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
-            <Label Content="Wednesday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
-            <Label Content="Thursday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
-            <Label Content="Friday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
-            <Label Content="Saturday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
-            <Label Content="Total" Width="77" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
-          </StackPanel>
-          <StackPanel Orientation="Horizontal">
-            <Label Name="lblWeek_Day1_Total" Content="-" Width="100" Margin="0,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
-            <Label Name="lblWeek_Day2_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
-            <Label Name="lblWeek_Day3_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
-            <Label Name="lblWeek_Day4_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
-            <Label Name="lblWeek_Day5_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
-            <Label Name="lblWeek_Day6_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
-            <Label Name="lblWeek_Day7_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
-            <Label Name="lblWeek_Total" Content="-" Width="77" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
-          </StackPanel>
+    <Grid>
+        <UserControl>
+            <UserControl.Resources>
+                <Storyboard x:Key="ImageRotate"/>
+            </UserControl.Resources>
+        </UserControl>
+        <Label Content="Approver" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="126" />
+        <Label Content="Employee" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="126" />
+        <Label Content="End Date" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top" Width="126" />
+        <Label Name="lblApproverName" Content="Approver Name" HorizontalAlignment="Left" Margin="141,10,0,0" VerticalAlignment="Top" Width="126" />
+        <ComboBox Name="cbxEmployee" HorizontalAlignment="Left" Margin="141,36,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbxEmployee_SelectionChanged" />
+        <DatePicker Name="dtpEndDate" HorizontalAlignment="Left" Margin="141,63,0,0" VerticalAlignment="Top" Width="120" SelectedDateChanged="dtpEndDate_SelectedDateChanged" />
+        <CheckBox Name="ckbxSelectAll" Content="Select All" HorizontalAlignment="Left" Margin="266,67,0,0" VerticalAlignment="Top" Checked="ckbxSelectAll_Clicked" Unchecked="ckbxSelectAll_Clicked" />
+        <Expander Header="Summary By Date" Margin="13,93,10,0" IsExpanded="True" FontWeight="Bold" Height="Auto" VerticalAlignment="Top">
+            <Grid Background="#00FFFFFF">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Name="lblWeek_Day1" Content="lblWeek_Day1" Width="100" Margin="0,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
+                        <Label Name="lblWeek_Day2" Content="Monday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
+                        <Label Name="lblWeek_Day3" Content="Tuesday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
+                        <Label Name="lblWeek_Day4" Content="Wednesday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
+                        <Label Name="lblWeek_Day5" Content="Thursday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
+                        <Label Name="lblWeek_Day6" Content="Friday" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
+                        <Label Name="lblWeek_Day7" Content="12/31/XX" Width="100" Margin="5,0,0,0" Height="auto" HorizontalContentAlignment="Center" />
+                        <Button Name="btnWeekDecrement" Width="26" Height="26" Margin="19,0,2,0" ToolTip="Previous Week Totals" Click="btnWeekDecrement_Click">
+                            <Image Source="/Pics/LeftTriangle.png" Stretch="Fill" />
+                        </Button>
+                        <Button Name="btnWeekIncrement" Width="26" Height="26" Margin="0,0,0,0" ToolTip="Previous Week Totals" Click="btnWeekIncrement_Click">
+                            <Image Source="/Pics/RightTriangle.png" Stretch="Fill" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Sunday" Width="100" Margin="0,0,0,0" HorizontalContentAlignment="Center" />
+                        <Label Content="Monday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
+                        <Label Content="Tuesday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
+                        <Label Content="Wednesday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
+                        <Label Content="Thursday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
+                        <Label Content="Friday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
+                        <Label Content="Saturday" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
+                        <Label Content="Total" Width="77" Margin="5,0,0,0" HorizontalContentAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Name="lblWeek_Day1_Total" Content="-" Width="100" Margin="0,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
+                        <Label Name="lblWeek_Day2_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
+                        <Label Name="lblWeek_Day3_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
+                        <Label Name="lblWeek_Day4_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
+                        <Label Name="lblWeek_Day5_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
+                        <Label Name="lblWeek_Day6_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
+                        <Label Name="lblWeek_Day7_Total" Content="-" Width="100" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
+                        <Label Name="lblWeek_Total" Content="-" Width="77" Margin="5,0,0,0" HorizontalContentAlignment="Center" FontWeight="Normal" />
+                    </StackPanel>
+                </StackPanel>
+                <Canvas Margin="0,0,0,0">
+                    <Line X1="0" Y1="50" X2="817" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
+                    <Line X1="735" Y1="0" X2="735" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
+                    <Line X1="0" Y1="0" X2="0" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
+                    <Line X1="0" Y1="0" X2="817" Y2="0" Stroke="#FF000000" StrokeThickness="1" />
+                    <Line X1="817" Y1="0" X2="817" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
+                </Canvas>
+            </Grid>
+        </Expander>
+        <DataGrid Name="dgHours" Margin="10,199,10,10" AutoGenerateColumns="False" AlternatingRowBackground="#FFD3D3D3" CanUserAddRows="False" SelectionChanged="dgHours_SelectionChanged" />
+        <StackPanel Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="Auto" Height="Auto">
+            <Label Content="Hours Selected for Approval" Margin="0,5,0,0" Height="26" />
+            <Label Name="lblHoursSelectedForApproval" Margin="0,5,0,0" Height="26" HorizontalContentAlignment="Center" />
+            <StackPanel Orientation="Horizontal">
+                <Button Name="btnApprove" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="25" Width="75" Click="btnApprove_Click">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Image Source="/Pics/Thumbup-black.png" RenderTransformOrigin="0.5, 0.5">
+                            <Image.RenderTransform>
+                                <RotateTransform />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Button.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" From="-20" To="20" AutoReverse="True" Duration="0:0:.5" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0" RepeatBehavior="0" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <TextBlock Text="  Approve" />
+                    </StackPanel>
+                </Button>
+                <Button Name="btnReject" HorizontalAlignment="Right" Margin="0,5,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnReject_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Pics/thumbdown-black.png" RenderTransformOrigin="0.5, 0.5">
+                            <Image.RenderTransform>
+                                <RotateTransform />
+                            </Image.RenderTransform>
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Button.MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" From="-20" To="20" AutoReverse="True" Duration="0:0:.5" RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0" RepeatBehavior="0" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <TextBlock Text="  Reject" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </StackPanel>
-        <Canvas Margin="0,0,0,0">
-          <Line X1="0" Y1="50" X2="817" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
-          <Line X1="735" Y1="0" X2="735" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
-          <Line X1="0" Y1="0" X2="0" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
-          <Line X1="0" Y1="0" X2="817" Y2="0" Stroke="#FF000000" StrokeThickness="1" />
-          <Line X1="817" Y1="0" X2="817" Y2="50" Stroke="#FF000000" StrokeThickness="1" />
-        </Canvas>
-      </Grid>
-    </Expander>
-    <DataGrid Name="dgHours" Margin="10,199,10,10" AutoGenerateColumns="False" AlternatingRowBackground="#FFD3D3D3" CanUserAddRows="False" SelectionChanged="dgHours_SelectionChanged" />
-    <StackPanel Margin="0,5,10,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="Auto" Height="Auto">
-      <Label Content="Hours Selected for Approval" Margin="0,5,0,0" Height="26" />
-      <Label Name="lblHoursSelectedForApproval" Margin="0,5,0,0" Height="26" HorizontalContentAlignment="Center" />
-      <StackPanel Orientation="Horizontal">
-        <Button Name="btnApprove" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="25" Width="75" Click="btnApprove_Click">
-          <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-            <Image Source="/Pics/Thumbup-black.png" RenderTransformOrigin="0.5, 0.5">
-              <Image.RenderTransform>
-                <RotateTransform />
-              </Image.RenderTransform>
-              <Image.Triggers>
-                <EventTrigger RoutedEvent="Button.MouseEnter">
-                  <BeginStoryboard>
-                    <Storyboard>
-                      <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" From="-20" To="20" AutoReverse="True" Duration="0:0:.5" RepeatBehavior="Forever" />
-                    </Storyboard>
-                  </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseLeave">
-                  <BeginStoryboard>
-                    <Storyboard>
-                      <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0" RepeatBehavior="0" />
-                    </Storyboard>
-                  </BeginStoryboard>
-                </EventTrigger>
-              </Image.Triggers>
-            </Image>
-            <TextBlock Text="  Approve" />
-          </StackPanel>
-        </Button>
-      <Button Name="btnReject" HorizontalAlignment="Right" Margin="0,5,0,0" VerticalAlignment="Top" Height="25" Width="75" Click="btnReject_Click">
-          <StackPanel Orientation="Horizontal">
-            <Image Source="/Pics/thumbdown-black.png" RenderTransformOrigin="0.5, 0.5">
-              <Image.RenderTransform>
-                <RotateTransform />
-              </Image.RenderTransform>
-              <Image.Triggers>
-                <EventTrigger RoutedEvent="Button.MouseEnter">
-                  <BeginStoryboard>
-                    <Storyboard>
-                      <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" From="-20" To="20" AutoReverse="True" Duration="0:0:.5" RepeatBehavior="Forever" />
-                    </Storyboard>
-                  </BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseLeave">
-                  <BeginStoryboard>
-                    <Storyboard>
-                      <DoubleAnimation Storyboard.TargetProperty="(Image.RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0" RepeatBehavior="0" />
-                    </Storyboard>
-                  </BeginStoryboard>
-                </EventTrigger>
-              </Image.Triggers>
-            </Image>
-            <TextBlock Text="  Reject" />
-          </StackPanel>
-        </Button>
-      </StackPanel>
-    </StackPanel>
-  </Grid>
+    </Grid>
 </Window>
