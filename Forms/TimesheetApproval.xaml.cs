@@ -14,7 +14,6 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private User user;
 
-		//private Queries queries = new Queries();
 		private Queries2 queries = new Queries2();
 
 		private Connection myConnection;
@@ -163,6 +162,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		private void btnReject_Click(object sender, RoutedEventArgs e)
 		{
 			string str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", "", -1, -1);
+			if (str == "") str = "No Reason Provided";
 			List<Entry> entries = new List<Entry>();
 			for (int i = 0; i < this.dgHours.SelectedItems.Count; i++)
 			{
