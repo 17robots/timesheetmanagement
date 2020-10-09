@@ -75,6 +75,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			{
 				MessageBox.Show(exception.ToString());
 			}
+			MyConnectionString = str;
 			string[] strArrays = new string[] { "datasource=", str, ";port=3306;Database=timereporting;username=", str2, ";password=", str1 };
 			this.myConnection = new MySql.Data.MySqlClient.MySqlConnection(string.Concat(strArrays));
 		}

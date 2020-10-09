@@ -116,7 +116,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void menuFile_ChangeConnectionString_Click(object sender, RoutedEventArgs e)
 		{
-			string str = Interaction.InputBox("Enter A New Connection String", "Connection String", "", -1, -1);
+			string str = Interaction.InputBox("Enter A New Connection String", "Connection String", myConnection.MyConnectionString, -1, -1);
 			if (!string.IsNullOrEmpty(str))
 			{
 				this.myConnection.ChangeConnectionString(str);
