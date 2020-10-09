@@ -93,13 +93,12 @@ namespace FivesBronxTimesheetManagement.Forms
 			List<User> users = new List<User>();
 			foreach (User allUser in this.allUsers)
 			{
-				List<User> localApprovers = queries.User_GetApprovers(allUser);
-				if (selectedApprover.UserID != allUser.UserID && localApprovers.Contains(selectedApprover))
-				{
+				if(allUser.UserID != selectedApprover.UserID && !queries.isApprover(allUser, selectedApprover))
+                {
 					users.Add(allUser);
-				}
+                }
 			}
-			lbxApproverApprovee_Box3.ItemsSource = allUsers;
+			lbxApproverApprovee_Box3.ItemsSource = users;
 		}
 
 		private void RefreshScreen()

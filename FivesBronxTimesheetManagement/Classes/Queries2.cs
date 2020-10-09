@@ -1143,6 +1143,19 @@ namespace FivesBronxTimesheetManagement.Classes
 			return returnedUser;
 		}
 
+		public bool isApprover(User approvee, User approver)
+        {
+			qString = string.Concat("Select * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, " = '", approver.UserID, "' AND ", t_ApprovalHierarchy_c_Approvee_Id, " = '", approvee.UserID, "'");
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			int total = 0;
+			while (reader.Read()) total++;
+			myConnection.Close();
+			if (total > 0) return true;
+			return false;
+        }
+
 		public List<User> GetUser_All()
         {
 			qString = string.Concat("SELECT * FROM ", t_Users);
