@@ -3,16 +3,21 @@
   <Grid>
     <StackPanel Height="auto">
       <StackPanel>
-        <Button Name="btnApproverApprovee" Content="Show Approver with Approvees" Click="btnApproverApprovee_Click" />
         <StackPanel Name="stkApproverApprovee" Visibility="Visible">
           <StackPanel Orientation="Horizontal">
-            <ListBox Name="lbxApproverApprovee_Box1" Margin="10,5,5,5" Width="150" MaxHeight="500" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="lbxApproverApprovee_Box1_SelectionChanged">
-              <ListBox.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
-              </ListBox.Resources>
+            <StackPanel Orientation="Vertical">
+                <Label>Approver</Label>
+                <ListBox Name="lbxApproverApprovee_Box1" Margin="10,5,5,5" Width="150" MaxHeight="500" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="lbxApproverApprovee_Box1_SelectionChanged">
+                <ListBox.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
+                </ListBox.Resources>
             </ListBox>
-            <ListBox Name="lbxApproverApprovee_Box2" Margin="5,5,10,5" Width="150" MaxHeight="500" SelectionMode="Extended" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <Label>Selected Approvees</Label>
+                <ListBox Name="lbxApproverApprovee_Box2" Margin="5,5,10,5" Width="150" MaxHeight="500" SelectionMode="Extended" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+            </StackPanel>
             <StackPanel Orientation="Vertical">
               <Button Name="btnAddApprovee" Height="20" Click="btnAddApprovee_Click">
                 <Image Source="/Pics/LeftTriangle.png" Stretch="Fill" />
@@ -21,18 +26,11 @@
                 <Image Source="/Pics/RightTriangle.png" Stretch="Fill" />
               </Button>
             </StackPanel>
-            <ListBox Name="lbxApproverApprovee_Box3" Margin="5,5,10,5" Width="150" MaxHeight="500" SelectionMode="Extended" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+            <StackPanel Orientation="Vertical">
+                <Label>Available Approvees</Label>
+                <ListBox Name="lbxApproverApprovee_Box3" Margin="5,5,10,5" Width="150" MaxHeight="500" SelectionMode="Extended" ScrollViewer.VerticalScrollBarVisibility="Visible" />
+            </StackPanel>
           </StackPanel>
-        </StackPanel>
-      </StackPanel>
-      <StackPanel>
-        <Button Name="btnApproveeApprover" Content="Show Approvees with Approver" Click="btnApproveeApprover_Click" />
-        <StackPanel Name="stkApproveeApprover" Visibility="Collapsed">
-          <StackPanel Orientation="Horizontal">
-            <ListBox Name="lbxApproveeApprover_Box1" Margin="10,5,5,5" Width="130" SelectionChanged="lbxApproveeApprover_Box1_SelectionChanged" />
-            <ListBox Name="lbxApproveeApprover_Box2" Margin="5,5,10,5" Width="130" />
-          </StackPanel>
-          <Button Name="btnAddApprover" Content="Add Approver" />
         </StackPanel>
       </StackPanel>
     </StackPanel>
