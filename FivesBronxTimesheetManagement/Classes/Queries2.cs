@@ -1,12 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Globalization;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FivesBronxTimesheetManagement.Classes
@@ -16,7 +11,7 @@ namespace FivesBronxTimesheetManagement.Classes
         public Connection myConnection = new Connection();
         private MySqlCommand myCommand;
         private string qString;
-        private Functions functions = new Functions();
+        private readonly Functions functions = new Functions();
 
 		public string t_ApprovalHierarchy
 		{
@@ -614,7 +609,7 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public Queries2()
         {
-			Connection connection = new Connection();
+			Connection connection;
 			t_Login = "login";
 			t_Login_c_Login_Id = "login_id";
 			t_Login_c_User_Id = "user_id";
@@ -737,7 +732,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			}
 		}
 
-		public void Approval_Approve(List<Entry> Entries, FivesBronxTimesheetManagement.Classes.User User)
+		public void Approval_Approve(List<Entry> Entries, User User)
 		{
 			try
 			{
@@ -753,7 +748,6 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public void Approval_Reject(List<Entry> entries, string rejectionReason)
 		{
-			List<int> nums = new List<int>();
 			try
 			{
 				DeleteTimeEntry(DeleteTimeEntryQStrings(t_Timesheet_Limbo, entries));
@@ -831,37 +825,6 @@ namespace FivesBronxTimesheetManagement.Classes
 			Insert(mySqlCommand);
 		}
 
-		public void DeleteTimeEntry(int entryId)
-		{
-			object[] tTimesheetPrelim = new object[] { "DELETE FROM ", t_Timesheet_Prelim, " WHERE ", t_Timesheet_c_Entry_Id, "='", entryId, "'" };
-			qString = string.Concat(tTimesheetPrelim);
-			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
-			try
-			{
-				myConnection.Open();
-				MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
-				MessageBox.Show("Entry Deleted");
-				while (mySqlDataReader.Read())
-				{
-				}
-				mySqlDataReader.Close();
-				myConnection.Close();
-			}
-			catch (Exception exception1)
-			{
-				Exception exception = exception1;
-				try
-				{
-					myConnection.Close();
-					MessageBox.Show(exception.Message);
-				}
-				catch
-				{
-					MessageBox.Show(exception.Message);
-				}
-			}
-		}
-
 		public void DeleteTimeEntry(List<string> qStrings)
 		{
 			myConnection.Open();
@@ -913,17 +876,6 @@ namespace FivesBronxTimesheetManagement.Classes
 					MessageBox.Show(exception.Message);
 				}
 			}
-		}
-
-		public List<string> DeleteTimeEntryQStrings(string tableName, List<int> entryIds)
-		{
-			List<string> strs = new List<string>();
-			foreach (int entryId in entryIds)
-			{
-				object[] objArray = new object[] { "DELETE FROM ", tableName, " WHERE ", t_Timesheet_c_Entry_Id, "='", entryId, "'" };
-				strs.Add(string.Concat(objArray));
-			}
-			return strs;
 		}
 
 		public List<string> DeleteTimeEntryQStrings(string tableName, List<Entry> entries)
@@ -1081,46 +1033,6 @@ namespace FivesBronxTimesheetManagement.Classes
 			Update(mySqlCommand);
 		}
 
-		public Entry Entry(string table, int entry_id)
-        {
-			object[] objArray = new object[] { "SELECT * FROM ", table, " WHERE ", t_Timesheet_c_Entry_Id, " = ", entry_id };
-			myCommand = new MySqlCommand(string.Concat(objArray), myConnection.MySqlConnection);
-			myConnection.Open();
-			MySqlDataReader reader = myCommand.ExecuteReader();
-			Entry returnedEntry = new Entry();
-			if(reader.Read())
-            {
-				returnedEntry = new Entry(
-					int.Parse(reader.GetString(0)), // entry_id
-					int.Parse(reader.GetString(1)), // user_id
-					reader.GetString(2), // user_name
-					reader.IsDBNull(reader.GetOrdinal("section_id")) ? null : new int?(int.Parse(reader.GetString(3))), // section_id
-					reader.IsDBNull(reader.GetOrdinal("project_serial")) ? "" : reader.GetString(4), // project_serial
-					reader.IsDBNull(reader.GetOrdinal("project_sap")) ? "" : reader.GetString(5), // project_sap
-					reader.IsDBNull(reader.GetOrdinal("number_section")) ? "" : reader.GetString(6), // number_section
-					reader.IsDBNull(reader.GetOrdinal("number_network")) ? null : new int?(int.Parse(reader.GetString(7))), // number_network
-					reader.IsDBNull(reader.GetOrdinal("number_activity")) ? "" : reader.GetString(8), // number_activity
-					DateTime.Parse(reader.GetString(9)), // date
-					int.Parse(reader.GetString(10)), // period
-					int.Parse(reader.GetString(11)), // year
-					double.Parse(reader.GetString(12)), // hours
-					reader.IsDBNull(reader.GetOrdinal("description")) ? "" : reader.GetString(13), // description
-					reader.IsDBNull(reader.GetOrdinal("timesheet_code")) ? "" : reader.GetString(14), // timesheet_code
-					reader.IsDBNull(reader.GetOrdinal("task_type")) ? "" : reader.GetString(15), // task_type
-					reader.IsDBNull(reader.GetOrdinal("submitted_status")) ? "" : reader.GetString(16), // submitted_status
-					reader.IsDBNull(reader.GetOrdinal("approval_status")) ? functions.approvalStatus(null) : functions.approvalStatus(reader.GetString(17)), // approval_status
-					reader.IsDBNull(reader.GetOrdinal("rejection_reason")) ? "" : reader.GetString(18), // rejection_reason - check
-					reader.IsDBNull(reader.GetOrdinal("approved_by_user_id")) ? null : new int?(int.Parse(reader.GetString(19))), // approved_by_user_id
-					reader.IsDBNull(reader.GetOrdinal("approved_by_user_name")) ? "" : reader.GetString(20), // approved_by_user_name
-					DateTime.Parse(reader.GetString(21)), // date_created
-					DateTime.Parse(reader.GetString(22)), // date_modified
-					reader.IsDBNull(reader.GetOrdinal("date_approved")) ? null : new DateTime?(DateTime.Parse(reader.GetString(22))) // date_approved
-				);
-				myConnection.Close();
-			}
-			return returnedEntry;
-		}
-
 		public User GetUser(int user_id)
         {
 			object[] objArray = { "SELECT * FROM ", t_Users, " WHERE ", t_Users_c_User_Id, " = ", user_id };
@@ -1142,19 +1054,6 @@ namespace FivesBronxTimesheetManagement.Classes
             }
 			return returnedUser;
 		}
-
-		public bool isApprover(User approvee, User approver)
-        {
-			qString = string.Concat("Select * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, " = '", approver.UserID, "' AND ", t_ApprovalHierarchy_c_Approvee_Id, " = '", approvee.UserID, "'");
-			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
-			myConnection.Open();
-			MySqlDataReader reader = myCommand.ExecuteReader();
-			int total = 0;
-			while (reader.Read()) total++;
-			myConnection.Close();
-			if (total > 0) return true;
-			return false;
-        }
 
 		public List<User> GetUser_All()
         {
@@ -1260,62 +1159,6 @@ namespace FivesBronxTimesheetManagement.Classes
             }
 			myConnection.Close();
 			return returnedStrings;
-		}
-
-		public void SaveTimeEntry(int userId, string userName, int? sectionId, string projectSerial, string projectSAP, string numberSection, int? network, string activity, DateTime date, int period, int year, double hours, string description, string timesheetCode, string taskType, string submittedStatus, string approvalStatus)
-		{
-			string[] tTimesheetPrelim = new string[] { "INSERT INTO ", t_Timesheet_Prelim, " (", t_Timesheet_c_User_Id, ", ", t_Timesheet_c_User_Name, ", ", t_Timesheet_c_Section_Id, ", ", t_Timesheet_c_Project_Serial, ", ", t_Timesheet_c_Project_Sap, ", ", t_Timesheet_c_Number_Section, ", ", t_Timesheet_c_Number_Network, ", ", t_Timesheet_c_Number_Activity, ", ", t_Timesheet_c_Date, ", ", t_Timesheet_c_Period, ", ", t_Timesheet_c_Year, ", ", t_Timesheet_c_Hours, ", ", t_Timesheet_c_Description, ", ", t_Timesheet_c_Timesheet_Code, ", ", t_Timesheet_c_Task_Type, ", ", t_Timesheet_c_Submitted_Status, ", ", t_Timesheet_c_Approval_Status, ", ", t_Timesheet_c_Date_Created, ") VALUES(@userId, @userName, @sectionId, @projectSerial, @projectSAP, @numberSection, @network, @activity, @date, @period, @year, @hours, @description, @timesheetCode, @taskType, @submittedStatus, @approvalStatus, @dateCreated)" };
-			qString = string.Concat(tTimesheetPrelim);
-			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
-			mySqlCommand.Parameters.AddWithValue("@userId", userId);
-			mySqlCommand.Parameters.AddWithValue("@userName", userName);
-			mySqlCommand.Parameters.AddWithValue("@sectionId", sectionId);
-			mySqlCommand.Parameters.AddWithValue("@projectSerial", projectSerial);
-			mySqlCommand.Parameters.AddWithValue("@projectSAP", projectSAP);
-			mySqlCommand.Parameters.AddWithValue("@numberSection", numberSection);
-			mySqlCommand.Parameters.AddWithValue("@network", network);
-			mySqlCommand.Parameters.AddWithValue("@activity", activity);
-			mySqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-			mySqlCommand.Parameters.AddWithValue("@period", period);
-			mySqlCommand.Parameters.AddWithValue("@year", year);
-			mySqlCommand.Parameters.AddWithValue("@hours", hours);
-			mySqlCommand.Parameters.AddWithValue("@description", description);
-			mySqlCommand.Parameters.AddWithValue("@timesheetCode", timesheetCode);
-			mySqlCommand.Parameters.AddWithValue("@taskType", taskType);
-			mySqlCommand.Parameters.AddWithValue("@submittedStatus", submittedStatus);
-			mySqlCommand.Parameters.AddWithValue("@approvalStatus", approvalStatus);
-			MySqlParameterCollection parameters = mySqlCommand.Parameters;
-			DateTime now = DateTime.Now;
-			parameters.AddWithValue("@dateCreated", now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-			Insert(mySqlCommand);
-		}
-
-		public void SaveTimeEntry(string tableName, int userId, string userName, int? sectionId, string projectSerial, string projectSAP, string numberSection, int? network, string activity, DateTime date, int period, int year, double hours, string description, string timesheetCode, string taskType, string submittedStatus, string approvalStatus)
-		{
-			string[] strArrays = new string[] { "INSERT INTO ", tableName, " (", t_Timesheet_c_User_Id, ", ", t_Timesheet_c_User_Name, ", ", t_Timesheet_c_Section_Id, ", ", t_Timesheet_c_Project_Serial, ", ", t_Timesheet_c_Project_Sap, ", ", t_Timesheet_c_Number_Section, ", ", t_Timesheet_c_Number_Network, ", ", t_Timesheet_c_Number_Activity, ", ", t_Timesheet_c_Date, ", ", t_Timesheet_c_Period, ", ", t_Timesheet_c_Year, ", ", t_Timesheet_c_Hours, ", ", t_Timesheet_c_Description, ", ", t_Timesheet_c_Timesheet_Code, ", ", t_Timesheet_c_Task_Type, ", ", t_Timesheet_c_Submitted_Status, ", ", t_Timesheet_c_Approval_Status, ", ", t_Timesheet_c_Date_Created, ") VALUES(@userId, @userName, @sectionId, @projectSerial, @projectSAP, @numberSection, @network, @activity, @date, @period, @year, @hours, @description, @timesheetCode, @taskType, @submittedStatus, @approvalStatus, @dateCreated)" };
-			qString = string.Concat(strArrays);
-			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
-			mySqlCommand.Parameters.AddWithValue("@userId", userId);
-			mySqlCommand.Parameters.AddWithValue("@userName", userName);
-			mySqlCommand.Parameters.AddWithValue("@sectionId", sectionId);
-			mySqlCommand.Parameters.AddWithValue("@projectSerial", projectSerial);
-			mySqlCommand.Parameters.AddWithValue("@projectSAP", projectSAP);
-			mySqlCommand.Parameters.AddWithValue("@numberSection", numberSection);
-			mySqlCommand.Parameters.AddWithValue("@network", network);
-			mySqlCommand.Parameters.AddWithValue("@activity", activity);
-			mySqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-			mySqlCommand.Parameters.AddWithValue("@period", period);
-			mySqlCommand.Parameters.AddWithValue("@year", year);
-			mySqlCommand.Parameters.AddWithValue("@hours", hours);
-			mySqlCommand.Parameters.AddWithValue("@description", description);
-			mySqlCommand.Parameters.AddWithValue("@timesheetCode", timesheetCode);
-			mySqlCommand.Parameters.AddWithValue("@taskType", taskType);
-			mySqlCommand.Parameters.AddWithValue("@submittedStatus", submittedStatus);
-			mySqlCommand.Parameters.AddWithValue("@approvalStatus", approvalStatus);
-			MySqlParameterCollection parameters = mySqlCommand.Parameters;
-			DateTime now = DateTime.Now;
-			parameters.AddWithValue("@dateCreated", now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-			Insert(mySqlCommand);
 		}
 
 		public void SaveTimeEntry(string tableName, Entry entry, ApprovalStatus approvalStatus, ApprovalStatus submittedStatus)
@@ -1475,29 +1318,6 @@ namespace FivesBronxTimesheetManagement.Classes
 				mySqlCommands.Add(mySqlCommand);
 			}
 			Insert(mySqlCommands);
-		}
-
-		public Section Section(int section_id)
-		{
-			object[] tSections = new object[] { " SELECT *  FROM ", t_Sections, " WHERE ", t_Sections_c_Entry_Id, "='", section_id, "'" };
-			myCommand = new MySqlCommand(string.Concat(tSections), myConnection.MySqlConnection);
-			myConnection.Open();
-			Section returnedSection = null;
-			MySqlDataReader reader = myCommand.ExecuteReader();
-			if(reader.Read())
-            {
-				returnedSection = new Section(
-					int.Parse(reader.GetString(0)),
-					reader.GetString(1),
-					reader.GetString(2),
-					reader.GetString(3),
-					reader.GetString(4),
-					reader.GetString(5),
-					reader.GetString(6)
-				);
-            }
-			myConnection.Close();
-			return returnedSection;
 		}
 
 		public List<Section> Sections(int project_number_network)
@@ -1736,50 +1556,6 @@ namespace FivesBronxTimesheetManagement.Classes
 			}
 		}
 
-		public void UpdateProject(Project project)
-		{
-			string[] tProjects = new string[] { "Update ", t_Projects, " SET ", t_Projects_c_Country, "=@country, ", t_Projects_c_Customer, "=@customer, ", t_Projects_c_IsOpen, "=@isOpen, ", t_Projects_c_IsWarrantyOpen, "=@isWarrantyOpen, ", t_Projects_c_Machine, "=@machine, ", t_Projects_c_Number_BFC, "=@numberBFC, ", t_Projects_c_Number_MAS90, "=@numberMAS90, ", t_Projects_c_Number_Network, "=@numberNetwork, ", t_Projects_c_Number_SAP, "=@numberSAP, ", t_Projects_c_Number_WarrantyNetwork, "=@numberWarrantyNetwork WHERE ", t_Projects_c_Number_Serial, "=@numberSerial" };
-			qString = string.Concat(tProjects);
-			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
-			mySqlCommand.Parameters.AddWithValue("@country", project.Country);
-			mySqlCommand.Parameters.AddWithValue("@customer", project.Customer);
-			mySqlCommand.Parameters.AddWithValue("@isOpen", project.IsOpen);
-			mySqlCommand.Parameters.AddWithValue("@isWarrantyOpen", project.IsWarrantyOpen);
-			mySqlCommand.Parameters.AddWithValue("@machine", project.Machine);
-			mySqlCommand.Parameters.AddWithValue("@numberBFC", project.Number_BFC);
-			mySqlCommand.Parameters.AddWithValue("@numberMAS90", project.Number_MAS90);
-			mySqlCommand.Parameters.AddWithValue("@numberNetwork", project.Number_Network);
-			mySqlCommand.Parameters.AddWithValue("@numberSAP", project.Number_SAP);
-			mySqlCommand.Parameters.AddWithValue("@numberWarrantyNetwork", project.Number_WarrantyNetwork);
-			mySqlCommand.Parameters.AddWithValue("@numberSerial", project.Number_Serial);
-			Update(mySqlCommand);
-		}
-
-		public void UpdateTimeEntry(int entryId, int? sectionId, string projectSerial, string projectSAP, string numberSection, int? network, string activity, DateTime date, int period, int year, double hours, string description, string timesheetCode, string taskType)
-		{
-			string[] tTimesheetPrelim = new string[] { "Update ", t_Timesheet_Prelim, " SET ", t_Timesheet_c_Section_Id, "=@sectionId, ", t_Timesheet_c_Project_Serial, "=@projectSerial, ", t_Timesheet_c_Project_Sap, "=@projectSAP, ", t_Timesheet_c_Number_Section, "=@numberSection, ", t_Timesheet_c_Number_Network, "=@network, ", t_Timesheet_c_Number_Activity, "=@activity, ", t_Timesheet_c_Date, "=@date, ", t_Timesheet_c_Period, "=@period, ", t_Timesheet_c_Year, "=@year, ", t_Timesheet_c_Hours, "=@hours, ", t_Timesheet_c_Description, "=@description, ", t_Timesheet_c_Timesheet_Code, "=@timesheetCode, ", t_Timesheet_c_Task_Type, "=@taskType, ", t_Timesheet_c_Date_Modified, "=@dateModified WHERE ", t_Timesheet_c_Entry_Id, "=@entryId" };
-			qString = string.Concat(tTimesheetPrelim);
-			MySqlCommand mySqlCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
-			mySqlCommand.Parameters.AddWithValue("@sectionId", sectionId);
-			mySqlCommand.Parameters.AddWithValue("@projectSerial", projectSerial);
-			mySqlCommand.Parameters.AddWithValue("@projectSAP", projectSAP);
-			mySqlCommand.Parameters.AddWithValue("@numberSection", numberSection);
-			mySqlCommand.Parameters.AddWithValue("@network", network);
-			mySqlCommand.Parameters.AddWithValue("@activity", activity);
-			mySqlCommand.Parameters.AddWithValue("@date", date.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-			mySqlCommand.Parameters.AddWithValue("@period", period);
-			mySqlCommand.Parameters.AddWithValue("@year", year);
-			mySqlCommand.Parameters.AddWithValue("@hours", hours);
-			mySqlCommand.Parameters.AddWithValue("@description", description);
-			mySqlCommand.Parameters.AddWithValue("@timesheetCode", timesheetCode);
-			mySqlCommand.Parameters.AddWithValue("@taskType", taskType);
-			MySqlParameterCollection parameters = mySqlCommand.Parameters;
-			DateTime now = DateTime.Now;
-			parameters.AddWithValue("@dateModified", now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture));
-			mySqlCommand.Parameters.AddWithValue("@entryId", entryId);
-			Update(mySqlCommand);
-		}
-
 		public void UpdateTimeEntry(Entry entry)
 		{
 			string[] tTimesheetPrelim = new string[] { "Update ", t_Timesheet_Prelim, " SET ", t_Timesheet_c_Section_Id, "=@sectionId, ", t_Timesheet_c_Project_Serial, "=@projectSerial, ", t_Timesheet_c_Project_Sap, "=@projectSAP, ", t_Timesheet_c_Number_Section, "=@numberSection, ", t_Timesheet_c_Number_Network, "=@network, ", t_Timesheet_c_Number_Activity, "=@activity, ", t_Timesheet_c_Date, "=@date, ", t_Timesheet_c_Period, "=@period, ", t_Timesheet_c_Year, "=@year, ", t_Timesheet_c_Hours, "=@hours, ", t_Timesheet_c_Description, "=@description, ", t_Timesheet_c_Timesheet_Code, "=@timesheetCode, ", t_Timesheet_c_Task_Type, "=@taskType, ", t_Timesheet_c_Date_Modified, "=@dateModified WHERE ", t_Timesheet_c_Entry_Id, "=@entryId" };
@@ -1978,7 +1754,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			return returnedUsers;
 		}
 
-		public List<User> User_GetApprovers(FivesBronxTimesheetManagement.Classes.User User)
+		public List<User> User_GetApprovers(User User)
 		{
 			object[] tApprovalHierarchy = new object[] { "SELECT * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, "= '", User.UserID, "'" };
 			qString = string.Concat(tApprovalHierarchy);

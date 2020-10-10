@@ -94,7 +94,7 @@ namespace FivesBronxTimesheetManagement.Classes
 		public double RoundedValueInRange(double value, double minValue, double maxValue)
 		{
 			double num;
-			double nearestHalf = this.RoundToNearestHalf(Convert.ToDouble(value));
+			double nearestHalf = RoundToNearestHalf(Convert.ToDouble(value));
 			if (nearestHalf > minValue)
 			{
 				num = (nearestHalf < maxValue ? nearestHalf : maxValue);
@@ -113,7 +113,7 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public DateTime WeekEnding(DateTime date)
 		{
-			DateTime dateTime = date.AddDays((double)((int)(DayOfWeek.Monday | DayOfWeek.Tuesday | DayOfWeek.Wednesday | DayOfWeek.Thursday | DayOfWeek.Friday | DayOfWeek.Saturday) - ((int)date.DayOfWeek + (int)DayOfWeek.Monday)));
+			DateTime dateTime = date.AddDays(((int)(DayOfWeek.Monday | DayOfWeek.Tuesday | DayOfWeek.Wednesday | DayOfWeek.Thursday | DayOfWeek.Friday | DayOfWeek.Saturday) - ((int)date.DayOfWeek + (int)DayOfWeek.Monday)));
 			return dateTime;
 		}
 	}

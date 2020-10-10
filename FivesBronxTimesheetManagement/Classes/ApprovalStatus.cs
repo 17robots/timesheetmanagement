@@ -1,5 +1,3 @@
-using System;
-
 namespace FivesBronxTimesheetManagement.Classes
 {
 	public enum ApprovalStatus

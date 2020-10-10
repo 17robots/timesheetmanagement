@@ -57,7 +57,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private DateTime filteredDate = DateTime.Now;
 
-		public TimesheetEntry(FivesBronxTimesheetManagement.Classes.User User)
+		public TimesheetEntry(User User)
 		{
 			InitializeComponent();
 			user = User;
@@ -78,21 +78,21 @@ namespace FivesBronxTimesheetManagement.Forms
 			hoursIncrement = 0.5;
 			txtHours.Text = hoursMin.ToString();
 			object[] userID = new object[] { "Time Entry for Employee #: ", user.UserID, " - ", user.UserName };
-			base.Title = string.Concat(userID);
+			Title = string.Concat(userID);
 			lblSectionDescription.Content = "";
 			dtpDate.SelectedDate = new DateTime?(DateTime.Now);
 			weekEnding = functions.WeekEnding(DateTime.Now);
 			RefreshDateList(weekEnding);
 		}
 
-		private void BindDataGrid(System.Windows.Controls.DataGrid dataGrid)
+		private void BindDataGrid(DataGrid dataGrid)
 		{
 			List<DataGridTextColumn> dataGridTextColumns = new List<DataGridTextColumn>();
-			SetterBaseCollection setters = (new System.Windows.Style(typeof(System.Windows.Controls.DataGridCell))).Setters;
+			SetterBaseCollection setters = (new Style(typeof(DataGridCell))).Setters;
 			Setter setter = new Setter()
 			{
-				Property = System.Windows.Controls.Control.HorizontalContentAlignmentProperty,
-				Value = System.Windows.HorizontalAlignment.Right
+				Property = HorizontalContentAlignmentProperty,
+				Value = HorizontalAlignment.Right
 			};
 			setters.Add(setter);
 			DataGridTextColumn dataGridTextColumn = new DataGridTextColumn()
@@ -101,7 +101,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			};
 			Binding binding = new Binding("date")
 			{
-				Converter = new FivesBronxTimesheetManagement.Classes.DateTimeConverter()
+				Converter = new DateTimeConverter()
 			};
 			dataGridTextColumn.Binding = binding;
 			dataGridTextColumns.Add(dataGridTextColumn);
@@ -138,7 +138,7 @@ namespace FivesBronxTimesheetManagement.Forms
 				Converter = new HoursWorkedConverter()
 			};
 			dataGridTextColumn5.Binding = binding1;
-			dataGridTextColumn5.CellStyle = (System.Windows.Style)base.FindResource("alignRight");
+			dataGridTextColumn5.CellStyle = (Style)base.FindResource("alignRight");
 			dataGridTextColumns.Add(dataGridTextColumn5);
 			DataGridTextColumn dataGridTextColumn6 = new DataGridTextColumn()
 			{
@@ -174,7 +174,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
 		{
 			myConnection.Close();
-			base.Close();
+			Close();
 		}
 
 		private void btnHoursDecrement_Click(object sender, RoutedEventArgs e)
@@ -204,9 +204,9 @@ namespace FivesBronxTimesheetManagement.Forms
 			int? nullable1;
 			string numberActivity;
 			double num = double.Parse(txtHours.Text);
-			string text = "";
-			string code = "";
-			string str = "";
+			string text;
+			string code;
+			string str;
 			if (IsValidEntry())
 			{
 				code = ((TimesheetCode)cbxTimeCode.SelectedItem).Code;
@@ -283,8 +283,8 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void cbxSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			string str = "";
-			string str1 = "";
+			string str;
+			string str1;
 			Project selectedItem = (Project)cbxJob.SelectedItem;
 			try
 			{
@@ -307,7 +307,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void cbxTaskType_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if ((cbxTaskType.SelectedItem == null ? true : cbxTaskType.SelectedItem.ToString() == "(N/A)"))
+			if (cbxTaskType.SelectedItem == null ? true : cbxTaskType.SelectedItem.ToString() == "(N/A)")
 			{
 				cbxJob.SelectedItem = null;
 			}
@@ -729,12 +729,12 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void menuFileChangePassword_Click(object sender, RoutedEventArgs e)
 		{
-			(new UserChangePassword(user)).Show();
+			new UserChangePassword(user).Show();
 		}
 
 		private void menuFileClose_Click(object sender, RoutedEventArgs e)
 		{
-			base.Close();
+			Close();
 		}
 
 		private void menuFileExport_Click(object sender, RoutedEventArgs e)
@@ -777,14 +777,9 @@ namespace FivesBronxTimesheetManagement.Forms
 			(new ProjectInfoScreen()).Show();
 		}
 
-		/*private void menuViewReports_Click(object sender, RoutedEventArgs e)
-		{
-			RunReports();
-		}*/
-
 		private void menuViewUserRights_Click(object sender, RoutedEventArgs e)
 		{
-			(new UserRights(user)).Show();
+			new UserRights(user).Show();
 		}
 
 		public void RefreshDateList(DateTime WeekEnding)
@@ -943,11 +938,6 @@ namespace FivesBronxTimesheetManagement.Forms
 			}
 			lblWeek_Total.Content = num7.ToString();
 		}
-
-		/*private void RunReports()
-		{
-			(new Report(user)).Show();
-		}*/
 
 		private void SubmitForApproval()
 		{

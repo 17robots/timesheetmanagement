@@ -1,12 +1,7 @@
-using System;
-using System.Runtime.CompilerServices;
-
 namespace FivesBronxTimesheetManagement.Classes
 {
 	public class Section
 	{
-		//private Queries queries = new Queries();
-		private Queries2 queries = new Queries2();
 
 		public string Description_Activity
 		{
@@ -60,13 +55,13 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public Section()
 		{
-			this.Id = 0;
-			this.Number_ProjectNetwork = "";
-			this.Number_Section = "";
-			this.Description_Section = "";
-			this.Number_Activity = "";
-			this.TaskType = "";
-			this.Description_Activity = "";
+			Id = 0;
+			Number_ProjectNetwork = "";
+			Number_Section = "";
+			Description_Section = "";
+			Number_Activity = "";
+			TaskType = "";
+			Description_Activity = "";
 		}
 
 		public Section(int id, string numberProjectNetwork, string numberSection, string descriptionSection, string numberActivity, 

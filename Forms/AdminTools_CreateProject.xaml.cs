@@ -5,7 +5,6 @@ using System.Windows;
 namespace FivesBronxTimesheetManagement.Forms
 {
     public partial class AdminTools_CreateProject : Window {
-		//private Queries queries = new Queries();
 		private Queries2 queries = new Queries2();
 
 		private Functions functions = new Functions();
@@ -19,11 +18,11 @@ namespace FivesBronxTimesheetManagement.Forms
 		}
 
 		private void btnCreate_Click(object sender, RoutedEventArgs e) {
-			if (this.IsValidData())
+			if (IsValidData())
 			{
 				try
 				{
-					this.queries.CreateProject(this.CreateProject());
+					queries.CreateProject(CreateProject());
 				}
 				catch (Exception exception)
 				{
@@ -34,66 +33,66 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private Project CreateProject() {
 			Project project = new Project() {
-				Country = this.txtCountry.Text,
-				Customer = this.txtCustomer.Text
+				Country = txtCountry.Text,
+				Customer = txtCustomer.Text
 			};
-			Functions function = this.functions;
-			bool? isChecked = this.ckbxIsOpen.IsChecked;
+			Functions function = functions;
+			bool? isChecked = ckbxIsOpen.IsChecked;
 			project.IsOpen = function.BoolToInt(isChecked.Value);
-			Functions function1 = this.functions;
-			isChecked = this.ckbxIsWarrantyOpen.IsChecked;
+			Functions function1 = functions;
+			isChecked = ckbxIsWarrantyOpen.IsChecked;
 			project.IsWarrantyOpen = function1.BoolToInt(isChecked.Value);
-			project.Machine = this.txtMachine.Text;
-			project.Number_BFC = this.txtBFCNumber.Text;
-			project.Number_MAS90 = this.txtSAPNumber.Text;
-			project.Number_Network = int.Parse(this.txtNetworkNumber.Text);
-			project.Number_SAP = this.txtSAPNumber.Text;
-			project.Number_Serial = this.txtSerialNumber.Text;
-            if (string.IsNullOrEmpty(this.txtWarrantyNetworkNumber.Text)) {
+			project.Machine = txtMachine.Text;
+			project.Number_BFC = txtBFCNumber.Text;
+			project.Number_MAS90 = txtSAPNumber.Text;
+			project.Number_Network = int.Parse(txtNetworkNumber.Text);
+			project.Number_SAP = txtSAPNumber.Text;
+			project.Number_Serial = txtSerialNumber.Text;
+            if (string.IsNullOrEmpty(txtWarrantyNetworkNumber.Text)) {
                 project.Number_WarrantyNetwork = 0;
             } else {
-                project.Number_WarrantyNetwork = int.Parse(this.txtWarrantyNetworkNumber.Text);
+                project.Number_WarrantyNetwork = int.Parse(txtWarrantyNetworkNumber.Text);
             }
 			return project;
 		}
 
 		private bool IsValidData() { 
 
-            if (string.IsNullOrEmpty(this.txtSerialNumber.Text)) {
+            if (string.IsNullOrEmpty(txtSerialNumber.Text)) {
                 MessageBox.Show("Error Creating Project: Engineering Serial Number Cannot Be Blank");
                 return false;
             }
-            else if (string.IsNullOrEmpty(this.txtSAPNumber.Text)) {
+            else if (string.IsNullOrEmpty(txtSAPNumber.Text)) {
                 MessageBox.Show("Error Creating Project: SAP Number Cannot Be Blank");
                 return false;
             }
-            else if (string.IsNullOrEmpty(this.txtBFCNumber.Text)) {
+            else if (string.IsNullOrEmpty(txtBFCNumber.Text)) {
 				MessageBox.Show("Error Creating Project: BFC Number Cannot Be Blank");
                 return false;
 			}
-            else if (!(string.IsNullOrEmpty(this.txtNetworkNumber.Text) ? false : this.functions.IsNumeric(this.txtNetworkNumber.Text))) {
+            else if (!(string.IsNullOrEmpty(txtNetworkNumber.Text) ? false : functions.IsNumeric(txtNetworkNumber.Text))) {
                 MessageBox.Show("Error Creating Project: Network Number Cannot Be Blank And Must Be An Integer (Number with no decimal places)");
                 return false;
             }
-            else if (string.IsNullOrEmpty(this.txtCustomer.Text)) {
+            else if (string.IsNullOrEmpty(txtCustomer.Text)) {
                 MessageBox.Show("Error Creating Project: Customer Cannot Be Blank");
                 return false;
             }
-            else if (string.IsNullOrEmpty(this.txtMachine.Text)) {
+            else if (string.IsNullOrEmpty(txtMachine.Text)) {
                 MessageBox.Show("Error Creating Project: Description Cannot Be Blank");
                 return false;
             }
-            else if (string.IsNullOrEmpty(this.txtCountry.Text)) {
+            else if (string.IsNullOrEmpty(txtCountry.Text)) {
 				MessageBox.Show("Error Creating Project: Country Cannot Be Blank");
                 return false;
 			}
-			else if ((string.IsNullOrEmpty(this.txtWarrantyNetworkNumber.Text) ? false : this.functions.IsNumeric(this.txtWarrantyNetworkNumber.Text))) {
+			else if ((string.IsNullOrEmpty(txtWarrantyNetworkNumber.Text) ? false : functions.IsNumeric(txtWarrantyNetworkNumber.Text))) {
                 return true;
 			}
-            else if(string.IsNullOrEmpty(this.txtWarrantyNetworkNumber.Text)) {
+            else if(string.IsNullOrEmpty(txtWarrantyNetworkNumber.Text)) {
                 return true;
             }
-            else if (!this.functions.IsNumeric(this.txtWarrantyNetworkNumber.Text)) {
+            else if (!functions.IsNumeric(txtWarrantyNetworkNumber.Text)) {
                 MessageBox.Show("Error Creating Project: Warranty Must Be A Number Or Must Be Left Blank");
                 return false;
             }

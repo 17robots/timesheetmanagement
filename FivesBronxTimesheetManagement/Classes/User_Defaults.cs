@@ -1,15 +1,12 @@
-using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace FivesBronxTimesheetManagement.Classes
 {
 	public class User_Defaults
 	{
-		//private Queries queries = new Queries();
-		private Queries2 queries = new Queries2();
+		private Queries2 queries;
 
-		public FivesBronxTimesheetManagement.Classes.Project Project
+		public Project Project
 		{
 			get;
 			set;
@@ -21,7 +18,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			set;
 		}
 
-		public FivesBronxTimesheetManagement.Classes.TimesheetCode TimesheetCode
+		public TimesheetCode TimesheetCode
 		{
 			get;
 			set;
@@ -135,31 +132,31 @@ namespace FivesBronxTimesheetManagement.Classes
 			private set;
 		}
 
-		public User_Defaults(FivesBronxTimesheetManagement.Classes.User User)
+		public User_Defaults(User User)
 		{
-			this.queries = new Queries2();
-			this.UserId = User.UserID;
-			List<string> strs = this.queries.User_Defaults(this.UserId);
-			this.TimesheetCode = this.queries.TimesheetCode(strs[0]);
-			this.TaskType = strs[1];
-			this.Project = this.queries.Project(strs[2]);
-			this.userDefault4 = strs[3];
-			this.userDefault5 = strs[4];
-			this.userDefault6 = strs[5];
-			this.userDefault7 = strs[6];
-			this.userDefault8 = strs[7];
-			this.userDefault9 = strs[8];
-			this.userDefault10 = strs[9];
-			this.userDefault11 = strs[10];
-			this.userDefault12 = strs[11];
-			this.userDefault13 = strs[12];
-			this.userDefault14 = strs[13];
-			this.userDefault15 = strs[14];
-			this.userDefault16 = strs[15];
-			this.userDefault17 = strs[16];
-			this.userDefault18 = strs[17];
-			this.userDefault19 = strs[18];
-			this.userDefault20 = strs[19];
+			queries = new Queries2();
+			UserId = User.UserID;
+			List<string> strs = queries.User_Defaults(UserId);
+			TimesheetCode = queries.TimesheetCode(strs[0]);
+			TaskType = strs[1];
+			Project = queries.Project(strs[2]);
+			userDefault4 = strs[3];
+			userDefault5 = strs[4];
+			userDefault6 = strs[5];
+			userDefault7 = strs[6];
+			userDefault8 = strs[7];
+			userDefault9 = strs[8];
+			userDefault10 = strs[9];
+			userDefault11 = strs[10];
+			userDefault12 = strs[11];
+			userDefault13 = strs[12];
+			userDefault14 = strs[13];
+			userDefault15 = strs[14];
+			userDefault16 = strs[15];
+			userDefault17 = strs[16];
+			userDefault18 = strs[17];
+			userDefault19 = strs[18];
+			userDefault20 = strs[19];
 		}
 	}
 }

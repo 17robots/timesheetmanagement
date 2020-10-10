@@ -17,7 +17,7 @@ namespace FivesBronxTimesheetManagement.Classes
 	{
 		public List<T> dataToPrint;
 
-		private Microsoft.Office.Interop.Excel.Application _excelApp;
+		private Application _excelApp;
 		private Workbooks _books;
 		private _Workbook _book;
 		private Sheets _sheets;
@@ -49,7 +49,7 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		private void CreateExcelRef()
 		{
-            _excelApp = new Microsoft.Office.Interop.Excel.Application();
+            _excelApp = new Application();
             _books = _excelApp.Workbooks;
             _book = _excelApp.Workbooks.Add();
             _sheets = _book.Worksheets;

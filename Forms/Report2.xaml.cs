@@ -4,11 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -165,7 +162,6 @@ namespace FivesBronxTimesheetManagement.Forms
                     }
                     else
                     {
-                        selectedDate = to.SelectedDate;
                         hasValue1 = to.SelectedDate.HasValue;
                     }
                     if (hasValue1)

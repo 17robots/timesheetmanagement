@@ -1,11 +1,7 @@
-using System;
-using System.Runtime.CompilerServices;
-
 namespace FivesBronxTimesheetManagement.Classes
 {
 	public class TaskType
 	{
-		//private Queries queries = new Queries();
 		private Queries2 queries = new Queries2();
 
 		public string ActivityNumber
@@ -36,8 +32,8 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public TaskType()
 		{
-			this.Id = "";
-			this.Description = "";
+			Id = "";
+			Description = "";
 		}
 
 		public TaskType(string activityNumber, string description, string id)
