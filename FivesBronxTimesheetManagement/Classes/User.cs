@@ -1,14 +1,17 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Animation;
 
 namespace FivesBronxTimesheetManagement.Classes
 {
-	public class User
+	public class User : IEquatable<User>
 	{
 		//private Queries queries = new Queries();
 		private Queries2 queries = new Queries2();
 
 		private Functions functions;
+
+		private readonly StringComparer comparer = StringComparer.OrdinalIgnoreCase;
 
 		public int IsActive
 		{
@@ -58,16 +61,20 @@ namespace FivesBronxTimesheetManagement.Classes
 			this.IsHourly = IsHourly;
 		}
 
-		/*public User(int User_Id)
+		public bool Equals(User other)
 		{
-			this.queries = new Queries();
-			this.functions = new Functions();
-			this.UserID = User_Id;
-			this.UserName = this.queries.User_EmployeeName(User_Id);
-			this.IsValidator = this.functions.BoolToInt(this.queries.User_IsValidator(User_Id));
-			this.IsAdmin = this.functions.BoolToInt(this.queries.User_IsAdmin(User_Id));
-			this.IsActive = this.functions.BoolToInt(this.queries.User_IsActive(User_Id));
-			this.IsHourly = this.functions.BoolToInt(this.queries.User_IsHourly(User_Id));
-		}*/
+			if (other == null) return false;
+			return UserID == other.UserID;
+		}
+
+		public override bool Equals(object other)
+		{
+			return this.Equals(other as User);
+		}
+
+		public override int GetHashCode()
+		{
+			return comparer.GetHashCode(UserID);
+		}
 	}
 }

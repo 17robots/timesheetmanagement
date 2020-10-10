@@ -22,7 +22,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private List<User> allUsers;
 
-		private List<User> approvees;
+		// private List<User> approvees;
 
 		private Functions functions = new Functions();
 
@@ -34,12 +34,12 @@ namespace FivesBronxTimesheetManagement.Forms
 				where this.functions.IntToBool(X.IsValidator)
 				where this.functions.IntToBool(X.IsActive)
 				orderby X.UserName
-				select X).ToList<User>();
+				select X).ToList();
 			this.allUsers = (
 				from X in this.queries.GetUser_All()
 				where this.functions.IntToBool(X.IsActive)
 				orderby X.UserName
-				select X).ToList<User>();
+				select X).ToList();
 			this.lbxApproverApprovee_Box1.DisplayMemberPath = "UserName";
 			this.lbxApproverApprovee_Box2.DisplayMemberPath = "UserName";
 			this.lbxApproverApprovee_Box3.DisplayMemberPath = "UserName";
@@ -56,7 +56,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			this.RefreshScreen();
 		}
 
-		private void btnApproveeApprover_Click(object sender, RoutedEventArgs e)
+		/* private void btnApproveeApprover_Click(object sender, RoutedEventArgs e)
 		{
 			this.stkApproverApprovee.Visibility = System.Windows.Visibility.Collapsed;
 		}
@@ -64,7 +64,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		private void btnApproverApprovee_Click(object sender, RoutedEventArgs e)
 		{
 			this.stkApproverApprovee.Visibility = System.Windows.Visibility.Visible;
-		}
+		} */ 
 
 		private void btnRemoveApprovee_Click(object sender, RoutedEventArgs e)
 		{
@@ -84,20 +84,22 @@ namespace FivesBronxTimesheetManagement.Forms
 		private void RefreshApproverApproveeBoxes()
 		{
 			User selectedApprover = (User)this.lbxApproverApprovee_Box1.SelectedItem;
+			List<User> localApprovees = this.queries.User_GetApprovees(selectedApprover);
 			this.lbxApproverApprovee_Box2.ItemsSource = (
-				from X in this.queries.User_GetApprovees(selectedApprover)
+				from X in localApprovees
 				where this.functions.IntToBool(X.IsActive)
 				orderby X.UserName
 				select X).ToList<User>();
 
 			List<User> users = new List<User>();
-			foreach (User allUser in this.allUsers)
+			foreach (User allUser in allUsers)
 			{
-				if(allUser.UserID != selectedApprover.UserID && !queries.isApprover(allUser, selectedApprover))
+				if(allUser.UserID != selectedApprover.UserID && localApprovees.IndexOf(allUser) == -1)
                 {
 					users.Add(allUser);
                 }
 			}
+
 			lbxApproverApprovee_Box3.ItemsSource = users;
 		}
 
