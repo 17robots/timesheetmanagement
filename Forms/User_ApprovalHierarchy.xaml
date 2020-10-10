@@ -1,40 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Window x:Class="FivesBronxTimesheetManagement.Forms.User_ApprovalHierarchy" Title="User_ApprovalHierarchy" Height="auto" Width="520" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Grid>
-    <StackPanel Height="auto">
-      <StackPanel>
-        <Button Name="btnApproverApprovee" Content="Show Approver with Approvees" Click="btnApproverApprovee_Click" />
-        <StackPanel Name="stkApproverApprovee" Visibility="Visible">
-          <StackPanel Orientation="Horizontal">
-            <ListBox Name="lbxApproverApprovee_Box1" Margin="10,5,5,5" Width="150" MaxHeight="500" SelectionMode="Single" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="lbxApproverApprovee_Box1_SelectionChanged">
-              <ListBox.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White" />
-              </ListBox.Resources>
-            </ListBox>
-            <ListBox Name="lbxApproverApprovee_Box2" Margin="5,5,10,5" Width="150" MaxHeight="500" SelectionMode="Extended" ScrollViewer.VerticalScrollBarVisibility="Visible" />
-            <StackPanel Orientation="Vertical">
-              <Button Name="btnAddApprovee" Height="20" Click="btnAddApprovee_Click">
+﻿<Window x:Class="FivesBronxTimesheetManagement.Forms.User_ApprovalHierarchy" Title="User_ApprovalHierarchy"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d" Width="500" Height="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".05*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width=".05*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width=".05*" />
+            <ColumnDefinition Width=".125*" />
+            <ColumnDefinition Width=".05*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width=".05*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".05*" />
+            <RowDefinition Height=".5*" />
+            <RowDefinition Height=".05*" />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Column="1" Grid.Row="1">
+            <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Approvers</Label>
+            <ListView SelectionMode="Single" Name="lbxApproverApprovee_Box1" SelectionChanged="lbxApproverApprovee_Box1_SelectionChanged"/>
+        </DockPanel>
+        <DockPanel Grid.Column="3" Grid.Row="1">
+            <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Selected Approvees</Label>
+            <ListView SelectionMode="Multiple" Name="lbxApproverApprovee_Box2" />
+        </DockPanel>
+        <StackPanel Orientation="Vertical" Grid.Column="5" Grid.Row="1" VerticalAlignment="Center">
+            <Button Name="btnAddApprovee" Height="20" Click="btnAddApprovee_Click">
                 <Image Source="/Pics/LeftTriangle.png" Stretch="Fill" />
-              </Button>
-              <Button Name="btnRemoveApprovee" Height="20" Click="btnRemoveApprovee_Click">
+            </Button>
+            <Button Name="btnRemoveApprovee" Height="20" Click="btnRemoveApprovee_Click">
                 <Image Source="/Pics/RightTriangle.png" Stretch="Fill" />
-              </Button>
-            </StackPanel>
-            <ListBox Name="lbxApproverApprovee_Box3" Margin="5,5,10,5" Width="150" MaxHeight="500" SelectionMode="Extended" ScrollViewer.VerticalScrollBarVisibility="Visible" />
-          </StackPanel>
+            </Button>
         </StackPanel>
-      </StackPanel>
-      <StackPanel>
-        <Button Name="btnApproveeApprover" Content="Show Approvees with Approver" Click="btnApproveeApprover_Click" />
-        <StackPanel Name="stkApproveeApprover" Visibility="Collapsed">
-          <StackPanel Orientation="Horizontal">
-            <ListBox Name="lbxApproveeApprover_Box1" Margin="10,5,5,5" Width="130" SelectionChanged="lbxApproveeApprover_Box1_SelectionChanged" />
-            <ListBox Name="lbxApproveeApprover_Box2" Margin="5,5,10,5" Width="130" />
-          </StackPanel>
-          <Button Name="btnAddApprover" Content="Add Approver" />
-        </StackPanel>
-      </StackPanel>
-    </StackPanel>
-  </Grid>
+        <DockPanel Grid.Column="7" Grid.Row="1">
+            <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Available Approvees</Label>
+            <ListView Name="lbxApproverApprovee_Box3" SelectionMode="Multiple" />
+        </DockPanel>
+    </Grid>
 </Window>

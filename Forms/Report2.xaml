@@ -34,11 +34,7 @@
         <Label Grid.Column="5" Grid.Row="1" Grid.ColumnSpan="5">Leave Column Blank To Choose All Items In The List</Label>
         <DockPanel Grid.Column="1" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">User Name</Label>
-            <ListView SelectionMode="Multiple" SelectionChanged="user_name_ItemSelectionChanged" Name="user_name" Focusable="False">
-                <ListView.Resources>
-                    <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="CornflowerBlue" />
-                </ListView.Resources>
-            </ListView>
+            <ListView SelectionMode="Multiple" SelectionChanged="user_name_ItemSelectionChanged" Name="user_name" Focusable="False" />
         </DockPanel>
         <DockPanel Grid.Column="3" Grid.Row="2">
             <Label DockPanel.Dock="Top" HorizontalAlignment="Center">Status</Label>

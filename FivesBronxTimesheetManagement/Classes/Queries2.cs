@@ -1143,6 +1143,19 @@ namespace FivesBronxTimesheetManagement.Classes
 			return returnedUser;
 		}
 
+		public bool isApprover(User approvee, User approver)
+        {
+			qString = string.Concat("Select * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, " = '", approver.UserID, "' AND ", t_ApprovalHierarchy_c_Approvee_Id, " = '", approvee.UserID, "'");
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			int total = 0;
+			while (reader.Read()) total++;
+			myConnection.Close();
+			if (total > 0) return true;
+			return false;
+        }
+
 		public List<User> GetUser_All()
         {
 			qString = string.Concat("SELECT * FROM ", t_Users);
@@ -1865,42 +1878,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			return strs;
 		}
 
-		public List<User> User_GetApprovees(User User)
-		{
-			object[] tApprovalHierarchy = new object[] { "SELECT * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, "= '", User.UserID, "'" };
-			qString = string.Concat(tApprovalHierarchy);
-			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
-			myConnection.Open();
-			MySqlDataReader reader = myCommand.ExecuteReader();
-			List<int> idList = new List<int>();
-			List<User> returnedUsers = new List<User>();
-			while (reader.Read())
-			{
-				idList.Add(int.Parse(reader.GetString(3)));
-			}
-			myConnection.Close();
-
-			idList.Sort();
-			if (idList.Count <= 0) return returnedUsers;
-			object[] objArray = { "SELECT * FROM ", t_Users, " WHERE ", t_Users_c_User_Id, " between ", idList.First().ToString(), " and ", idList.Last().ToString() };
-			myCommand = new MySqlCommand(string.Concat(objArray), myConnection.MySqlConnection);
-			myConnection.Open();
-			reader = myCommand.ExecuteReader();
-			while(reader.Read())
-            {
-				returnedUsers.Add(new User(
-					int.Parse(reader.GetString(0)), // user id
-					reader.GetString(1),
-					int.Parse(reader.GetString(2)),
-					int.Parse(reader.GetString(3)),
-					int.Parse(reader.GetString(4)),
-					int.Parse(reader.GetString(5))
-				));
-			}
-			myConnection.Close();
-			reader.Close();
-			return returnedUsers;
-		}
+		
 
 		public string ProjectNumber_Network(string numberSerial)
 		{
@@ -1956,6 +1934,50 @@ namespace FivesBronxTimesheetManagement.Classes
 			}
 		}
 
+		public List<User> User_GetApprovees(User User)
+		{
+			object[] tApprovalHierarchy = new object[] { "SELECT * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, "= '", User.UserID, "'" };
+			qString = string.Concat(tApprovalHierarchy);
+			myCommand = new MySqlCommand(qString, myConnection.MySqlConnection);
+			myConnection.Open();
+			MySqlDataReader reader = myCommand.ExecuteReader();
+			List<int> idList = new List<int>();
+			List<User> returnedUsers = new List<User>();
+			while (reader.Read())
+			{
+				idList.Add(int.Parse(reader.GetString(3)));
+			}
+			myConnection.Close();
+			if (idList.Count <= 0) return returnedUsers;
+			string listString = "";
+			foreach (var item in idList)
+			{
+				listString += "'";
+				listString += item.ToString();
+				listString += "',";
+			}
+
+			listString = listString.Substring(0, listString.Length - 1);
+			object[] objArray = { "SELECT * FROM ", t_Users, " WHERE ", t_Users_c_User_Id, " in ( ", listString, ")" };
+			myCommand = new MySqlCommand(string.Concat(objArray), myConnection.MySqlConnection);
+			myConnection.Open();
+			reader = myCommand.ExecuteReader();
+			while (reader.Read())
+			{
+				returnedUsers.Add(new User(
+					int.Parse(reader.GetString(0)), // user id
+					reader.GetString(1),
+					int.Parse(reader.GetString(2)),
+					int.Parse(reader.GetString(3)),
+					int.Parse(reader.GetString(4)),
+					int.Parse(reader.GetString(5))
+				));
+			}
+			myConnection.Close();
+			reader.Close();
+			return returnedUsers;
+		}
+
 		public List<User> User_GetApprovers(FivesBronxTimesheetManagement.Classes.User User)
 		{
 			object[] tApprovalHierarchy = new object[] { "SELECT * FROM ", t_ApprovalHierarchy, " WHERE ", t_ApprovalHierarchy_c_Approver_Id, "= '", User.UserID, "'" };
@@ -1970,10 +1992,17 @@ namespace FivesBronxTimesheetManagement.Classes
 				idList.Add(int.Parse(reader.GetString(1)));
 			}
 			myConnection.Close();
-
-			idList.Sort();
 			if (idList.Count <= 0) return returnedUsers;
-			object[] objArray = { "SELECT * FROM ", t_Users, " WHERE ", t_Users_c_User_Id, " between ", idList.First().ToString(), " and ", idList.Last().ToString() };
+			string listString = "";
+			foreach (var item in idList)
+			{
+				listString += "'";
+				listString += item.ToString();
+				listString += "',";
+			}
+
+			listString = listString.Substring(0, listString.Length - 1);
+			object[] objArray = { "SELECT * FROM ", t_Users, " WHERE ", t_Users_c_User_Id, " in ( ", listString, ")" };
 			myCommand = new MySqlCommand(string.Concat(objArray), myConnection.MySqlConnection);
 			myConnection.Open();
 			reader = myCommand.ExecuteReader();

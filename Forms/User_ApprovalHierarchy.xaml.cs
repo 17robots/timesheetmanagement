@@ -16,14 +16,13 @@ namespace FivesBronxTimesheetManagement.Forms
 {
 	public partial class User_ApprovalHierarchy : Window
 	{
-		//private Queries queries = new Queries();
 		private Queries2 queries = new Queries2();
 
 		private List<User> allApprovers;
 
 		private List<User> allUsers;
 
-		private List<User> approvees;
+		// private List<User> approvees;
 
 		private Functions functions = new Functions();
 
@@ -35,17 +34,15 @@ namespace FivesBronxTimesheetManagement.Forms
 				where this.functions.IntToBool(X.IsValidator)
 				where this.functions.IntToBool(X.IsActive)
 				orderby X.UserName
-				select X).ToList<User>();
+				select X).ToList();
 			this.allUsers = (
 				from X in this.queries.GetUser_All()
 				where this.functions.IntToBool(X.IsActive)
 				orderby X.UserName
-				select X).ToList<User>();
+				select X).ToList();
 			this.lbxApproverApprovee_Box1.DisplayMemberPath = "UserName";
 			this.lbxApproverApprovee_Box2.DisplayMemberPath = "UserName";
 			this.lbxApproverApprovee_Box3.DisplayMemberPath = "UserName";
-			this.lbxApproveeApprover_Box2.DisplayMemberPath = "UserName";
-			this.lbxApproveeApprover_Box1.DisplayMemberPath = "UserName";
 			this.RefreshScreen();
 		}
 
@@ -59,17 +56,15 @@ namespace FivesBronxTimesheetManagement.Forms
 			this.RefreshScreen();
 		}
 
-		private void btnApproveeApprover_Click(object sender, RoutedEventArgs e)
+		/* private void btnApproveeApprover_Click(object sender, RoutedEventArgs e)
 		{
-			this.stkApproveeApprover.Visibility = System.Windows.Visibility.Visible;
 			this.stkApproverApprovee.Visibility = System.Windows.Visibility.Collapsed;
 		}
 
 		private void btnApproverApprovee_Click(object sender, RoutedEventArgs e)
 		{
-			this.stkApproveeApprover.Visibility = System.Windows.Visibility.Collapsed;
 			this.stkApproverApprovee.Visibility = System.Windows.Visibility.Visible;
-		}
+		} */ 
 
 		private void btnRemoveApprovee_Click(object sender, RoutedEventArgs e)
 		{
@@ -81,14 +76,6 @@ namespace FivesBronxTimesheetManagement.Forms
 			this.RefreshScreen();
 		}
 
-		private void lbxApproveeApprover_Box1_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			this.lbxApproveeApprover_Box2.ItemsSource = (
-				from X in this.queries.User_GetApprovers((User)this.lbxApproveeApprover_Box1.SelectedItem)
-				orderby X.UserName
-				select X).ToList<User>();
-		}
-
 		private void lbxApproverApprovee_Box1_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			this.RefreshApproverApproveeBoxes();
@@ -96,28 +83,29 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void RefreshApproverApproveeBoxes()
 		{
-			this.approvees = (
-				from X in this.queries.User_GetApprovees((User)this.lbxApproverApprovee_Box1.SelectedItem)
+			User selectedApprover = (User)this.lbxApproverApprovee_Box1.SelectedItem;
+			List<User> localApprovees = this.queries.User_GetApprovees(selectedApprover);
+			this.lbxApproverApprovee_Box2.ItemsSource = (
+				from X in localApprovees
 				where this.functions.IntToBool(X.IsActive)
 				orderby X.UserName
 				select X).ToList<User>();
-			this.lbxApproverApprovee_Box2.ItemsSource = this.approvees;
+
 			List<User> users = new List<User>();
-			foreach (User allUser in this.allUsers)
+			foreach (User allUser in allUsers)
 			{
-				if (this.approvees.Any<User>((User X) => X.UserID == allUser.UserID))
-				{
-					continue;
-				}
-				users.Add(allUser);
+				if(allUser.UserID != selectedApprover.UserID && localApprovees.IndexOf(allUser) == -1)
+                {
+					users.Add(allUser);
+                }
 			}
-			this.lbxApproverApprovee_Box3.ItemsSource = users;
+
+			lbxApproverApprovee_Box3.ItemsSource = users;
 		}
 
 		private void RefreshScreen()
 		{
 			this.lbxApproverApprovee_Box1.ItemsSource = this.allApprovers;
-			this.lbxApproveeApprover_Box1.ItemsSource = this.allUsers;
 			if (this.lbxApproverApprovee_Box1.SelectedItem != null)
 			{
 				this.RefreshApproverApproveeBoxes();
