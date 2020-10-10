@@ -1,12 +1,6 @@
 using FivesBronxTimesheetManagement.Classes;
-using System;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
+
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -14,57 +8,56 @@ namespace FivesBronxTimesheetManagement.Forms
 	{
 		private AdminTools_EditProject parent;
 
-		private Project project;
+		private readonly Project project;
 
-		//private Queries queries = new Queries();
-		private Queries2 queries = new Queries2();
+		private readonly Queries2 queries = new Queries2();
 
-		private Functions functions = new Functions();
+		private readonly Functions functions = new Functions();
 
 		public AdminTools_EditProject_NewSection(AdminTools_EditProject parent, Project project)
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 			this.parent = parent;
 			this.project = project;
-			this.cbxTaskType.DisplayMemberPath = "Id";
-			this.RefreshScreen();
+			cbxTaskType.DisplayMemberPath = "Id";
+			RefreshScreen();
 		}
 
 		private void btnOk_Click(object sender, RoutedEventArgs e)
 		{
 			int numberWarrantyNetwork;
-			if (string.IsNullOrEmpty(this.txtSection.Text))
+			if (string.IsNullOrEmpty(txtSection.Text))
 			{
 				MessageBox.Show("Must Have Section Number");
 			}
-			else if (string.IsNullOrEmpty(this.txtSectionDescription.Text))
+			else if (string.IsNullOrEmpty(txtSectionDescription.Text))
 			{
 				MessageBox.Show("Must Have Section Description");
 			}
-			else if (this.cbxTaskType.SelectedItem == null)
+			else if (cbxTaskType.SelectedItem == null)
 			{
 				MessageBox.Show("Must Select A Task Type");
 			}
-			else if ((!this.functions.IsNumeric(this.txtActivity.Text) ? false : this.txtActivity.Text.Length == 4))
+			else if ((!functions.IsNumeric(txtActivity.Text) ? false : txtActivity.Text.Length == 4))
 			{
 				Section section = new Section();
-				if (this.chbxWarranty.IsChecked.Value)
+				if (chbxWarranty.IsChecked.Value)
 				{
-					numberWarrantyNetwork = this.project.Number_WarrantyNetwork;
+					numberWarrantyNetwork = project.Number_WarrantyNetwork;
 					section.Number_ProjectNetwork = numberWarrantyNetwork.ToString();
 				}
 				else
 				{
-					numberWarrantyNetwork = this.project.Number_Network;
+					numberWarrantyNetwork = project.Number_Network;
 					section.Number_ProjectNetwork = numberWarrantyNetwork.ToString();
 				}
-				section.Number_Section = this.txtSection.Text;
-				section.Description_Section = this.txtSectionDescription.Text;
-				section.TaskType = ((TaskType)this.cbxTaskType.SelectedItem).Id;
-				section.Number_Activity = this.txtActivity.Text;
-				section.Description_Activity = ((TaskType)this.cbxTaskType.SelectedItem).Description;
-				this.queries.CreateSection(section);
-				this.parent.RefreshListBox_Sections(this.project);
+				section.Number_Section = txtSection.Text;
+				section.Description_Section = txtSectionDescription.Text;
+				section.TaskType = ((TaskType)cbxTaskType.SelectedItem).Id;
+				section.Number_Activity = txtActivity.Text;
+				section.Description_Activity = ((TaskType)cbxTaskType.SelectedItem).Description;
+				queries.CreateSection(section);
+				parent.RefreshListBox_Sections(project);
 			}
 			else
 			{
@@ -74,8 +67,8 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		public void RefreshScreen()
 		{
-			this.lblProject.Content = this.project.Serial_Customer_Machine;
-			this.cbxTaskType.ItemsSource = this.queries.TaskTypesAll();
+			lblProject.Content = project.Serial_Customer_Machine;
+			cbxTaskType.ItemsSource = queries.TaskTypesAll();
 		}
 	}
 }

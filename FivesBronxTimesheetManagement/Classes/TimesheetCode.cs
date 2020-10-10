@@ -1,12 +1,7 @@
-using Google.Protobuf;
-using System;
-using System.Runtime.CompilerServices;
-
 namespace FivesBronxTimesheetManagement.Classes
 {
 	public class TimesheetCode
 	{
-		//private Queries queries = new Queries();
 		private Queries2 queries = new Queries2();
 
 		public string Code
@@ -19,11 +14,11 @@ namespace FivesBronxTimesheetManagement.Classes
 		{
 			get
 			{
-				return string.Concat(this.Code, "-", this.Description);
+				return string.Concat(Code, "-", Description);
 			}
 			set
 			{
-				this.Code_Description = value;
+				Code_Description = value;
 			}
 		}
 
@@ -35,8 +30,8 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public TimesheetCode()
 		{
-			this.Code = "";
-			this.Description = "";
+			Code = "";
+			Description = "";
 		}
 
 		public TimesheetCode(string code, string description)
@@ -48,7 +43,7 @@ namespace FivesBronxTimesheetManagement.Classes
 		public TimesheetCode(string Code)
 		{
 			this.Code = Code;
-			this.Description = this.queries.TimeCodes_Description(Code);
+			Description = queries.TimeCodes_Description(Code);
 		}
 	}
 }

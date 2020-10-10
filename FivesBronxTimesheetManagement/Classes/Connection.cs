@@ -1,17 +1,13 @@
 using MySql.Data.MySqlClient;
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace FivesBronxTimesheetManagement.Classes
 {
 	public class Connection
 	{
-		private MySql.Data.MySqlClient.MySqlConnection myConnection;
-
 		private string path = "";
 
 		public string MyConnectionString
@@ -20,13 +16,7 @@ namespace FivesBronxTimesheetManagement.Classes
 			set;
 		}
 
-		public MySql.Data.MySqlClient.MySqlConnection MySqlConnection
-		{
-			get
-			{
-				return this.myConnection;
-			}
-		}
+		public MySqlConnection MySqlConnection { get; }
 
 		public Connection()
 		{
@@ -37,12 +27,12 @@ namespace FivesBronxTimesheetManagement.Classes
 			try
 			{
 				path = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "\\connectionString.txt");
-				if (!File.Exists(this.path))
+				if (!File.Exists(path))
 				{
 					TextWriter textWriter = File.CreateText(string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "\\connectionString.txt"));
 					textWriter.WriteLine("localhost");
 					textWriter.Close();
-					streamReader = new StreamReader(this.path);
+					streamReader = new StreamReader(path);
 					try
 					{
 						str = streamReader.ReadLine();
@@ -57,7 +47,7 @@ namespace FivesBronxTimesheetManagement.Classes
 				}
 				else
 				{
-					streamReader = new StreamReader(this.path);
+					streamReader = new StreamReader(path);
 					try
 					{
 						str = streamReader.ReadLine();
@@ -77,57 +67,32 @@ namespace FivesBronxTimesheetManagement.Classes
 			}
 			MyConnectionString = str;
 			string[] strArrays = new string[] { "datasource=", str, ";port=3306;Database=timereporting;username=", str2, ";password=", str1 };
-			this.myConnection = new MySql.Data.MySqlClient.MySqlConnection(string.Concat(strArrays));
+			MySqlConnection = new MySqlConnection(string.Concat(strArrays));
 		}
 
 		public void ChangeConnectionString(string newConnectionString)
 		{
-			File.WriteAllText(this.path, newConnectionString);
+			File.WriteAllText(path, newConnectionString);
 		}
 
 		public void Close()
 		{
-			if (this.myConnection.State == ConnectionState.Open)
+			if (MySqlConnection.State == ConnectionState.Open)
 			{
-				this.myConnection.Close();
+				MySqlConnection.Close();
 			}
 		}
 
 		public void Open()
 		{
-			if (this.myConnection.State == ConnectionState.Closed)
+			if (MySqlConnection.State == ConnectionState.Closed)
 			{
-				this.myConnection.Open();
+				MySqlConnection.Open();
 			}
-			else if (this.myConnection.State == ConnectionState.Open)
+			else if (MySqlConnection.State == ConnectionState.Open)
 			{
-				this.myConnection.Close();
-				this.myConnection.Open();
-			}
-		}
-
-		public void SetConnectionString()
-		{
-			this.MyConnectionString = this.myConnection.ToString();
-		}
-
-		public void Test()
-		{
-			try
-			{
-				MySql.Data.MySqlClient.MySqlConnection mySqlConnection = this.myConnection;
-				MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter()
-				{
-					SelectCommand = new MySqlCommand("select all TimesheetsModel.Employee ;", mySqlConnection)
-				};
-				MySqlCommandBuilder mySqlCommandBuilder = new MySqlCommandBuilder(mySqlDataAdapter);
-				mySqlConnection.Open();
-				MessageBox.Show("Connected");
-				mySqlConnection.Close();
-			}
-			catch (Exception exception)
-			{
-				MessageBox.Show(exception.Message);
+				MySqlConnection.Close();
+				MySqlConnection.Open();
 			}
 		}
 	}

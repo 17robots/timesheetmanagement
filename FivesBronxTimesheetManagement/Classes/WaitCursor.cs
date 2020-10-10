@@ -9,13 +9,13 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public WaitCursor()
 		{
-			this._previousCursor = Mouse.OverrideCursor;
+			_previousCursor = Mouse.OverrideCursor;
 			Mouse.OverrideCursor = Cursors.Wait;
 		}
 
 		public void Dispose()
 		{
-			Mouse.OverrideCursor = this._previousCursor;
+			Mouse.OverrideCursor = _previousCursor;
 		}
 	}
 }

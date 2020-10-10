@@ -70,7 +70,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			};
 			Binding binding = new Binding("date")
 			{
-				Converter = new FivesBronxTimesheetManagement.Classes.DateTimeConverter()
+				Converter = new DateTimeConverter()
 			};
 			dataGridTextColumn2.Binding = binding;
 			dataGridTextColumns.Add(dataGridTextColumn2);
@@ -138,12 +138,12 @@ namespace FivesBronxTimesheetManagement.Forms
 		private void btnApprove_Click(object sender, RoutedEventArgs e)
 		{
 			List<Entry> entries = new List<Entry>();
-			for (int i = 0; i < this.dgHours.SelectedItems.Count; i++)
+			for (int i = 0; i < dgHours.SelectedItems.Count; i++)
 			{
-				entries.Add((Entry)this.dgHours.SelectedItems[i]);
+				entries.Add((Entry)dgHours.SelectedItems[i]);
 			}
-			this.queries.Approval_Approve(entries, this.user);
-			this.RefreshDGHoursFromClassList();
+			queries.Approval_Approve(entries, user);
+			RefreshDGHoursFromClassList();
 		}
 
 		private void btnReject_Click(object sender, RoutedEventArgs e)
@@ -151,42 +151,42 @@ namespace FivesBronxTimesheetManagement.Forms
 			string str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", "", -1, -1);
 			if (str == "") str = "No Reason Provided";
 			List<Entry> entries = new List<Entry>();
-			for (int i = 0; i < this.dgHours.SelectedItems.Count; i++)
+			for (int i = 0; i < dgHours.SelectedItems.Count; i++)
 			{
-				entries.Add((Entry)this.dgHours.SelectedItems[i]);
+				entries.Add((Entry)dgHours.SelectedItems[i]);
 			}
-			this.queries.Approval_Reject(entries, str);
-			this.RefreshDGHoursFromClassList();
+			queries.Approval_Reject(entries, str);
+			RefreshDGHoursFromClassList();
 		}
 
 		private void btnWeekDecrement_Click(object sender, RoutedEventArgs e)
 		{
-			this.currentWeekEnding = this.currentWeekEnding.AddDays(-7);
-			this.RefreshDateList(this.currentWeekEnding);
+			currentWeekEnding = currentWeekEnding.AddDays(-7);
+			RefreshDateList(currentWeekEnding);
 		}
 
 		private void btnWeekIncrement_Click(object sender, RoutedEventArgs e)
 		{
-			this.currentWeekEnding = this.currentWeekEnding.AddDays(7);
-			this.RefreshDateList(this.currentWeekEnding);
+			currentWeekEnding = currentWeekEnding.AddDays(7);
+			RefreshDateList(currentWeekEnding);
 		}
 
 		private void ckbxSelectAll_Clicked(object sender, RoutedEventArgs e)
 		{
 			try
 			{
-				bool? isChecked = this.ckbxSelectAll.IsChecked;
+				bool? isChecked = ckbxSelectAll.IsChecked;
 				if ((!isChecked.GetValueOrDefault() ? 0 : Convert.ToInt32(isChecked.HasValue)) == 0)
 				{
-					this.dgHours.SelectedItem = null;
-					this.ckbxSelectAll.Content = "Select All";
-					this.dgHours.Focus();
+					dgHours.SelectedItem = null;
+					ckbxSelectAll.Content = "Select All";
+					dgHours.Focus();
 				}
 				else
 				{
-					this.dgHours.SelectAll();
-					this.ckbxSelectAll.Content = "DeSelect All";
-					this.dgHours.Focus();
+					dgHours.SelectAll();
+					ckbxSelectAll.Content = "DeSelect All";
+					dgHours.Focus();
 				}
 			}
 			catch
@@ -197,81 +197,81 @@ namespace FivesBronxTimesheetManagement.Forms
 		private void dgHours_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			double num = 0;
-			foreach (Entry selectedItem in this.dgHours.SelectedItems)
+			foreach (Entry selectedItem in dgHours.SelectedItems)
 			{
 				num += selectedItem.hours;
 			}
 			if (num != 0)
 			{
-				this.lblHoursSelectedForApproval.Content = num.ToString();
+				lblHoursSelectedForApproval.Content = num.ToString();
 			}
 			else
 			{
-				this.lblHoursSelectedForApproval.Content = "-";
+				lblHoursSelectedForApproval.Content = "-";
 			}
 		}
 
 		private void dtpEndDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if ((this.dtpEndDate.SelectedDate.Value > DateTime.Now ? false : this.dtpEndDate.SelectedDate.HasValue))
+			if (dtpEndDate.SelectedDate.Value > DateTime.Now ? false : dtpEndDate.SelectedDate.HasValue)
 			{
-				this.beforeDate = this.dtpEndDate.SelectedDate.Value;
+				beforeDate = dtpEndDate.SelectedDate.Value;
 			}
 			else
 			{
-				this.dtpEndDate.SelectedDate = new DateTime?(this.beforeDate);
+				dtpEndDate.SelectedDate = new DateTime?(beforeDate);
 			}
 		}
 
 		private void LoadConstantsFromDb()
 		{
-			this.users = (
-				from E in this.queries.User_GetApprovees(this.user)
+			users = (
+				from E in queries.User_GetApprovees(user)
 				orderby E.UserName
 				select E).ToList<User>();
-			this.cbxEmployee.ItemsSource = this.users;
-			this.cbxEmployee.DisplayMemberPath = "UserName";
+			cbxEmployee.ItemsSource = users;
+			cbxEmployee.DisplayMemberPath = "UserName";
 		}
 
 		private void RefreshDateList(DateTime WeekEnding)
 		{
-			this.currentWeekEnding = this.myFunctions.WeekEnding(WeekEnding);
-			this.lblWeek_Day7.Content = this.currentWeekEnding.ToShortDateString();
-			Label lblWeekDay6 = this.lblWeek_Day6;
-			DateTime dateTime = this.currentWeekEnding.AddDays(-1);
+			currentWeekEnding = myFunctions.WeekEnding(WeekEnding);
+			lblWeek_Day7.Content = currentWeekEnding.ToShortDateString();
+			Label lblWeekDay6 = lblWeek_Day6;
+			DateTime dateTime = currentWeekEnding.AddDays(-1);
 			lblWeekDay6.Content = dateTime.ToShortDateString();
-			Label lblWeekDay5 = this.lblWeek_Day5;
-			dateTime = this.currentWeekEnding.AddDays(-2);
+			Label lblWeekDay5 = lblWeek_Day5;
+			dateTime = currentWeekEnding.AddDays(-2);
 			lblWeekDay5.Content = dateTime.ToShortDateString();
-			Label lblWeekDay4 = this.lblWeek_Day4;
-			dateTime = this.currentWeekEnding.AddDays(-3);
+			Label lblWeekDay4 = lblWeek_Day4;
+			dateTime = currentWeekEnding.AddDays(-3);
 			lblWeekDay4.Content = dateTime.ToShortDateString();
-			Label lblWeekDay3 = this.lblWeek_Day3;
-			dateTime = this.currentWeekEnding.AddDays(-4);
+			Label lblWeekDay3 = lblWeek_Day3;
+			dateTime = currentWeekEnding.AddDays(-4);
 			lblWeekDay3.Content = dateTime.ToShortDateString();
-			Label lblWeekDay2 = this.lblWeek_Day2;
-			dateTime = this.currentWeekEnding.AddDays(-5);
+			Label lblWeekDay2 = lblWeek_Day2;
+			dateTime = currentWeekEnding.AddDays(-5);
 			lblWeekDay2.Content = dateTime.ToShortDateString();
-			Label lblWeekDay1 = this.lblWeek_Day1;
-			dateTime = this.currentWeekEnding.AddDays(-6);
+			Label lblWeekDay1 = lblWeek_Day1;
+			dateTime = currentWeekEnding.AddDays(-6);
 			lblWeekDay1.Content = dateTime.ToShortDateString();
-			this.RefreshSummaryByDate(this.currentWeekEnding);
+			RefreshSummaryByDate(currentWeekEnding);
 		}
 
 		public void RefreshDGHoursFromClassList()
 		{
-			string tTimesheetLimbo = this.queries.t_Timesheet_Limbo;
-			if (this.cbxEmployee.SelectedItem != null)
+			string tTimesheetLimbo = queries.t_Timesheet_Limbo;
+			if (cbxEmployee.SelectedItem != null)
 			{
-				int userID = ((User)this.cbxEmployee.SelectedItem).UserID;
-				this.dgHours.ItemsSource = null;
+				int userID = ((User)cbxEmployee.SelectedItem).UserID;
+				dgHours.ItemsSource = null;
 				try
 				{
-					this.itemsSourceEntries = this.queries.Entries(this.queries.User_AllEntries(userID, tTimesheetLimbo));
-					this.dgHours.ItemsSource = 
-						from E in this.itemsSourceEntries
+					itemsSourceEntries = queries.Entries(queries.User_AllEntries(userID, tTimesheetLimbo));
+					dgHours.ItemsSource = 
+						from E in itemsSourceEntries
 						orderby E.date
-						where E.date <= this.beforeDate
+						where E.date <= beforeDate
 						select E;
 				}
 				catch (Exception exception)
@@ -286,33 +286,33 @@ namespace FivesBronxTimesheetManagement.Forms
 			try
 			{
 				double num = (
-					from E in this.itemsSourceEntries
+					from E in itemsSourceEntries
 					where E.date.Date == weekEnding.AddDays(-6).Date
-					select E).Sum<Entry>((Entry E) => E.hours);
+					select E).Sum((Entry E) => E.hours);
 				double num1 = (
-					from E in this.itemsSourceEntries
+					from E in itemsSourceEntries
 					where E.date.Date == weekEnding.AddDays(-5).Date
-					select E).Sum<Entry>((Entry E) => E.hours);
+					select E).Sum((Entry E) => E.hours);
 				double num2 = (
-					from E in this.itemsSourceEntries
+					from E in itemsSourceEntries
 					where E.date.Date == weekEnding.AddDays(-4).Date
-					select E).Sum<Entry>((Entry E) => E.hours);
+					select E).Sum((Entry E) => E.hours);
 				double num3 = (
-					from E in this.itemsSourceEntries
+					from E in itemsSourceEntries
 					where E.date.Date == weekEnding.AddDays(-3).Date
-					select E).Sum<Entry>((Entry E) => E.hours);
+					select E).Sum((Entry E) => E.hours);
 				double num4 = (
-					from E in this.itemsSourceEntries
+					from E in itemsSourceEntries
 					where E.date.Date == weekEnding.AddDays(-2).Date
-					select E).Sum<Entry>((Entry E) => E.hours);
+					select E).Sum((Entry E) => E.hours);
 				double num5 = (
-					from E in this.itemsSourceEntries
+					from E in itemsSourceEntries
 					where E.date.Date == weekEnding.AddDays(-1).Date
-					select E).Sum<Entry>((Entry E) => E.hours);
+					select E).Sum((Entry E) => E.hours);
 				double num6 = (
-					from E in this.itemsSourceEntries
+					from E in itemsSourceEntries
 					where E.date.Date == weekEnding.Date
-					select E).Sum<Entry>((Entry E) => E.hours);
+					select E).Sum((Entry E) => E.hours);
 				List<double> nums = new List<double>()
 				{
 					num,
@@ -327,13 +327,13 @@ namespace FivesBronxTimesheetManagement.Forms
 				double num7 = nums1.Sum();
 				List<Label> labels = new List<Label>()
 				{
-					this.lblWeek_Day1_Total,
-					this.lblWeek_Day2_Total,
-					this.lblWeek_Day3_Total,
-					this.lblWeek_Day4_Total,
-					this.lblWeek_Day5_Total,
-					this.lblWeek_Day6_Total,
-					this.lblWeek_Day7_Total
+					lblWeek_Day1_Total,
+					lblWeek_Day2_Total,
+					lblWeek_Day3_Total,
+					lblWeek_Day4_Total,
+					lblWeek_Day5_Total,
+					lblWeek_Day6_Total,
+					lblWeek_Day7_Total
 				};
 				List<Label> normal = labels;
 				string str = "There are only 24 hours in a day!  Please Correct!";
@@ -363,7 +363,7 @@ namespace FivesBronxTimesheetManagement.Forms
 						normal[i].Background = Brushes.Red;
 					}
 				}
-				this.lblWeek_Total.Content = num7.ToString();
+				lblWeek_Total.Content = num7.ToString();
 			}
 			catch
 			{
@@ -374,9 +374,9 @@ namespace FivesBronxTimesheetManagement.Forms
 		{
 			try
 			{
-				this.RefreshDGHoursFromClassList();
-				this.RefreshSummaryByDate(this.currentWeekEnding);
-				this.ckbxSelectAll.IsChecked = new bool?(false);
+				RefreshDGHoursFromClassList();
+				RefreshSummaryByDate(currentWeekEnding);
+				ckbxSelectAll.IsChecked = new bool?(false);
 			}
 			catch
 			{

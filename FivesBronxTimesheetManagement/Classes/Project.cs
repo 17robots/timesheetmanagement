@@ -1,14 +1,7 @@
-using System;
-using System.Runtime.CompilerServices;
-
 namespace FivesBronxTimesheetManagement.Classes
 {
 	public class Project
 	{
-		//private Queries queries = new Queries();
-		private Queries2 queries = new Queries2();
-
-		private Functions functions = new Functions();
 
 		public string Country
 		{
@@ -80,24 +73,24 @@ namespace FivesBronxTimesheetManagement.Classes
 		{
 			get
 			{
-				string[] numberSerial = new string[] { this.Number_Serial, "-", this.Customer, "-", this.Machine };
+				string[] numberSerial = new string[] { Number_Serial, "-", Customer, "-", Machine };
 				return string.Concat(numberSerial);
 			}
 		}
 
 		public Project()
 		{
-			this.Number_Serial = "";
-			this.Number_SAP = "";
-			this.Number_MAS90 = "";
-			this.Number_BFC = "";
-			this.Number_Network = 0;
-			this.Customer = "";
-			this.Machine = "";
-			this.Country = "";
-			this.IsOpen = 0;
-			this.IsWarrantyOpen = 0;
-			this.Number_WarrantyNetwork = 0;
+			Number_Serial = "";
+			Number_SAP = "";
+			Number_MAS90 = "";
+			Number_BFC = "";
+			Number_Network = 0;
+			Customer = "";
+			Machine = "";
+			Country = "";
+			IsOpen = 0;
+			IsWarrantyOpen = 0;
+			Number_WarrantyNetwork = 0;
 		}
 
 		public Project(string numberSerial, string numberSAP, string numberMAS90, string numberBFC, int numberNetwork, 
@@ -115,20 +108,5 @@ namespace FivesBronxTimesheetManagement.Classes
 			Number_Serial = numberSerial;
 			Number_WarrantyNetwork = numberWarrantyNetwork;
         }
-
-		/*public Project(string Serial)
-		{
-			this.Number_Serial = Serial;
-			this.Number_SAP = this.queries.ProjectNumber_SAP(Serial);
-			this.Number_MAS90 = this.queries.ProjectNumber_MAS90(Serial);
-			this.Number_BFC = this.queries.ProjectNumber_BFC(Serial);
-			this.Number_Network = int.Parse(this.queries.ProjectNumber_Network(Serial));
-			this.Customer = this.queries.ProjectName(Serial);
-			this.Machine = this.queries.ProjectMachine(Serial);
-			this.Country = this.queries.ProjectCountry(Serial);
-			this.IsOpen = this.functions.BoolToInt(this.queries.ProjectIsOpen(Serial));
-			this.IsWarrantyOpen = this.functions.BoolToInt(this.queries.ProjectIsWarrantyOpen(Serial));
-			this.Number_WarrantyNetwork = int.Parse(this.queries.ProjectNumber_WarrantyNetwork(Serial));
-		}*/
 	}
 }

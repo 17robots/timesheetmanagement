@@ -1,53 +1,44 @@
 using FivesBronxTimesheetManagement.Classes;
-using System;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
 	public partial class MainWindow : Window
 	{
-		private int user_id;
-
 		private User user;
 
 		private Functions functions = new Functions();
 
-		public MainWindow(FivesBronxTimesheetManagement.Classes.User User)
+		public MainWindow(User User)
 		{
-			this.InitializeComponent();
-			this.user_id = User.UserID;
-			this.user = User;
-			this.LimitButtonVisibility(this.user);
+			InitializeComponent();
+			user = User;
+			LimitButtonVisibility(user);
 		}
 
 		private void btnAdministratorTools_Click(object sender, RoutedEventArgs e)
 		{
-			(new AdminTools()).Show();
+			new AdminTools().Show();
 		}
 
 		private void btnApprovalScreen_Click(object sender, RoutedEventArgs e)
 		{
-			(new TimesheetApproval(this.user)).Show();
+			new TimesheetApproval(user).Show();
 		}
 
 		private void btnReports_Click(object sender, RoutedEventArgs e)
 		{
-			(new Report2(this.user)).Show();
+			new Report2(user).Show();
 		}
 
         private void btnAbout_Click(object sender, RoutedEventArgs e)
         {
-            (new About()).Show();
+            new About().Show();
         }
 
 		private void btnTimeEntryScreen_Click(object sender, RoutedEventArgs e)
 		{
-			(new TimesheetEntry(this.user)).Show();
+			new TimesheetEntry(user).Show();
 		}
 
 		private void btnLogout_Click(object sender, RoutedEventArgs e)
@@ -55,29 +46,29 @@ namespace FivesBronxTimesheetManagement.Forms
 			Session.Logout();
 			for(int i = 1; i < App.Current.Windows.Count; ++i)
 			{
-				App.Current.Windows[i].Close();
+				Application.Current.Windows[i].Close();
 			}
 			new UserLogin().Show(); // open a new login window
 			Close(); // close this one
 		}
 
-		private void LimitButtonVisibility(FivesBronxTimesheetManagement.Classes.User User)
+		private void LimitButtonVisibility(User User)
 		{
-			if (this.functions.IntToBool(User.IsAdmin))
+			if (functions.IntToBool(User.IsAdmin))
 			{
-				this.btnAdministratorTools.Visibility = System.Windows.Visibility.Visible;
+				btnAdministratorTools.Visibility = Visibility.Visible;
 			}
 			else
 			{
-				this.btnAdministratorTools.Visibility = System.Windows.Visibility.Collapsed;
+				btnAdministratorTools.Visibility = Visibility.Collapsed;
 			}
-			if (!this.functions.IntToBool(User.IsValidator))
+			if (!functions.IntToBool(User.IsValidator))
 			{
-				this.btnApprovalScreen.Visibility = System.Windows.Visibility.Collapsed;
+				btnApprovalScreen.Visibility = Visibility.Collapsed;
 			}
-			if (!this.functions.IntToBool(User.IsActive))
+			if (!functions.IntToBool(User.IsActive))
 			{
-				this.btnTimeEntryScreen.Visibility = System.Windows.Visibility.Collapsed;
+				btnTimeEntryScreen.Visibility = Visibility.Collapsed;
 			}
 		}
 	}

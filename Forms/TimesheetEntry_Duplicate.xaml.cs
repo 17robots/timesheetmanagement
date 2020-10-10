@@ -19,10 +19,6 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		public Entry entry;
 
-		private Entry originalEntry;
-
-		private int entryId;
-
 		private double hoursMax = 24;
 
 		private double hoursMin = 0.5;
@@ -31,16 +27,14 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		public TimesheetEntry_Duplicate(Entry entry, TimesheetEntry tsEntry)
 		{
-			this.entryId = entry.entry_id.Value;
 			this.entry = entry;
-			this.originalEntry = entry;
 			this.tsEntry = tsEntry;
-			this.InitializeComponent();
-			this.queries = new Queries2();
-			this.myConnection = new Connection();
-			this.functions = new Functions();
-			this.LoadConstantsFromDb();
-			this.LoadSelectedEntry();
+			InitializeComponent();
+			queries = new Queries2();
+			myConnection = new Connection();
+			functions = new Functions();
+			LoadConstantsFromDb();
+			LoadSelectedEntry();
 		}
 
 		private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -50,10 +44,10 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void btnHoursDecrement_Click(object sender, RoutedEventArgs e)
 		{
-			double num = double.Parse(this.txtHours.Text);
+			double num = double.Parse(txtHours.Text);
 			num -= hoursIncrement;
 			TextBox str = txtHours;
-			double num1 = functions.RoundedValueInRange(num, this.hoursMin, this.hoursMax);
+			double num1 = functions.RoundedValueInRange(num, hoursMin, hoursMax);
 			str.Text = num1.ToString();
 		}
 
@@ -62,7 +56,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			double num = double.Parse(txtHours.Text);
 			num += hoursIncrement;
 			TextBox str = txtHours;
-			double num1 = functions.RoundedValueInRange(num, this.hoursMin, this.hoursMax);
+			double num1 = functions.RoundedValueInRange(num, hoursMin, hoursMax);
 			str.Text = num1.ToString();
 		}
 
@@ -74,10 +68,10 @@ namespace FivesBronxTimesheetManagement.Forms
 			string numberSection;
 			int? nullable1;
 			string numberActivity;
-			double num = double.Parse(this.txtHours.Text);
-			string text = "";
-			string code = "";
-			string str = "";
+			double num = double.Parse(txtHours.Text);
+			string text;
+			string code;
+			string str;
 			if (cbxTimeCode.SelectedItem != null)
 			{
 				code = ((TimesheetCode)cbxTimeCode.SelectedItem).Code;
@@ -145,10 +139,7 @@ namespace FivesBronxTimesheetManagement.Forms
 							entry.description = text;
 							entry.timesheet_code = code;
 							entry.task_type = str;
-							// this.tsEntry.RefreshDGHoursFromClassList();
-							// this.tsEntry.RefreshSummaryByDate(this.functions.WeekEnding(this.entry.date));
 							DialogResult = new bool?(true);
-							// base.Close();
 						}
 						else
 						{
@@ -187,7 +178,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void cbxSection_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			string str = "";
+			string str;
 			Project selectedItem = (Project)cbxJob.SelectedItem;
 			try
 			{
@@ -267,8 +258,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			cbxTaskType.SelectedValue = (new TaskType(entry.task_type)).Id;
 			if (!string.IsNullOrEmpty(entry.project_serial))
 			{
-				cbxJob.SelectedValue = queries.Project(this.entry.project_serial).Serial_Customer_Machine;
-				//this.cbxJob.SelectedValue = (new Project(this.entry.project_serial)).Serial_Customer_Machine;
+				cbxJob.SelectedValue = queries.Project(entry.project_serial).Serial_Customer_Machine;
 			}
 			cbxSection.SelectedValue = entry.number_section;
 			dtpDate.SelectedDate = new DateTime?(entry.date);
@@ -292,7 +282,6 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void UpdateSections(Project project)
 		{
-			// Section section = null;
 			cbxSection.Items.Clear();
 			lblSectionDescription.Content = "";
 			if (project == null || cbxTaskType.SelectedItem == null || project.Number_Serial == "" ? false : !(cbxTaskType.SelectedItem.ToString() == ""))

@@ -1,15 +1,9 @@
 using FivesBronxTimesheetManagement.Classes;
 using Microsoft.VisualBasic;
-using Microsoft.VisualBasic.Logging;
 using MySql.Data.MySqlClient;
 using System;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Markup;
 
 namespace FivesBronxTimesheetManagement.Forms
 {
@@ -36,16 +30,16 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
-			base.Close();
+			Close();
 		}
 
 		private void Login()
 		{
 			try
 			{
-				string[] text = new string[] { "SELECT * FROM login WHERE user_id='", this.txtEmployeeId.Text, "' AND password='", this.txtPassword.Password, "'" };
-				MySqlCommand mySqlCommand = new MySqlCommand(string.Concat(text), this.myConnection.MySqlConnection);
-				this.myConnection.Open();
+				string[] text = new string[] { "SELECT * FROM login WHERE user_id='", txtEmployeeId.Text, "' AND password='", txtPassword.Password, "'" };
+				MySqlCommand mySqlCommand = new MySqlCommand(string.Concat(text), myConnection.MySqlConnection);
+				myConnection.Open();
 				MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
 				int num = 0;
 				while (mySqlDataReader.Read())
@@ -54,21 +48,21 @@ namespace FivesBronxTimesheetManagement.Forms
 				}
 				if (num == 1)
 				{
-					this.myConnection.Close();
+					myConnection.Close();
 					Session.CreateSession(txtEmployeeId.Text, txtPassword.Password);
-					MainWindow mainWindow = new MainWindow(this.queries.GetUser(int.Parse(this.txtEmployeeId.Text)));
+					MainWindow mainWindow = new MainWindow(queries.GetUser(int.Parse(txtEmployeeId.Text)));
 					mainWindow.Show();
-					base.Close();
+					Close();
 				}
 				else if (num <= 1)
 				{
 					MessageBox.Show("Incorrect Username and/or Password");
-					this.myConnection.Close();
+					myConnection.Close();
 				}
 				else
 				{
 					MessageBox.Show("Duplicate Username and password.... Access Denied");
-					this.myConnection.Close();
+					myConnection.Close();
 				}
 			}
 			catch (Exception exception)
@@ -100,12 +94,12 @@ namespace FivesBronxTimesheetManagement.Forms
 				else if (num <= 1)
 				{
 					MessageBox.Show("Incorrect Username and/or Password");
-					this.myConnection.Close();
+					myConnection.Close();
 				}
 				else
 				{
-					MessageBox.Show("Duplicate Username and password.... Access Denied. Please Speak To Administrator Of Database.");
-					this.myConnection.Close();
+					MessageBox.Show("Duplicate Username and password.... Access Denied. Please Speak To Administrator Of Data");
+					myConnection.Close();
 				}
 			}
 			catch (Exception exception)
@@ -119,8 +113,8 @@ namespace FivesBronxTimesheetManagement.Forms
 			string str = Interaction.InputBox("Enter A New Connection String", "Connection String", myConnection.MyConnectionString, -1, -1);
 			if (!string.IsNullOrEmpty(str))
 			{
-				this.myConnection.ChangeConnectionString(str);
-				this.myConnection = new Connection();
+				myConnection.ChangeConnectionString(str);
+				myConnection = new Connection();
 			}
 		}
 
@@ -128,7 +122,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		{
 			if (e.Key == Key.Return)
 			{
-				this.Login();
+				Login();
 			}
 		}
 	}

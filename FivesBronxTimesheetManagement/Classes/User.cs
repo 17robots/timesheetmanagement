@@ -1,15 +1,9 @@
 using System;
-using System.Runtime.CompilerServices;
-using System.Windows.Media.Animation;
 
 namespace FivesBronxTimesheetManagement.Classes
 {
 	public class User : IEquatable<User>
 	{
-		//private Queries queries = new Queries();
-		private Queries2 queries = new Queries2();
-
-		private Functions functions;
 
 		private readonly StringComparer comparer = StringComparer.OrdinalIgnoreCase;
 
@@ -51,10 +45,8 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public User(int User_ID, string User_Name, int IsValidator, int IsAdmin, int IsActive, int IsHourly)
 		{
-			this.queries = new Queries2();
-			this.functions = new Functions();
-			this.UserID = User_ID;
-			this.UserName = User_Name;
+			UserID = User_ID;
+			UserName = User_Name;
 			this.IsValidator = IsValidator;
 			this.IsAdmin = IsAdmin;
 			this.IsActive = IsActive;
@@ -69,7 +61,7 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public override bool Equals(object other)
 		{
-			return this.Equals(other as User);
+			return Equals(other as User);
 		}
 
 		public override int GetHashCode()
