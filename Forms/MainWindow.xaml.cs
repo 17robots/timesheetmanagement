@@ -33,7 +33,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
         private void btnAbout_Click(object sender, RoutedEventArgs e)
         {
-            new About().Show();
+            new About(user).Show();
         }
 
 		private void btnTimeEntryScreen_Click(object sender, RoutedEventArgs e)

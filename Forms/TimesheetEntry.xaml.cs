@@ -769,7 +769,7 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void menuViewAbout_Click(object sender, RoutedEventArgs e)
 		{
-			(new About()).Show();
+			(new About(user)).Show();
 		}
 
 		private void menuViewProjectInformation_Click(object sender, RoutedEventArgs e)
