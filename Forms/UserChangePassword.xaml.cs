@@ -30,7 +30,11 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void ChangePassword()
 		{
-			if (!(txtPassword1.Password == txtPassword2.Password))
+			if (txtPassword1.Password == "" || txtPassword2.Password == "")
+			{
+				MessageBox.Show("New Password Cannot Be Empty");
+			}
+			else if (!(txtPassword1.Password == txtPassword2.Password))
 			{
 				MessageBox.Show("Password1 must equal Password2");
 			}
