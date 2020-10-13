@@ -1,29 +1,77 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<!--<?xml version="1.0" encoding="utf-8"?>
 <Window x:Class="FivesBronxTimesheetManagement.Forms.About" Title="Options" Height="300" Width="350" ResizeMode="NoResize" SizeToContent="WidthAndHeight" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Grid>
     <StackPanel Orientation="Vertical">
       <Image Source="/Pics/fives_logo.jpg" Margin="0,0,0,0" Height="50" HorizontalAlignment="Right" />
       <Label HorizontalAlignment="Center" Margin="10,0,10,0" Content="Fives Bronx Timesheet Management Options" FontWeight="ExtraBold" />
-      <StackPanel Orientation="Horizontal">
-        <Label Margin="10,0,10,0" Content="Version:" FontWeight="ExtraBold" />
-        <Label Name="lblVersion" Content="1.2" />
-      </StackPanel>
       <StackPanel>
         <Label HorizontalAlignment="Left" Margin="10,0,10,0" Content="General" FontWeight="Bold" />
         <Button Name="btnAbout" Content="About" Width="175" HorizontalAlignment="Left">
+          <Button.Triggers>
+            <EventTrigger RoutedEvent="Button.Click">
+              <BeginStoryboard Storyboard="{StaticResource Show_About}" />
+              <BeginStoryboard Storyboard="{StaticResource Hide_Tier1}" />
+              <BeginStoryboard Storyboard="{StaticResource Show_BackButton}" />
+            </EventTrigger>
+          </Button.Triggers>
+        </Button>
+        <Button x:Name="btnBack" Visibility="Collapsed">Back</Button>
+      </StackPanel>
+      <StackPanel x:Name="aboutContent" Visibility="Collapsed">
+        <StackPanel Orientation="Horizontal">
+          <Label Margin="10,0,10,0" Content="Version:" FontWeight="ExtraBold" />
+          <Label Name="lblVersion" Content="1.2" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <Label Margin="10,0,10,0" Content="Maintained By:" FontWeight="ExtraBold" />
+          <Label Name="maintainer" Content="Matthew Dray" />
+      </StackPanel>
+      </StackPanel>
+    </StackPanel>
+  </Grid>
+</Window>-->
+
+<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="FivesBronxTimesheetManagement.Forms.About" Title="Options" Height="300" Width="350" ResizeMode="NoResize" SizeToContent="WidthAndHeight" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Window.Resources>
+
+  </Window.Resources>
+  <Grid>
+    <StackPanel>
+      <Image Source="/Pics/fives_logo.jpg" Margin="0,0,0,0" Height="50" HorizontalAlignment="Right" />
+      <Label HorizontalAlignment="Center" Margin="10,0,10,0" Content="Fives Bronx Timesheet Management Options" FontWeight="ExtraBold" />
+    </StackPanel>
+    <StackPanel Name="Tier1">
+      <Label HorizontalAlignment="Left" Margin="10,0,10,0" Content="General" FontWeight="Bold" />
+      <Button Content="About">
         <Button.Triggers>
           <EventTrigger RoutedEvent="Button.Click">
-            <BeginStoryboard Storyboard="{StaticResource Show_UserOptions}" />
+            <BeginStoryboard Storyboard="{StaticResource Show_About}" />
             <BeginStoryboard Storyboard="{StaticResource Hide_Tier1}" />
             <BeginStoryboard Storyboard="{StaticResource Show_BackButton}" />
           </EventTrigger>
         </Button.Triggers>
       </Button>
+      <Label HorizontalAlignment="Left" Margin="10,0,10,0" Content="User" FontWeight="Bold" />
+      <Button Name="btnFileChangePassword" Content="Change Password" Click="btnFileChangePassword_Click" />
+    </StackPanel>
+    <StackPanel Name="Tier2" Visibility="Collapsed">
+      <StackPanel Orientation="Horizontal">
+        <Label Margin="10,0,10,0" Content="Version:" FontWeight="ExtraBold" />
+        <Label Name="lblVersion" Content="1.2" />
       </StackPanel>
       <StackPanel Orientation="Horizontal">
         <Label Margin="10,0,10,0" Content="Maintained By:" FontWeight="ExtraBold" />
         <Label Name="maintainer" Content="Matthew Dray" />
-      </StackPanel>
+      <StackPanel>
     </StackPanel>
+    <Button Name="btnBack" Content="Back" Visibility="Collapsed">
+      <Button.Triggers>
+        <EventTrigger RoutedEvent="Button.Click">
+          <BeginStoryboard Storyboard="{StaticResource Hide_Tier2}" />
+          <BeginStoryboard Storyboard="{StaticResource Show_Tier1}" />
+        </EventTrigger>
+      </Button.Triggers>
+    </Button>
   </Grid>
 </Window>
