@@ -609,7 +609,7 @@ namespace FivesBronxTimesheetManagement.Classes
 
 		public Queries2()
         {
-			Connection connection;
+			// Connection connection;
 			t_Login = "login";
 			t_Login_c_Login_Id = "login_id";
 			t_Login_c_User_Id = "user_id";

@@ -149,7 +149,7 @@ namespace FivesBronxTimesheetManagement.Forms
 		private void btnReject_Click(object sender, RoutedEventArgs e)
 		{
 			string str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", "", -1, -1);
-			if (str == "") str = "No Reason Provided";
+			if (str == "") return; // break if they cancel or do not have a rejection reason
 			List<Entry> entries = new List<Entry>();
 			for (int i = 0; i < dgHours.SelectedItems.Count; i++)
 			{
