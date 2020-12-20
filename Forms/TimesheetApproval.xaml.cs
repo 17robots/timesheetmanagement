@@ -30,6 +30,8 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private Functions myFunctions;
 
+		private string savedRejectReason = "";
+
 		public TimesheetApproval(FivesBronxTimesheetManagement.Classes.User User)
 		{
 			this.user = User;
@@ -148,8 +150,14 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void btnReject_Click(object sender, RoutedEventArgs e)
 		{
-			string str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", "", -1, -1);
+			string str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", savedRejectReason, -1, -1);
 			if (str == "") return; // break if they cancel or do not have a rejection reason
+			if (str.Length > 255)
+			{
+				MessageBox.Show("Text Needs To Be Less Than 255 Characters");
+				savedRejectReason = str;
+				return;
+			}
 			List<Entry> entries = new List<Entry>();
 			for (int i = 0; i < dgHours.SelectedItems.Count; i++)
 			{
