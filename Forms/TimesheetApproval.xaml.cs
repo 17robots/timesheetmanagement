@@ -150,24 +150,14 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private void btnReject_Click(object sender, RoutedEventArgs e)
 		{
-			string str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", savedRejectReason, -1, -1);
+			RejectionReason rejectionReason = new RejectionReason();
+			rejectionReason.ShowDialog();
+			Tuple<bool, string> rejectionResult = rejectionReason.result; // once we do this we know the string cannot be empty	
+			if (rejectionResult == null) return;
+			if(!rejectionResult.Item1) return;
+
+			string str = rejectionResult.Item2;
 			
-			if (str == "")
-			{
-				// MessageBox.Show("Please Enter In A Rejection Reason");
-				return;
-			}// break if they cancel or do not have a rejection reason
-			while(str.Length > 255)
-			{
-				MessageBox.Show("Text Needs To Be Less Than 255 Characters");
-				savedRejectReason = str;
-				str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", savedRejectReason, -1, -1);
-				if (str == "")
-				{
-					// MessageBox.Show("Please Enter In A Rejection Reason");
-					return;
-				}// break if they cancel or do not have a rejection reason
-			}
 			List<Entry> entries = new List<Entry>();
 			for (int i = 0; i < dgHours.SelectedItems.Count; i++)
 			{
