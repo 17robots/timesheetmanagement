@@ -30,9 +30,9 @@ namespace FivesBronxTimesheetManagement.Forms
 
 		private Functions myFunctions;
 
-		private string savedRejectReason = "";
+		private string savedRejectReason = "No Reason Provided, See Manager";
 
-		public TimesheetApproval(FivesBronxTimesheetManagement.Classes.User User)
+		public TimesheetApproval(User User)
 		{
 			this.user = User;
 			this.InitializeComponent();
@@ -151,12 +151,22 @@ namespace FivesBronxTimesheetManagement.Forms
 		private void btnReject_Click(object sender, RoutedEventArgs e)
 		{
 			string str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", savedRejectReason, -1, -1);
-			if (str == "") return; // break if they cancel or do not have a rejection reason
-			if (str.Length > 255)
+			
+			if (str == "")
+			{
+				// MessageBox.Show("Please Enter In A Rejection Reason");
+				return;
+			}// break if they cancel or do not have a rejection reason
+			while(str.Length > 255)
 			{
 				MessageBox.Show("Text Needs To Be Less Than 255 Characters");
 				savedRejectReason = str;
-				return;
+				str = Interaction.InputBox("Enter A Rejection Reason", "Rejection Reason", savedRejectReason, -1, -1);
+				if (str == "")
+				{
+					// MessageBox.Show("Please Enter In A Rejection Reason");
+					return;
+				}// break if they cancel or do not have a rejection reason
 			}
 			List<Entry> entries = new List<Entry>();
 			for (int i = 0; i < dgHours.SelectedItems.Count; i++)
@@ -165,6 +175,7 @@ namespace FivesBronxTimesheetManagement.Forms
 			}
 			queries.Approval_Reject(entries, str);
 			RefreshDGHoursFromClassList();
+			savedRejectReason = "No Reason Provided, See Manager";
 		}
 
 		private void btnWeekDecrement_Click(object sender, RoutedEventArgs e)
