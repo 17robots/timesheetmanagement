@@ -121,6 +121,9 @@
     <Compile Include="FivesBronxTimesheetManagement\Classes\OrderAttribute.cs" />
     <Compile Include="FivesBronxTimesheetManagement\Classes\Queries2.cs" />
     <Compile Include="FivesBronxTimesheetManagement\Classes\Session.cs" />
+    <Compile Include="Forms\RejectionReason.xaml.cs">
+      <DependentUpon>RejectionReason.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Report2.xaml.cs">
       <DependentUpon>Report2.xaml</DependentUpon>
     </Compile>
@@ -340,6 +343,10 @@
     <Page Include="Forms\AdminTools.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Forms\RejectionReason.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Report2.xaml">
       <SubType>Designer</SubType>
