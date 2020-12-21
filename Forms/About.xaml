@@ -30,6 +30,7 @@
       <StackPanel>
         <Image Source="/Pics/fives_logo.jpg" Margin="0,0,0,0" Height="50" HorizontalAlignment="Right" />
         <Label HorizontalAlignment="Center" Margin="10,0,10,0" Content="Fives Bronx Timesheet Management Options" FontWeight="ExtraBold" />
+        <Label Name="ConnectionString" HorizontalAlignment="Center" Margin="10,0,10,0" />
       </StackPanel>
       <StackPanel Name="Tier1" Margin="0,10,0,10" HorizontalAlignment="Center">
         <Label HorizontalAlignment="Left" Margin="10,0,10,0" Content="General" FontWeight="Bold" />
